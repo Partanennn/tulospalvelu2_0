@@ -1,5 +1,5 @@
-import Image from "next/image";
 import getLogo from "@/utils/getLogo";
+import Image from "next/image";
 
 const templateTeams = [
   "HC Nokia/Hokkarit Oranssit",
@@ -21,8 +21,8 @@ const LogoSlider = () => {
       key={teamName}
       src={getLogo(teamName)}
       alt={teamName}
-      width={30}
-      height={30}
+      width={50}
+      height={50}
     />
   ));
 

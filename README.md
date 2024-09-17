@@ -1,5 +1,7 @@
 # Tulospalvelu 2.0
 
+Nice way to show stats for Finnish youth hockey
+
 ## How to run
 
 - Clone/fork this repo

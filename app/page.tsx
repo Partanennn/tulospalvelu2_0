@@ -1,24 +1,24 @@
 import LogoSlider from "@/components/LogoSlider";
-import TulospalveluLayout from "./layout";
 import NavBar from "@/components/Navbar";
 import Layout from "./layout";
 
-async function getGroupTeams() {
-  const url = "https://google.com";
+/* async function getGroupTeams(): Promise<string> {
+  const getSeasonsUrl =
+    "https://tulospalvelu.leijonat.fi/helpers/getSeasons.php";
+
   const body = new FormData();
   body.append("", "");
-  const res = await fetch(url, {
-    method: "POST",
-    body: JSON.stringify(body),
-  });
 
-  //const data = res.text();
-  return res;
-}
+  const resSeasons = await fetch(getSeasonsUrl, {
+    method: "POST",
+  });
+  const seasons = resSeasons.json();
+
+  return seasons;
+} */
 
 const Tulospalvelu = async () => {
-  const data = getGroupTeams();
-  console.log(data);
+  //const data = await getGroupTeams();
   return (
     <Layout>
       <LogoSlider />

@@ -9,12 +9,14 @@ import Select from "./Select";
 
 interface NavBarProps {
   seasons: string[];
+  levels: string[];
+  groups: string[];
 }
 
-const NavBar = ({ seasons = [] }: NavBarProps) => {
+const NavBar = ({ seasons, levels, groups }: NavBarProps) => {
   const [selectedSeason, setSelectedSeason] = useState(seasons[0]);
-  const [selectedSeries, setSelectedSeries] = useState(navbarSeries[0]);
-  const [selectedGroup, setSelectedGroup] = useState(navbarGroups[0]);
+  const [selectedLevel, setSelectedLevels] = useState(levels[0]);
+  const [selectedGroup, setSelectedGroup] = useState(groups[0]);
   const router = useRouter();
 
   return (
@@ -22,12 +24,9 @@ const NavBar = ({ seasons = [] }: NavBarProps) => {
       <div className="flex flex-row gap-[3rem]">
         <Image className="ml-4" src={leijonaPNG} alt="leijona" width={63} />
         <div className="flex gap-[3rem] items-center">
-          <Select
-            values={seasons}
-            setSelectedValue={(value) => setSelectedSeason(value)}
-          />
-          <Select values={navbarSeries} setSelectedValue={setSelectedSeries} />
-          <Select values={navbarGroups} setSelectedValue={setSelectedGroup} />
+          <Select values={seasons} setSelectedValue={setSelectedSeason} />
+          <Select values={levels} setSelectedValue={setSelectedLevels} />
+          <Select values={groups} setSelectedValue={setSelectedGroup} />
         </div>
       </div>
       <div className="flex flex-row justify-between items-center text-lg gap-[8rem] mx-[6rem]">

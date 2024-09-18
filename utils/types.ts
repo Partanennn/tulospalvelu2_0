@@ -20,3 +20,8 @@ export interface Season {
   SeasonNumber: string;
   seasonName: string;
 }
+
+export interface Level {
+  LevelID: string;
+  LevelName: string;
+}

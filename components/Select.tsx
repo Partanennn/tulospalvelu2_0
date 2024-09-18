@@ -22,7 +22,7 @@ const Select = ({ values, setSelectedValue }: SelectProps) => {
         setSelected(value.currentTarget.value);
         setSelectedValue(value.currentTarget.value);
       }}
-      className="bg-primary-600 rounded-full px-3 hover:bg-primary-500 hover:cursor-pointer"
+      className="bg-primary-600 rounded-full px-3 py-3 hover:bg-primary-500 hover:cursor-pointer"
     >
       {options}
     </select>

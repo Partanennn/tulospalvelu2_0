@@ -17,7 +17,17 @@ const config: Config = {
       "primary-700": "#002E6D",
       "primary-800": "#002454",
       "primary-900": "#000E21",
+      "neutral-100": "#F7F7F7",
+      "neutral-200": "#F2F2F2",
+      "neutral-300": "#E8E8E8",
+      "neutral-400": "#E0E0E0",
+      "neutral-500": "#D6D9D6",
+      "neutral-600": "#CCCCCC",
+      "neutral-700": "#BFBFBF",
+      "neutral-800": "#A6A6A6",
+      "neutral-900": "#8C8C8C",
       white: "#FFFFFF",
+      black: "#000000",
     },
     extend: {
       colors: {

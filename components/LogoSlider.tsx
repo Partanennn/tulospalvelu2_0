@@ -1,28 +1,15 @@
-import Image from "next/image";
 import getLogo from "@/utils/getLogo";
-
-const templateTeams = [
-  "HC Nokia/Hokkarit Oranssit",
-  "HPK Oranssi",
-  "Ilves Keltainen",
-  "Ilves Musta",
-  "Ilves Vihreä",
-  "KOOVEE Black",
-  "LeKi",
-  "Pelicans Turkoosi",
-  "Pelicans Turkoosi 2",
-  "Tappara Musta",
-  "Tappara Sininen",
-];
+import { teams } from "@/utils/mockData";
+import Image from "next/image";
 
 const LogoSlider = () => {
-  const logos = templateTeams.map((teamName) => (
+  const logos = teams.map((teamName) => (
     <Image
       key={teamName}
       src={getLogo(teamName)}
       alt={teamName}
-      width={30}
-      height={30}
+      width={50}
+      height={50}
     />
   ));
 

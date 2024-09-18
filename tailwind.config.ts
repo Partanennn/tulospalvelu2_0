@@ -17,6 +17,7 @@ const config: Config = {
       "primary-700": "#002E6D",
       "primary-800": "#002454",
       "primary-900": "#000E21",
+      white: "#FFFFFF",
     },
     extend: {
       colors: {

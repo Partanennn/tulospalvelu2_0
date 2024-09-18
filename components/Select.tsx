@@ -1,7 +1,10 @@
+"use client";
+
+import { Series } from "@/utils/mockData";
 import { Dispatch, SetStateAction, useState } from "react";
 
 interface SelectProps {
-  values: string[];
+  values: string[] | Series[];
   setSelectedValue: Dispatch<SetStateAction<string>>;
 }
 
@@ -9,7 +12,7 @@ const Select = ({ values, setSelectedValue }: SelectProps) => {
   const [selected, setSelected] = useState("");
 
   const options = values.map((option) => (
-    <option key="option">{option}</option>
+    <option key={option}>{option}</option>
   ));
 
   return (

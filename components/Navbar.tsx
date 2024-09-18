@@ -1,14 +1,18 @@
 "use client";
 import leijonaPNG from "@/assets/Logos/leijona.png";
-import { navbarGroups, navbarSeasons, navbarSeries } from "@/utils/mockData";
+import { navbarGroups, navbarSeries } from "@/utils/mockData";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import TextButton from "./Buttons/TextButton";
 import Select from "./Select";
 
-const NavBar = () => {
-  const [selectedSeason, setSelectedSeason] = useState(navbarSeasons[0]);
+interface NavBarProps {
+  seasons: string[];
+}
+
+const NavBar = ({ seasons = [] }: NavBarProps) => {
+  const [selectedSeason, setSelectedSeason] = useState(seasons[0]);
   const [selectedSeries, setSelectedSeries] = useState(navbarSeries[0]);
   const [selectedGroup, setSelectedGroup] = useState(navbarGroups[0]);
   const router = useRouter();
@@ -18,7 +22,10 @@ const NavBar = () => {
       <div className="flex flex-row gap-[3rem]">
         <Image className="ml-4" src={leijonaPNG} alt="leijona" width={63} />
         <div className="flex gap-[3rem] items-center">
-          <Select values={navbarSeasons} setSelectedValue={setSelectedSeason} />
+          <Select
+            values={seasons}
+            setSelectedValue={(value) => setSelectedSeason(value)}
+          />
           <Select values={navbarSeries} setSelectedValue={setSelectedSeries} />
           <Select values={navbarGroups} setSelectedValue={setSelectedGroup} />
         </div>

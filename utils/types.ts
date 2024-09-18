@@ -15,3 +15,8 @@ export interface StatGroup {
   teams: any[];
   winPoints: number;
 }
+
+export interface Season {
+  SeasonNumber: string;
+  seasonName: string;
+}

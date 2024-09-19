@@ -15,3 +15,26 @@ export interface StatGroup {
   teams: any[];
   winPoints: number;
 }
+
+export type StandingTeam = {
+  Games: number;
+  GoalDiff: number;
+  GoalsAgainst: number;
+  GoalsFor: number;
+  Looses: number;
+  OtLooses: number;
+  OtWins: number;
+  PenaltyMinutes: number;
+  Points: number;
+  PointsPerGame: number;
+  Ranking: number;
+  SeasonID: number;
+  StatGroupID: string;
+  TeamAbbrv: string;
+  TeamAssociation: string;
+  TeamID: string;
+  TeamImg: string;
+  Ties: number;
+  UniqueID: number;
+  Wins: number;
+};

@@ -1,7 +1,7 @@
 "use client";
-import { Group } from "@/app/api/fetchGroups/route";
-import { Level } from "@/app/api/fetchLevels/route";
-import { Season } from "@/app/api/fetchSeasons/route";
+import { Group } from "@/app/api/groups/route";
+import { Level } from "@/app/api/levels/route";
+import { Season } from "@/app/api/seasons/route";
 import leijonaPNG from "@/assets/Logos/leijona.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -24,7 +24,7 @@ const NavBar = () => {
 
   useEffect(() => {
     const getSeasons = async () => {
-      const res = await fetch("/api/fetchSeasons");
+      const res = await fetch("/api/seasons");
       const newSeasons = (await res.json()) as Season[];
       setSeasons(newSeasons);
 
@@ -37,9 +37,9 @@ const NavBar = () => {
 
   useEffect(() => {
     const getLevels = async () => {
-      const res = await fetch("/api/fetchLevels", {
+      const res = await fetch("/api/levels", {
         method: "POST",
-        body: JSON.stringify(selectedSeason?.SeasonNumber),
+        body: JSON.stringify({ seasonNumber: selectedSeason?.SeasonNumber }),
       });
 
       const newLevels = (await res.json()) as Level[];
@@ -53,7 +53,7 @@ const NavBar = () => {
 
   useEffect(() => {
     const getGroups = async () => {
-      const res = await fetch("/api/fetchGroups", {
+      const res = await fetch("/api/groups", {
         method: "POST",
         body: JSON.stringify({
           season: selectedSeason?.SeasonNumber,
@@ -78,8 +78,7 @@ const NavBar = () => {
       }),
     });
 
-    const games = await res.json();
-    console.log("games: ", { games });
+    //const games = await res.json();
   };
 
   return (

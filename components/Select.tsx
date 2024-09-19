@@ -2,16 +2,20 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 
-interface SelectProps {
-  values: string[];
+type ValuesWithId = {
+  id: string;
+  text: string;
+};
+interface SelectProps<T> {
+  values: (T & ValuesWithId)[];
   setSelectedValue: Dispatch<SetStateAction<string>>;
 }
 
-const Select = ({ values, setSelectedValue }: SelectProps) => {
+const Select = <T,>({ values, setSelectedValue }: SelectProps<T>) => {
   const [selected, setSelected] = useState("");
 
   const options = values.map((option) => (
-    <option key={option}>{option}</option>
+    <option key={option.id}>{option.text}</option>
   ));
 
   return (

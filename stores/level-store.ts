@@ -1,4 +1,4 @@
-import { Level } from "@/app/api/fetchLevels/route";
+import { Level } from "@/app/api/levels/route";
 import { create } from "zustand";
 
 type LevelStore = {

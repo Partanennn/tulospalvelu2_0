@@ -1,5 +1,5 @@
 "use client";
-import { Level } from "@/app/api/fetchLevels/route";
+import { Level } from "@/app/api/levels/route";
 import leijonaPNG from "@/assets/Logos/leijona.png";
 import { Group, useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
@@ -22,7 +22,7 @@ const NavBar = () => {
 
   useEffect(() => {
     const getSeasons = async () => {
-      const res = await fetch("/api/fetchSeasons");
+      const res = await fetch("/api/seasons");
       const newSeasons = (await res.json()) as Season[];
       updateSeasons(newSeasons);
 
@@ -35,7 +35,7 @@ const NavBar = () => {
 
   useEffect(() => {
     const getLevels = async () => {
-      const res = await fetch("/api/fetchLevels", {
+      const res = await fetch("/api/levels", {
         method: "POST",
         body: JSON.stringify(selectedSeason?.SeasonNumber ?? "2025"),
       });
@@ -51,7 +51,7 @@ const NavBar = () => {
 
   useEffect(() => {
     const getGroups = async () => {
-      const res = await fetch("/api/fetchGroups", {
+      const res = await fetch("/api/groups", {
         method: "POST",
         body: JSON.stringify({
           season: selectedSeason?.SeasonNumber,
@@ -86,7 +86,11 @@ const NavBar = () => {
         <Image className="ml-4" src={leijonaPNG} alt="leijona" width={63} />
         <div className="flex gap-[3rem] items-center">
           <Select
-            values={seasons.map((season) => season.SeasonName)}
+            values={seasons.map((season) => ({
+              ...season,
+              text: season.SeasonName,
+              id: season.SeasonNumber,
+            }))}
             setSelectedValue={(value) => {
               const selected = seasons.find(
                 (season) => season.SeasonName === value
@@ -95,7 +99,11 @@ const NavBar = () => {
             }}
           />
           <Select
-            values={levels.map((level) => level.LevelName)}
+            values={levels.map((level) => ({
+              ...level,
+              id: level.LevelID,
+              text: level.LevelName,
+            }))}
             setSelectedValue={(value) => {
               const selected = levels.find(
                 (level) => level.LevelName === value
@@ -104,7 +112,11 @@ const NavBar = () => {
             }}
           />
           <Select
-            values={groups.map((group) => group.StatGroupName)}
+            values={groups.map((group) => ({
+              ...group,
+              id: group.StatGroupID,
+              text: group.StatGroupName,
+            }))}
             setSelectedValue={(value) => {
               const selected = groups.find(
                 (group) => group.StatGroupName === value

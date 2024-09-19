@@ -32,7 +32,7 @@ const getLogo = (teamName: string) => {
     return logos.PelicansPNG;
   }
 
-  return logos.LeijonaPNG;
+  return logos.LeijonaMustaPNG;
 };
 
 export default getLogo;

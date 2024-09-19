@@ -8,26 +8,26 @@ export type Standing = {
 };
 
 export type StandingTeam = {
-  Games: number;
-  GoalDiff: number;
-  GoalsAgainst: number;
-  GoalsFor: number;
-  Looses: number;
-  OtLooses: number;
-  OtWins: number;
-  PenaltyMinutes: number;
-  Points: number;
-  PointsPerGame: number;
-  Ranking: number;
-  SeasonID: number;
-  StatGroupID: number;
+  Games: string;
+  GoalDiff: string;
+  GoalsAgainst: string;
+  GoalsFor: string;
+  Looses: string;
+  OtLooses: string;
+  OtWins: string;
+  PenaltyMinutes: string;
+  Points: string;
+  PointsPerGame: string;
+  Ranking: string;
+  SeasonID: string;
+  StatGroupID: string;
   TeamAbbrv: string;
-  TeamAssociation: number;
-  TeamID: number;
+  TeamAssociation: string;
+  TeamID: string;
   TeamImg: string;
-  Ties: number;
-  UniqueID: number;
-  Wins: number;
+  Ties: string;
+  UniqueID: string;
+  Wins: string;
 };
 
 type StandingStore = {

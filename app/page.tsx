@@ -1,7 +1,11 @@
+import Scoreboard from "@/components/Scoreboard";
+
 const Tulospalvelu = async () => {
   return (
-    <div>
-      <p>Home</p>
+    <div className="flex flex-row justify-around">
+      <Scoreboard />
+      <p>Tulevat Ottelut</p>
+      <p>Pistepörssi</p>
     </div>
   );
 };

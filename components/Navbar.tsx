@@ -6,6 +6,7 @@ import leijonaPNG from "@/assets/Logos/leijona.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Button from "./Buttons/Button";
 import TextButton from "./Buttons/TextButton";
 import Select from "./Select";
 
@@ -62,28 +63,24 @@ const NavBar = () => {
 
       const newGroups = (await res.json()) as Group[];
       setGroups(newGroups);
-
       const selected = newGroups.length > 0 ? newGroups[0] : null;
       setSelectedGroup(selected);
     };
     getGroups();
   }, [selectedSeason, selectedLevel]);
 
-  useEffect(() => {
-    const getGames = async () => {
-      const res = await fetch("/api/gamesPerDay", {
-        method: "POST",
-        body: JSON.stringify({
-          season: selectedSeason?.SeasonNumber,
-          stgid: selectedGroup?.StatGroupID,
-        }),
-      });
+  const getGames = async () => {
+    const res = await fetch("/api/gamesPerDay", {
+      method: "POST",
+      body: JSON.stringify({
+        season: selectedSeason?.SeasonNumber,
+        stgid: selectedGroup?.StatGroupID,
+      }),
+    });
 
-      const games = await res.json();
-      console.log("games: ", { games });
-    };
-    getGames();
-  }, [selectedSeason, selectedLevel, selectedGroup]);
+    const games = await res.json();
+    console.log("games: ", { games });
+  };
 
   return (
     <div className="flex bg-primary-800 text-white justify-between py-5">
@@ -117,9 +114,10 @@ const NavBar = () => {
               setSelectedGroup(selected ?? groups[0]);
             }}
           />
+          <Button value="Hae" onClick={getGames} />
         </div>
       </div>
-      <div className="flex flex-row justify-between items-center text-lg gap-[8rem] mx-[6rem]">
+      <div className="flex flex-row justify-between items-center text-lg gap-[3rem] mx-[6rem]">
         <TextButton value="Etusivu" onClick={() => router.push("/")} />
         <TextButton value="Otteluohjelma" onClick={() => router.push("/")} />
         <TextButton value="Pelaajat" onClick={() => router.push("/")} />

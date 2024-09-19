@@ -1,10 +1,9 @@
 "use client";
 
-import { Series } from "@/utils/mockData";
 import { Dispatch, SetStateAction, useState } from "react";
 
 interface SelectProps {
-  values: string[] | Series[];
+  values: string[];
   setSelectedValue: Dispatch<SetStateAction<string>>;
 }
 

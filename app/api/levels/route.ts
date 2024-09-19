@@ -3,7 +3,7 @@ export interface Level {
   LevelName: string;
 }
 
-export async function POST(req: Request) {
+export const POST = async (req: Request) => {
   const url = "https://tulospalvelu.leijonat.fi/helpers/getLevels.php";
 
   const season = await req.json();
@@ -18,4 +18,4 @@ export async function POST(req: Request) {
   const data = await res.json();
 
   return Response.json(data);
-}
+};

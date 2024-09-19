@@ -10,7 +10,6 @@ export async function POST(req: Request) {
 
   const body = new FormData();
   body.append("season", season);
-
   const res = await fetch(url, {
     method: "POST",
     body: body,

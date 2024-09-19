@@ -36,7 +36,7 @@ const TulospalveluLayout = async ({ children }: TulospalveluLayoutProps) => {
     <html>
       <body>
         <LogoSlider />
-        <NavBar groups={groups.map((group) => group.StatGroupName)} />
+        <NavBar />
         {children}
       </body>
     </html>

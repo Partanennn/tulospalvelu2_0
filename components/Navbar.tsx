@@ -10,8 +10,11 @@ import TextButton from "./Buttons/TextButton";
 import Select from "./Select";
 
 const NavBar = () => {
-  const [selectedSeason, setSelectedSeason] = useState<Season | null>(null);
-  const [selectedLevel, setSelectedLevel] = useState<Level | null>(null);
+  const [selectedSeason, setSelectedSeason] = useState<Season | null>({
+    SeasonName: "2024-2025",
+    SeasonNumber: "2025",
+  });
+  const [selectedLevel, setSelectedLevel] = useState<Level | null>();
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
   const [seasons, setSeasons] = useState<Season[]>([]);
   const [levels, setLevels] = useState<Level[]>([]);
@@ -37,6 +40,7 @@ const NavBar = () => {
         method: "POST",
         body: JSON.stringify(selectedSeason?.SeasonNumber),
       });
+
       const newLevels = (await res.json()) as Level[];
       setLevels(newLevels);
 
@@ -52,7 +56,7 @@ const NavBar = () => {
         method: "POST",
         body: JSON.stringify({
           season: selectedSeason?.SeasonNumber,
-          levelId: selectedLevel?.LevelID,
+          levelId: selectedLevel?.LevelID ?? "65",
         }),
       });
 
@@ -64,6 +68,22 @@ const NavBar = () => {
     };
     getGroups();
   }, [selectedSeason, selectedLevel]);
+
+  useEffect(() => {
+    const getGames = async () => {
+      const res = await fetch("/api/gamesPerDay", {
+        method: "POST",
+        body: JSON.stringify({
+          season: selectedSeason?.SeasonNumber,
+          stgid: selectedGroup?.StatGroupID,
+        }),
+      });
+
+      const games = await res.json();
+      console.log("games: ", { games });
+    };
+    getGames();
+  }, [selectedSeason, selectedLevel, selectedGroup]);
 
   return (
     <div className="flex bg-primary-800 text-white justify-between py-5">

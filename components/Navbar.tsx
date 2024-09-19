@@ -4,6 +4,7 @@ import leijonaPNG from "@/assets/Logos/leijona.png";
 import { Group, useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { Season, useSeasonStore } from "@/stores/season-store";
+import { useStandingStore } from "@/stores/standing-store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -19,6 +20,8 @@ const NavBar = () => {
     useSeasonStore();
   const { groups, selectedGroup, updateGroups, updateSelectedGroup } =
     useGroupStore();
+
+  const { updateStanding } = useStandingStore();
 
   useEffect(() => {
     const getSeasons = async () => {
@@ -67,8 +70,8 @@ const NavBar = () => {
     getGroups();
   }, [selectedSeason, selectedLevel]);
 
-  const getGames = async () => {
-    const res = await fetch("/api/gamesPerDay", {
+  const getStandings = async () => {
+    const res = await fetch("/api/standings", {
       method: "POST",
       body: JSON.stringify({
         season: selectedSeason?.SeasonNumber,
@@ -76,8 +79,8 @@ const NavBar = () => {
       }),
     });
 
-    const games = await res.json();
-    console.log("games: ", { games });
+    const data = await res.json();
+    updateStanding(data);
   };
 
   return (
@@ -124,7 +127,7 @@ const NavBar = () => {
               updateSelectedGroup(selected ?? groups[0]);
             }}
           />
-          <Button value="Hae" onClick={getGames} />
+          <Button value="Hae" onClick={getStandings} />
         </div>
       </div>
       <div className="flex flex-row justify-between items-center text-lg gap-[3rem] mx-[6rem]">

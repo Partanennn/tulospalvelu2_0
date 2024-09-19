@@ -1,52 +1,50 @@
 "use client";
-import { Group } from "@/app/api/fetchGroups/route";
 import { Level } from "@/app/api/fetchLevels/route";
-import { Season } from "@/app/api/fetchSeasons/route";
 import leijonaPNG from "@/assets/Logos/leijona.png";
+import { Group, useGroupStore } from "@/stores/group-store";
+import { useLevelStore } from "@/stores/level-store";
+import { Season, useSeasonStore } from "@/stores/season-store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Button from "./Buttons/Button";
 import TextButton from "./Buttons/TextButton";
 import Select from "./Select";
 
 const NavBar = () => {
-  const [selectedSeason, setSelectedSeason] = useState<Season | null>({
-    SeasonName: "2024-2025",
-    SeasonNumber: "2025",
-  });
-  const [selectedLevel, setSelectedLevel] = useState<Level | null>();
-  const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
-  const [seasons, setSeasons] = useState<Season[]>([]);
-  const [levels, setLevels] = useState<Level[]>([]);
-  const [groups, setGroups] = useState<Group[]>([]);
   const router = useRouter();
+  const { levels, selectedLevel, updateLevels, updateSelectedLevel } =
+    useLevelStore();
+  const { selectedSeason, seasons, updateSelectedSeason, updateSeasons } =
+    useSeasonStore();
+  const { groups, selectedGroup, updateGroups, updateSelectedGroup } =
+    useGroupStore();
 
   useEffect(() => {
     const getSeasons = async () => {
       const res = await fetch("/api/fetchSeasons");
       const newSeasons = (await res.json()) as Season[];
-      setSeasons(newSeasons);
+      updateSeasons(newSeasons);
 
       const selected = newSeasons.length > 0 ? newSeasons[0] : null;
-      setSelectedSeason(selected);
+      updateSelectedSeason(selected);
     };
 
     getSeasons();
-  }, []);
+  }, [updateSelectedSeason, updateSeasons]);
 
   useEffect(() => {
     const getLevels = async () => {
       const res = await fetch("/api/fetchLevels", {
         method: "POST",
-        body: JSON.stringify(selectedSeason?.SeasonNumber),
+        body: JSON.stringify(selectedSeason?.SeasonNumber ?? "2025"),
       });
 
       const newLevels = (await res.json()) as Level[];
-      setLevels(newLevels);
+      updateLevels(newLevels);
 
       const selected = newLevels.length > 0 ? newLevels[0] : null;
-      setSelectedLevel(selected);
+      updateSelectedLevel(selected);
     };
     getLevels();
   }, [selectedSeason]);
@@ -62,9 +60,9 @@ const NavBar = () => {
       });
 
       const newGroups = (await res.json()) as Group[];
-      setGroups(newGroups);
+      updateGroups(newGroups);
       const selected = newGroups.length > 0 ? newGroups[0] : null;
-      setSelectedGroup(selected);
+      updateSelectedGroup(selected);
     };
     getGroups();
   }, [selectedSeason, selectedLevel]);
@@ -93,7 +91,7 @@ const NavBar = () => {
               const selected = seasons.find(
                 (season) => season.SeasonName === value
               );
-              setSelectedSeason(selected ?? seasons[0]);
+              updateSelectedSeason(selected ?? seasons[0]);
             }}
           />
           <Select
@@ -102,7 +100,7 @@ const NavBar = () => {
               const selected = levels.find(
                 (level) => level.LevelName === value
               );
-              setSelectedLevel(selected ?? levels[0]);
+              updateSelectedLevel(selected ?? levels[0]);
             }}
           />
           <Select
@@ -111,7 +109,7 @@ const NavBar = () => {
               const selected = groups.find(
                 (group) => group.StatGroupName === value
               );
-              setSelectedGroup(selected ?? groups[0]);
+              updateSelectedGroup(selected ?? groups[0]);
             }}
           />
           <Button value="Hae" onClick={getGames} />

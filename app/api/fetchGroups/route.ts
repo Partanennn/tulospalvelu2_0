@@ -1,8 +1,3 @@
-export type Group = {
-  StatGroupID: string;
-  StatGroupName: string;
-};
-
 export const POST = async (req: Request) => {
   const url =
     "https://tulospalvelu.leijonat.fi/serie/helpers/getStatGroups.php";

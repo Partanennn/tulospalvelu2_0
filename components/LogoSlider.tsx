@@ -22,9 +22,7 @@ const LogoSlider = () => {
     return (
       <Image
         key={team.UniqueID}
-        src={
-          `https://tulospalvelu.leijonat.fi/images/associations/weblogos/200x200/${team.TeamImg}` /* await getLogo(team.TeamImg) */
-        }
+        src={`https://tulospalvelu.leijonat.fi/images/associations/weblogos/200x200/${team.TeamImg}`}
         alt={team.TeamAbbrv}
         width={50}
         height={50}

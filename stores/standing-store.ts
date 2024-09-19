@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export type Standing = {
-  StandingLines: string[]; // ?
+  StandingLines: string[];
   StdRankingTypes: number;
   Teams: StandingTeam[];
   WinPoints: number;

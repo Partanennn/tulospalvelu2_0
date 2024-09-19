@@ -14,8 +14,16 @@ const Scoreboard = () => {
   const { selectedSeason } = useSeasonStore();
   const { standing } = useStandingStore();
 
-  const teams = standing?.Teams.map((team) => (
-    <tr key={team.UniqueID} className="odd:bg-neutral-300">
+  const teams = standing?.Teams.map((team, index) => (
+    <tr
+      key={team.UniqueID}
+      className="odd:bg-neutral-300"
+      style={{
+        borderBottom: standing.StandingLines.includes((index + 1).toString())
+          ? "1px solid black"
+          : "",
+      }}
+    >
       <Cell>{team.Ranking}</Cell>
       <Cell>{team.TeamAbbrv}</Cell>
       <Cell>{team.Games}</Cell>

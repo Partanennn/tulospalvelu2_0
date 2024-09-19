@@ -1,18 +1,28 @@
 import LogoSlider from "@/components/LogoSlider";
 import NavBar from "@/components/Navbar";
-import { Season } from "@/utils/types";
+import { Group } from "@/utils/types";
 import { ReactNode } from "react";
 import "./globals.css";
 
-async function getSeasons(): Promise<Season[]> {
-  const getSeasonsUrl =
-    "https://tulospalvelu.leijonat.fi/helpers/getSeasons.php";
+export async function getGroups(
+  season: string,
+  levelId: string
+): Promise<Group[]> {
+  const url =
+    "https://tulospalvelu.leijonat.fi/serie/helpers/getStatGroups.php";
+  const body = new FormData();
+  body.append("season", season);
+  body.append("levelid", levelId);
+  body.append("districtid", "");
 
-  const resSeasons = await fetch(getSeasonsUrl, {
+  const res = await fetch(url, {
     method: "POST",
+    body: body,
   });
-  const seasons = await resSeasons.json();
-  return seasons;
+
+  const data = await res.json();
+
+  return data;
 }
 
 interface TulospalveluLayoutProps {
@@ -20,13 +30,13 @@ interface TulospalveluLayoutProps {
 }
 
 const TulospalveluLayout = async ({ children }: TulospalveluLayoutProps) => {
-  const seasons = await getSeasons();
+  const groups = await getGroups("2025", "101");
 
   return (
     <html>
       <body>
         <LogoSlider />
-        <NavBar seasons={seasons.map((value) => value.SeasonNumber)} />
+        <NavBar />
         {children}
       </body>
     </html>

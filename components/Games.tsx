@@ -4,7 +4,14 @@ import { GameDay } from "@/app/api/gamesPerDay/route";
 import { useGamesStore } from "@/stores/games-store";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
+
+type CellProps = {
+  children: ReactNode;
+};
+const Cell = ({ children }: CellProps) => (
+  <td className="px-2 text-center">{children}</td>
+);
 
 const Games = () => {
   const { gamesPerDay, updateGamesPerDay: updateGames } = useGamesStore();
@@ -30,6 +37,30 @@ const Games = () => {
     }
   }, [selectedSeason, selectedGroup]);
 
+  const gameItems = gamesPerDay.map((gameDay) => {
+    let gameDate = "";
+    const basicRows = gameDay.Games.map((game) => {
+      gameDate = game.GameDate + " " + game.DowFI;
+      return (
+        <tr>
+          <Cell>
+            {game.GameDate} {game.GameTime}
+          </Cell>
+          <Cell>{game.HomeTeamAbbrv}</Cell>
+          <Cell>{game.AwayTeamAbbrv}</Cell>
+        </tr>
+      );
+    });
+    const dayRow = (
+      <tr>
+        <td colSpan={3} className="text-center text-lg">
+          {gameDate}
+        </td>
+      </tr>
+    );
+    return [dayRow, basicRows];
+  });
+
   return (
     <table>
       <thead>
@@ -37,13 +68,7 @@ const Games = () => {
           <th colSpan={3}>Otteluohjelma</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>Value 1</td>
-          <td>Value 2</td>
-          <td>Value 3</td>
-        </tr>
-      </tbody>
+      <tbody>{gameItems}</tbody>
     </table>
   );
 };

@@ -7,7 +7,7 @@ import { ReactNode, useEffect } from "react";
 type Cell = {
   children: ReactNode;
 };
-const Cell = ({ children }: Cell) => {
+export const Cell = ({ children }: Cell) => {
   return <td className="text-sm px-5 py-1.5 text-center">{children}</td>;
 };
 

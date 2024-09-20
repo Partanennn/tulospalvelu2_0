@@ -42,18 +42,19 @@ const Games = () => {
     const basicRows = gameDay.Games.map((game) => {
       gameDate = game.GameDate + " " + game.DowFI;
       return (
-        <tr>
+        <tr className="odd:bg-neutral-500 even: bg-neutral-200">
           <Cell>
             {game.GameDate} {game.GameTime}
           </Cell>
           <Cell>{game.HomeTeamAbbrv}</Cell>
           <Cell>{game.AwayTeamAbbrv}</Cell>
+          <Cell>{game.RinkName}</Cell>
         </tr>
       );
     });
     const dayRow = (
       <tr>
-        <td colSpan={3} className="text-center text-lg">
+        <td colSpan={4} className="text-center text-lg">
           {gameDate}
         </td>
       </tr>

@@ -35,7 +35,7 @@ export type Game = {
   Latitude: string;
   LevelID: string;
   LevelName: string;
-  LiceFeedSource: string;
+  LiveFeedSource: string;
   LiveURL: string;
   Longitude: string;
   OnlyStreamStorage: string;

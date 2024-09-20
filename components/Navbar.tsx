@@ -4,11 +4,9 @@ import leijonaPNG from "@/assets/Logos/leijona.png";
 import { Group, useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { Season, useSeasonStore } from "@/stores/season-store";
-import { useStandingStore } from "@/stores/standing-store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import Button from "./Buttons/Button";
 import TextButton from "./Buttons/TextButton";
 import Select from "./Select";
 
@@ -20,8 +18,6 @@ const NavBar = () => {
     useSeasonStore();
   const { groups, selectedGroup, updateGroups, updateSelectedGroup } =
     useGroupStore();
-
-  const { updateStanding } = useStandingStore();
 
   useEffect(() => {
     const getSeasons = async () => {
@@ -37,37 +33,41 @@ const NavBar = () => {
   }, [updateSelectedSeason, updateSeasons]);
 
   useEffect(() => {
-    const getLevels = async () => {
-      const res = await fetch("/api/levels", {
-        method: "POST",
-        body: JSON.stringify(selectedSeason?.SeasonNumber ?? "2025"),
-      });
+    if (selectedSeason) {
+      const getLevels = async () => {
+        const res = await fetch("/api/levels", {
+          method: "POST",
+          body: JSON.stringify(selectedSeason?.SeasonNumber ?? "2025"),
+        });
 
-      const newLevels = (await res.json()) as Level[];
-      updateLevels(newLevels);
+        const newLevels = (await res.json()) as Level[];
+        updateLevels(newLevels);
 
-      const selected = newLevels.length > 0 ? newLevels[0] : null;
-      updateSelectedLevel(selected);
-    };
-    getLevels();
+        const selected = newLevels.length > 0 ? newLevels[0] : null;
+        updateSelectedLevel(selected);
+      };
+      getLevels();
+    }
   }, [selectedSeason?.SeasonNumber]);
 
   useEffect(() => {
-    const getGroups = async () => {
-      const res = await fetch("/api/groups", {
-        method: "POST",
-        body: JSON.stringify({
-          season: selectedSeason?.SeasonNumber,
-          levelId: selectedLevel?.LevelID ?? "65",
-        }),
-      });
+    if (selectedSeason && selectedLevel) {
+      const getGroups = async () => {
+        const res = await fetch("/api/groups", {
+          method: "POST",
+          body: JSON.stringify({
+            season: selectedSeason?.SeasonNumber,
+            levelId: selectedLevel?.LevelID ?? "65",
+          }),
+        });
 
-      const newGroups = (await res.json()) as Group[];
-      updateGroups(newGroups);
-      const selected = newGroups.length > 0 ? newGroups[0] : null;
-      updateSelectedGroup(selected);
-    };
-    getGroups();
+        const newGroups = (await res.json()) as Group[];
+        updateGroups(newGroups);
+        const selected = newGroups.length > 0 ? newGroups[0] : null;
+        updateSelectedGroup(selected);
+      };
+      getGroups();
+    }
   }, [selectedSeason?.SeasonNumber, selectedLevel?.LevelID]);
 
   return (
@@ -76,6 +76,7 @@ const NavBar = () => {
         <Image className="ml-4" src={leijonaPNG} alt="leijona" width={63} />
         <div className="flex gap-[3rem] items-center">
           <Select
+            value={selectedSeason?.SeasonName ?? ""}
             values={seasons.map((season) => ({
               ...season,
               text: season.SeasonName,
@@ -89,6 +90,7 @@ const NavBar = () => {
             }}
           />
           <Select
+            value={selectedLevel?.LevelName ?? ""}
             values={levels.map((level) => ({
               ...level,
               id: level.LevelID,
@@ -102,6 +104,7 @@ const NavBar = () => {
             }}
           />
           <Select
+            value={selectedGroup?.StatGroupName ?? ""}
             values={groups.map((group) => ({
               ...group,
               id: group.StatGroupID,

@@ -42,7 +42,10 @@ const Games = () => {
     const basicRows = gameDay.Games.map((game) => {
       gameDate = game.GameDate + " " + game.DowFI;
       return (
-        <tr className="odd:bg-neutral-500 even: bg-neutral-200">
+        <tr
+          key={game.GameID}
+          className="odd:bg-neutral-300 even: bg-neutral-200"
+        >
           <Cell>
             {game.GameDate} {game.GameTime}
           </Cell>
@@ -66,7 +69,9 @@ const Games = () => {
     <table>
       <thead>
         <tr>
-          <th colSpan={3}>Otteluohjelma</th>
+          <th colSpan={4} className="text-2xl">
+            Otteluohjelma
+          </th>
         </tr>
       </thead>
       <tbody>{gameItems}</tbody>

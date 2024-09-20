@@ -50,7 +50,7 @@ const NavBar = () => {
       updateSelectedLevel(selected);
     };
     getLevels();
-  }, [selectedSeason]);
+  }, [selectedSeason?.SeasonNumber]);
 
   useEffect(() => {
     const getGroups = async () => {
@@ -68,20 +68,7 @@ const NavBar = () => {
       updateSelectedGroup(selected);
     };
     getGroups();
-  }, [selectedSeason, selectedLevel]);
-
-  const getStandings = async () => {
-    const res = await fetch("/api/standings", {
-      method: "POST",
-      body: JSON.stringify({
-        season: selectedSeason?.SeasonNumber,
-        stgid: selectedGroup?.StatGroupID,
-      }),
-    });
-
-    const data = await res.json();
-    updateStanding(data);
-  };
+  }, [selectedSeason?.SeasonNumber, selectedLevel?.LevelID]);
 
   return (
     <div className="flex bg-primary-800 text-white justify-between py-5">
@@ -127,12 +114,15 @@ const NavBar = () => {
               updateSelectedGroup(selected ?? groups[0]);
             }}
           />
-          <Button value="Hae" onClick={getStandings} />
+          {/* <Button value="Hae" onClick={getStandings} /> */}
         </div>
       </div>
       <div className="flex flex-row justify-between items-center text-lg gap-[3rem] mx-[6rem]">
         <TextButton value="Etusivu" onClick={() => router.push("/")} />
-        <TextButton value="Otteluohjelma" onClick={() => router.push("/")} />
+        <TextButton
+          value="Otteluohjelma"
+          onClick={() => router.push("/otteluohjelma")}
+        />
         <TextButton value="Pelaajat" onClick={() => router.push("/")} />
         <TextButton value="Tilastot" onClick={() => router.push("/")} />
       </div>

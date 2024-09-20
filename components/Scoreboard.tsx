@@ -1,7 +1,8 @@
 "use client";
+import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { useStandingStore } from "@/stores/standing-store";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 
 type Cell = {
   children: ReactNode;
@@ -12,7 +13,27 @@ const Cell = ({ children }: Cell) => {
 
 const Scoreboard = () => {
   const { selectedSeason } = useSeasonStore();
-  const { standing } = useStandingStore();
+  const { standing, updateStanding } = useStandingStore();
+  const { selectedGroup } = useGroupStore();
+
+  useEffect(() => {
+    if (selectedSeason && selectedGroup) {
+      const getStandings = async () => {
+        const res = await fetch("/api/standings", {
+          method: "POST",
+          body: JSON.stringify({
+            season: selectedSeason.SeasonNumber,
+            stgid: selectedGroup.StatGroupID,
+          }),
+        });
+
+        const data = await res.json();
+        updateStanding(data);
+      };
+
+      getStandings();
+    }
+  }, [selectedSeason, selectedGroup]);
 
   const teams = standing?.Teams.map((team, index) => (
     <tr

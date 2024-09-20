@@ -2,14 +2,9 @@
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { useStandingStore } from "@/stores/standing-store";
-import { ReactNode, useEffect } from "react";
-
-type Cell = {
-  children: ReactNode;
-};
-export const Cell = ({ children }: Cell) => {
-  return <td className="text-sm px-5 py-1.5 text-center">{children}</td>;
-};
+import { useEffect } from "react";
+import Cell from "./Table/Cell";
+import TableHeader from "./Table/TableHeader";
 
 const Scoreboard = () => {
   const { selectedSeason } = useSeasonStore();
@@ -60,12 +55,12 @@ const Scoreboard = () => {
   ));
 
   return (
-    <table className="table-auto">
+    <table className="my-5">
       <thead>
         <tr>
-          <th className="text-xl py-3" colSpan={11}>
+          <TableHeader colSpan={11}>
             Sarjataulukko {selectedSeason?.SeasonName}
-          </th>
+          </TableHeader>
         </tr>
         <tr className="text-lg">
           <th></th>

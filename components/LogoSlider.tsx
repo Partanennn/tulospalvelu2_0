@@ -3,6 +3,7 @@
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { useStandingStore } from "@/stores/standing-store";
+import { imageUrl } from "@/utils/types";
 import Image from "next/image";
 import { useEffect } from "react";
 
@@ -34,7 +35,7 @@ const LogoSlider = () => {
     return (
       <Image
         key={team.UniqueID}
-        src={`https://tulospalvelu.leijonat.fi/images/associations/weblogos/200x200/${team.TeamImg}`}
+        src={`${imageUrl}/${team.TeamImg}`}
         alt={team.TeamAbbrv}
         width={50}
         height={50}

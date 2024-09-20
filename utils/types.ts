@@ -15,3 +15,6 @@ export interface StatGroup {
   teams: any[];
   winPoints: number;
 }
+
+export const imageUrl =
+  "https://tulospalvelu.leijonat.fi/images/associations/weblogos/200x200";

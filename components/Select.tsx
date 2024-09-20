@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 type ValuesWithId = {
   id: string;
@@ -8,24 +8,22 @@ type ValuesWithId = {
 };
 interface SelectProps<T> {
   values: (T & ValuesWithId)[];
+  value: string;
   setSelectedValue: Dispatch<SetStateAction<string>>;
 }
 
-const Select = <T,>({ values, setSelectedValue }: SelectProps<T>) => {
-  const [selected, setSelected] = useState("");
-
+const Select = <T,>({ values, setSelectedValue, value }: SelectProps<T>) => {
   const options = values.map((option) => (
     <option key={option.id}>{option.text}</option>
   ));
 
   return (
     <select
-      value={selected}
+      value={value}
       onChange={(value) => {
-        setSelected(value.currentTarget.value);
         setSelectedValue(value.currentTarget.value);
       }}
-      className="bg-primary-600 rounded-full px-3 py-3 hover:bg-primary-500 hover:cursor-pointer"
+      className="bg-primary-600 rounded-full px-3 py-3 hover:bg-primary-500 hover:cursor-pointer text-center"
     >
       {options}
     </select>

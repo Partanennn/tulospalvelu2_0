@@ -1,28 +1,41 @@
 "use client";
 
+import { useGroupStore } from "@/stores/group-store";
+import { useSeasonStore } from "@/stores/season-store";
 import { useStandingStore } from "@/stores/standing-store";
+import { imageUrl } from "@/utils/types";
 import Image from "next/image";
+import { useEffect } from "react";
 
 const LogoSlider = () => {
-  const { standing } = useStandingStore();
+  const { standing, updateStanding } = useStandingStore();
+  const { selectedSeason } = useSeasonStore();
+  const { selectedGroup } = useGroupStore();
 
-  const getLogo = async (imageUrl: string) => {
-    const res = await fetch("/api/logo", {
-      method: "POST",
-      body: JSON.stringify({ url: imageUrl }),
-    });
+  useEffect(() => {
+    if (selectedSeason && selectedGroup) {
+      const getStandings = async () => {
+        const res = await fetch("/api/standings", {
+          method: "POST",
+          body: JSON.stringify({
+            season: selectedSeason.SeasonNumber,
+            stgid: selectedGroup.StatGroupID,
+          }),
+        });
 
-    const blob = await res.blob();
-    const imageObject = URL.createObjectURL(blob);
-    return imageObject;
-  };
+        const data = await res.json();
+        updateStanding(data);
+      };
+
+      getStandings();
+    }
+  }, [selectedSeason, selectedGroup]);
 
   const logos = standing?.Teams.map((team) => {
-    getLogo(team.TeamImg);
     return (
       <Image
         key={team.UniqueID}
-        src={`https://tulospalvelu.leijonat.fi/images/associations/weblogos/200x200/${team.TeamImg}`}
+        src={`${imageUrl}/${team.TeamImg}`}
         alt={team.TeamAbbrv}
         width={50}
         height={50}

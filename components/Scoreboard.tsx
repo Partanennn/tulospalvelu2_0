@@ -1,18 +1,34 @@
 "use client";
+import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { useStandingStore } from "@/stores/standing-store";
-import { ReactNode } from "react";
-
-type Cell = {
-  children: ReactNode;
-};
-const Cell = ({ children }: Cell) => {
-  return <td className="text-sm px-5 py-1.5 text-center">{children}</td>;
-};
+import { useEffect } from "react";
+import Cell from "./Table/Cell";
+import TableHeader from "./Table/TableHeader";
 
 const Scoreboard = () => {
   const { selectedSeason } = useSeasonStore();
-  const { standing } = useStandingStore();
+  const { standing, updateStanding } = useStandingStore();
+  const { selectedGroup } = useGroupStore();
+
+  useEffect(() => {
+    if (selectedSeason && selectedGroup) {
+      const getStandings = async () => {
+        const res = await fetch("/api/standings", {
+          method: "POST",
+          body: JSON.stringify({
+            season: selectedSeason.SeasonNumber,
+            stgid: selectedGroup.StatGroupID,
+          }),
+        });
+
+        const data = await res.json();
+        updateStanding(data);
+      };
+
+      getStandings();
+    }
+  }, [selectedSeason, selectedGroup]);
 
   const teams = standing?.Teams.map((team, index) => (
     <tr
@@ -39,12 +55,12 @@ const Scoreboard = () => {
   ));
 
   return (
-    <table className="table-auto">
+    <table className="my-5">
       <thead>
         <tr>
-          <th className="text-xl py-3" colSpan={11}>
+          <TableHeader colSpan={11}>
             Sarjataulukko {selectedSeason?.SeasonName}
-          </th>
+          </TableHeader>
         </tr>
         <tr className="text-lg">
           <th></th>

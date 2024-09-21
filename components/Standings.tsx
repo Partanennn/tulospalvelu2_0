@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import Cell from "./Table/Cell";
 import TableHeader from "./Table/TableHeader";
 
-const Scoreboard = () => {
+const Standings = () => {
   const { selectedSeason } = useSeasonStore();
   const { standing, updateStanding } = useStandingStore();
   const { selectedGroup } = useGroupStore();
@@ -51,7 +51,7 @@ const Scoreboard = () => {
   ));
 
   return (
-    <table className="my-5">
+    <table className="mx-5">
       <thead>
         <tr>
           <TableHeader colSpan={11}>
@@ -77,4 +77,4 @@ const Scoreboard = () => {
   );
 };
 
-export default Scoreboard;
+export default Standings;

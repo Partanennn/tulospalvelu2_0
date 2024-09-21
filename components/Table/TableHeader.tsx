@@ -14,7 +14,7 @@ const TableHeader = ({
   return (
     <th
       colSpan={colSpan}
-      className={`text-center text-xl bg-primary-600 text-white py-2 ${className}`}
+      className={`text-center text-xl bg-primary-600 text-white py-2 px-5 ${className}`}
     >
       {children}
     </th>

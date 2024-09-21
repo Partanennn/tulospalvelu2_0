@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface StatGroup {
   gameDays: any[];
   gameRules: string;
@@ -15,6 +17,10 @@ export interface StatGroup {
   teams: any[];
   winPoints: number;
 }
+
+export type ChildrenType = {
+  children: ReactNode;
+};
 
 export const imageUrl =
   "https://tulospalvelu.leijonat.fi/images/associations/weblogos/200x200";

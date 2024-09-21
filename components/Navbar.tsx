@@ -5,14 +5,18 @@ import useFetch from "@/hooks/useFetch";
 import { Group, useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { Season, useSeasonStore } from "@/stores/season-store";
+import { navbarItems } from "@/utils/navItems";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import TextButton from "./Buttons/TextButton";
 import Select from "./Select";
 
 const NavBar = () => {
+  const pathName = usePathname();
   const router = useRouter();
+  const [selectedPage, setSelectedPage] = useState("");
+
   const { levels, selectedLevel, updateLevels, updateSelectedLevel } =
     useLevelStore();
   const { selectedSeason, seasons, updateSelectedSeason, updateSeasons } =
@@ -57,6 +61,20 @@ const NavBar = () => {
       updateSelectedGroup(selected);
     }
   }, [groupsData, updateGroups, updateSelectedGroup]);
+
+  useEffect(() => {
+    const match = navbarItems.find((item) => item.url === pathName);
+    setSelectedPage(match?.text ?? "");
+  }, [pathName]);
+
+  const navItems = navbarItems.map((item) => (
+    <TextButton
+      key={item.text}
+      value={item.text}
+      isSelected={selectedPage === item.text}
+      onClick={() => router.push(item.url)}
+    />
+  ));
 
   return (
     <div className="flex bg-primary-800 text-white justify-between py-5">
@@ -109,13 +127,7 @@ const NavBar = () => {
         </div>
       </div>
       <div className="flex flex-row justify-between items-center text-lg gap-[3rem] mx-[6rem]">
-        <TextButton value="Etusivu" onClick={() => router.push("/")} />
-        <TextButton
-          value="Otteluohjelma"
-          onClick={() => router.push("/otteluohjelma")}
-        />
-        <TextButton value="Pelaajat" onClick={() => router.push("/")} />
-        <TextButton value="Tilastot" onClick={() => router.push("/")} />
+        {navItems}
       </div>
     </div>
   );

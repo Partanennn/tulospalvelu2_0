@@ -101,7 +101,7 @@ const Games = () => {
   });
 
   return (
-    <table>
+    <table className="mx-5">
       <thead>
         <tr>
           <TableHeader colSpan={colCount}>Kaikki Ottelut</TableHeader>

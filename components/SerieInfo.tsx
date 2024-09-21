@@ -5,17 +5,18 @@ import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
-import { ReactNode } from "react";
+import { ChildrenType } from "@/utils/types";
 import TableHeader from "./Table/TableHeader";
 
-type ChildrenType = {
-  children: ReactNode;
-};
 const Row = ({ children }: ChildrenType) => {
-  return <tr>{children}</tr>;
+  return <tr className="odd:bg-neutral-300 py-2">{children}</tr>;
 };
 const CellRight = ({ children }: ChildrenType) => (
-  <td className="flex justify-end items-end">{children}</td>
+  <td className="flex justify-end px-2 py-2">{children}</td>
+);
+
+const CellLeft = ({ children }: ChildrenType) => (
+  <td className="py-2 px-2 text">{children}</td>
 );
 
 const SerieInfo = () => {
@@ -33,7 +34,7 @@ const SerieInfo = () => {
   });
 
   return (
-    <div className="mx-5">
+    <div>
       <table>
         <thead>
           <tr>
@@ -42,54 +43,72 @@ const SerieInfo = () => {
         </thead>
         <tbody>
           <Row>
-            <td>Sarja alkaa</td>
+            <CellLeft>Sarja alkaa</CellLeft>
             <CellRight>{data?.BeginDate}</CellRight>
           </Row>
           <Row>
-            <td>Sarja päättyy</td>
+            <CellLeft>Sarja päättyy</CellLeft>
             <CellRight>{data?.EndDate}</CellRight>
           </Row>
           <Row>
-            <td>Yhteydenotto</td>
-            <CellRight>TEE LOPPUUN</CellRight>
+            <CellLeft>Yhteydenotto</CellLeft>
+            <CellRight>
+              <div className="flex flex-col justify-end items-end">
+                <div>{data?.SerieManagerName}</div>
+                <div>{data?.SerieManagerEmail}</div>
+                <div>{data?.SerieManagerPhone}</div>
+              </div>
+            </CellRight>
           </Row>
           <Row>
-            <td>Kurinpito</td>
+            <CellLeft>Kurinpito</CellLeft>
             <CellRight>{data?.DisciplinaryContact}</CellRight>
           </Row>
           <Row>
-            <td>Erätauko</td>
-            <CellRight>
-              {data?.IntermissionTimeBetweenPeriods ?? 0} min
-            </CellRight>
-          </Row>
-          <Row>
-            <td>Erätauko (Jatkoaika)</td>
-            <CellRight>
-              {data?.IntermissionTimeBetweenPeriods ?? 0} min
-            </CellRight>
-          </Row>
-          <Row>
-            <td>Lämmittely</td>
-            <CellRight>{data?.WarmUpTime ?? 0} min</CellRight>
-          </Row>
-          <Row>
-            <td>Erotuomarimäärä</td>
-            <CellRight>{data?.NumberOfReferees ?? 0}</CellRight>
-          </Row>
-          <Row>
-            <td>Erotuomaritaso</td>
-            <CellRight>Taso {data?.LevelOfReferees ?? 0}</CellRight>
-          </Row>
-          <Row>
-            <td>Erän pituus</td>
+            <CellLeft>Erän pituus</CellLeft>
             <CellRight>
               {data?.GameRules?.PeriodLengthMinutes ?? 0} min
             </CellRight>
           </Row>
           <Row>
-            <td>Erien määrä</td>
+            <CellLeft>Erien määrä</CellLeft>
             <CellRight>{data?.GameRules?.NumberOfPeriods} kpl</CellRight>
+          </Row>
+          <Row>
+            <CellLeft>Pieni jäähy</CellLeft>
+            <CellRight>
+              {data?.GameRules?.MinorPenaltyLengthMinutes} min
+            </CellRight>
+          </Row>
+          <Row>
+            <CellLeft>Iso jäähy</CellLeft>
+            <CellRight>
+              {data?.GameRules?.MajorPenaltyLengthMinutes} min
+            </CellRight>
+          </Row>
+          <Row>
+            <CellLeft>Erätauko</CellLeft>
+            <CellRight>
+              {data?.IntermissionTimeBetweenPeriods ?? 0} min
+            </CellRight>
+          </Row>
+          <Row>
+            <CellLeft>Erätauko (Jatkoaika)</CellLeft>
+            <CellRight>
+              {data?.IntermissionTimeBetweenPeriods ?? 0} min
+            </CellRight>
+          </Row>
+          <Row>
+            <CellLeft>Lämmittely</CellLeft>
+            <CellRight>{data?.WarmUpTime ?? 0} min</CellRight>
+          </Row>
+          <Row>
+            <CellLeft>Erotuomarimäärä</CellLeft>
+            <CellRight>{data?.NumberOfReferees ?? 0}</CellRight>
+          </Row>
+          <Row>
+            <CellLeft>Erotuomaritaso</CellLeft>
+            <CellRight>Taso {data?.LevelOfReferees ?? 0}</CellRight>
           </Row>
         </tbody>
       </table>

@@ -17,10 +17,10 @@ export const navbarItems: NavbarItem[] = [
   },
   {
     text: "Pelaajat",
-    url: "/players",
+    url: "/",
   },
   {
     text: "Tilastot",
-    url: "/stats",
+    url: "/",
   },
 ];

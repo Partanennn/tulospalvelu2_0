@@ -23,19 +23,19 @@ export type SerieInfo = {
 };
 
 type GameRules = {
-  ClockCountDirection: boolean;
-  CoachChallenge: boolean;
-  DisableVideoReview: boolean;
+  ClockCountDirection: number;
+  CoachChallenge: number;
+  DisableVideoReview: number;
   ExtraPeriodLengthMinutes: number;
   ExtraPeriodLengthSeconds: number;
   GameBreakStatistics: number;
   GameLengthMinutes: number;
   GameLengthSeconds: number;
   GameSheetType: number;
-  HasExtraPeriod: boolean;
-  HasOvertime: boolean;
-  HasWinningShot: boolean;
-  IceHockeyInline: boolean;
+  HasExtraPeriod: number;
+  HasOvertime: number;
+  HasWinningShot: number;
+  IceHockeyInline: number;
   MajorPenaltyLengthMinutes: number;
   MajorPenaltyLengthSeconds: number;
   MinorPenaltyLengthMinutes: number;
@@ -48,12 +48,12 @@ type GameRules = {
   OvertimeLengthSeconds: number;
   PeriodLengthMinutes: number;
   PeriodLengthSeconds: number;
-  PlusMinus: boolean;
-  RefereeStats: boolean;
+  PlusMinus: number;
+  RefereeStats: number;
   RosterType: number;
-  ShootingMap: boolean;
-  Statistics: boolean;
-  TimeOnIce: boolean;
+  ShootingMap: number;
+  Statistics: number;
+  TimeOnIce: number;
 };
 
 export const POST = async (req: Request) => {

@@ -14,22 +14,19 @@ import TableHeader from "./Table/TableHeader";
 
 const colCount = 10;
 
-const Games = () => {
+const Schedule = () => {
   const { gamesPerDay, updateGamesPerDay: updateGames } = useGamesStore();
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
 
-  const { data: gamesData, isLoading } = useFetch<GameDay[]>(
-    "/api/gamesPerDay",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        season: selectedSeason?.SeasonNumber,
-        stgid: selectedGroup?.StatGroupID,
-        gameDays: "all",
-      }),
-    }
-  );
+  const { data: gamesData } = useFetch<GameDay[]>("/api/gamesPerDay", {
+    method: "POST",
+    body: JSON.stringify({
+      season: selectedSeason?.SeasonNumber,
+      stgid: selectedGroup?.StatGroupID,
+      gameDays: "all",
+    }),
+  });
 
   useEffect(() => {
     if (gamesData) {
@@ -110,17 +107,9 @@ const Games = () => {
           <TableHeader colSpan={colCount}>Kaikki Ottelut</TableHeader>
         </tr>
       </thead>
-      <tbody>
-        {isLoading ? (
-          <tr>
-            <td colSpan={colCount}>Tietojen haku käynnissä</td>
-          </tr>
-        ) : (
-          gameItems
-        )}
-      </tbody>
+      <tbody>{gameItems}</tbody>
     </table>
   );
 };
 
-export default Games;
+export default Schedule;

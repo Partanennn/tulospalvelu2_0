@@ -1,6 +1,7 @@
+import { GET_SEASONS_URL } from "../_lib/urls";
+
 export async function GET() {
-  const getSeasonsUrl =
-    "https://tulospalvelu.leijonat.fi/helpers/getSeasons.php";
+  const getSeasonsUrl = GET_SEASONS_URL;
 
   const resSeasons = await fetch(getSeasonsUrl, {
     method: "POST",

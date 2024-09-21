@@ -1,6 +1,7 @@
 "use client";
 
 import { GameDay } from "@/app/api/gamesPerDay/route";
+import useFetch from "@/hooks/useFetch";
 import { useGamesStore } from "@/stores/games-store";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
@@ -11,29 +12,30 @@ import Cell from "./Table/Cell";
 import LinkCell from "./Table/LinkCell";
 import TableHeader from "./Table/TableHeader";
 
+const colCount = 7;
+
 const Games = () => {
   const { gamesPerDay, updateGamesPerDay: updateGames } = useGamesStore();
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
 
-  useEffect(() => {
-    if (selectedSeason && selectedGroup) {
-      const getGames = async () => {
-        const res = await fetch("/api/gamesPerDay", {
-          method: "POST",
-          body: JSON.stringify({
-            season: selectedSeason?.SeasonNumber,
-            stgid: selectedGroup?.StatGroupID,
-            gameDays: "all",
-          }),
-        });
-        const newGames = (await res.json()) as GameDay[];
-
-        updateGames(newGames);
-      };
-      getGames();
+  const { data: gamesData, isLoading } = useFetch<GameDay[]>(
+    "/api/gamesPerDay",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        season: selectedSeason?.SeasonNumber,
+        stgid: selectedGroup?.StatGroupID,
+        gameDays: "all",
+      }),
     }
-  }, [selectedSeason, selectedGroup]);
+  );
+
+  useEffect(() => {
+    if (gamesData) {
+      updateGames(gamesData);
+    }
+  }, [gamesData]);
 
   const gameItems = gamesPerDay.map((gameDay) => {
     let gameDate = "";
@@ -89,8 +91,8 @@ const Games = () => {
       );
     });
     const dayRow = (
-      <tr>
-        <td colSpan={7} className="text-center text-lg py-3 font-bold">
+      <tr key={gameDate}>
+        <td colSpan={colCount} className="text-center text-lg py-3 font-bold">
           {gameDate}
         </td>
       </tr>
@@ -102,10 +104,18 @@ const Games = () => {
     <table>
       <thead>
         <tr>
-          <TableHeader colSpan={7}>Kaikki Ottelut</TableHeader>
+          <TableHeader colSpan={colCount}>Kaikki Ottelut</TableHeader>
         </tr>
       </thead>
-      <tbody>{gameItems}</tbody>
+      <tbody>
+        {isLoading ? (
+          <tr>
+            <td colSpan={colCount}>Tietojen haku käynnissä</td>
+          </tr>
+        ) : (
+          gameItems
+        )}
+      </tbody>
     </table>
   );
 };

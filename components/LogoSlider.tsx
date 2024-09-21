@@ -1,8 +1,9 @@
 "use client";
 
+import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
-import { useStandingStore } from "@/stores/standing-store";
+import { Standing, useStandingStore } from "@/stores/standing-store";
 import { imageUrl } from "@/utils/types";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -12,24 +13,19 @@ const LogoSlider = () => {
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
 
+  const { data: standingsData } = useFetch<Standing>("/api/standings", {
+    method: "POST",
+    body: JSON.stringify({
+      season: selectedSeason?.SeasonNumber,
+      stgid: selectedGroup?.StatGroupID,
+    }),
+  });
+
   useEffect(() => {
-    if (selectedSeason && selectedGroup) {
-      const getStandings = async () => {
-        const res = await fetch("/api/standings", {
-          method: "POST",
-          body: JSON.stringify({
-            season: selectedSeason.SeasonNumber,
-            stgid: selectedGroup.StatGroupID,
-          }),
-        });
-
-        const data = await res.json();
-        updateStanding(data);
-      };
-
-      getStandings();
+    if (standingsData) {
+      updateStanding(standingsData);
     }
-  }, [selectedSeason, selectedGroup]);
+  }, [standingsData, updateStanding]);
 
   const logos = standing?.Teams.map((team) => {
     return (

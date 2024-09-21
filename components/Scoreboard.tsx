@@ -1,7 +1,8 @@
 "use client";
+import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
-import { useStandingStore } from "@/stores/standing-store";
+import { Standing, useStandingStore } from "@/stores/standing-store";
 import { useEffect } from "react";
 import Cell from "./Table/Cell";
 import TableHeader from "./Table/TableHeader";
@@ -11,24 +12,19 @@ const Scoreboard = () => {
   const { standing, updateStanding } = useStandingStore();
   const { selectedGroup } = useGroupStore();
 
+  const { data: standingData } = useFetch<Standing>("/api/standings", {
+    method: "POST",
+    body: JSON.stringify({
+      season: selectedSeason?.SeasonNumber,
+      stgid: selectedGroup?.StatGroupID,
+    }),
+  });
+
   useEffect(() => {
-    if (selectedSeason && selectedGroup) {
-      const getStandings = async () => {
-        const res = await fetch("/api/standings", {
-          method: "POST",
-          body: JSON.stringify({
-            season: selectedSeason.SeasonNumber,
-            stgid: selectedGroup.StatGroupID,
-          }),
-        });
-
-        const data = await res.json();
-        updateStanding(data);
-      };
-
-      getStandings();
+    if (standingData) {
+      updateStanding(standingData);
     }
-  }, [selectedSeason, selectedGroup]);
+  }, [standingData, updateStanding]);
 
   const teams = standing?.Teams.map((team, index) => (
     <tr

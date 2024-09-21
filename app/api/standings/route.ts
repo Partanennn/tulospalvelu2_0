@@ -1,5 +1,7 @@
+import { GET_STANDINGS_URL } from "../_lib/urls";
+
 export async function POST(req: Request) {
-  const url = "https://tulospalvelu.leijonat.fi/serie/helpers/getStandings.php";
+  const url = GET_STANDINGS_URL;
 
   const reqBody = await req.json();
 

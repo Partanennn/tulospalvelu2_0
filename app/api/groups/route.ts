@@ -1,6 +1,7 @@
+import { GET_STAT_GROUP_URL } from "../_lib/urls";
+
 export const POST = async (req: Request) => {
-  const url =
-    "https://tulospalvelu.leijonat.fi/serie/helpers/getStatGroups.php";
+  const url = GET_STAT_GROUP_URL;
 
   const reqBody = await req.json();
 

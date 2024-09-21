@@ -1,4 +1,5 @@
 import { Game } from "@/stores/games-store";
+import { GET_GAMES_URL } from "../_lib/urls";
 
 export type GameDay = {
   GameDates: any[];
@@ -11,7 +12,7 @@ export type GameDay = {
 };
 
 export const POST = async (req: Request) => {
-  const url = "https://tulospalvelu.leijonat.fi/helpers/getGames.php";
+  const url = GET_GAMES_URL;
 
   const reqBody = await req.json();
 

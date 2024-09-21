@@ -12,7 +12,7 @@ import Cell from "./Table/Cell";
 import LinkCell from "./Table/LinkCell";
 import TableHeader from "./Table/TableHeader";
 
-const colCount = 7;
+const colCount = 10;
 
 const Games = () => {
   const { gamesPerDay, updateGamesPerDay: updateGames } = useGamesStore();
@@ -35,7 +35,7 @@ const Games = () => {
     if (gamesData) {
       updateGames(gamesData);
     }
-  }, [gamesData]);
+  }, [gamesData, updateGames]);
 
   const gameItems = gamesPerDay.map((gameDay) => {
     let gameDate = "";
@@ -81,6 +81,9 @@ const Games = () => {
               </div>
             </div>
           </Cell>
+          <Cell>{game.HomeGoals}</Cell>
+          <Cell>-</Cell>
+          <Cell>{game.AwayGoals}</Cell>
           <Cell>{game.RinkName}</Cell>
           <LinkCell
             url={`https://tulospalvelu.leijonat.fi/gamesheet/?gid=${game.GameID}&lang=fi&season=${selectedSeason?.SeasonNumber}`}

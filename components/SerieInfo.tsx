@@ -5,15 +5,18 @@ import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
-import TableHeader from "./Table/TableHeader";
 import { ReactNode } from "react";
+import TableHeader from "./Table/TableHeader";
 
-type Row = {
+type ChildrenType = {
   children: ReactNode;
 };
-const Row = ({ children }: Row) => {
+const Row = ({ children }: ChildrenType) => {
   return <tr>{children}</tr>;
 };
+const CellRight = ({ children }: ChildrenType) => (
+  <td className="flex justify-end items-end">{children}</td>
+);
 
 const SerieInfo = () => {
   const { selectedSeason } = useSeasonStore();
@@ -29,58 +32,64 @@ const SerieInfo = () => {
     }),
   });
 
-  console.log("data: ", { data });
-
   return (
-    <div className="mx-5 justify-center items-center flex">
+    <div className="mx-5">
       <table>
         <thead>
-          <TableHeader colSpan={2}>Sarja info</TableHeader>
+          <tr>
+            <TableHeader colSpan={2}>Sarja info</TableHeader>
+          </tr>
         </thead>
         <tbody>
           <Row>
             <td>Sarja alkaa</td>
-            <td>{data?.BeginDate}</td>
+            <CellRight>{data?.BeginDate}</CellRight>
           </Row>
           <Row>
             <td>Sarja päättyy</td>
-            <td>{data?.EndDate}</td>
+            <CellRight>{data?.EndDate}</CellRight>
           </Row>
           <Row>
             <td>Yhteydenotto</td>
-            <td>TEE LOPPUUN</td>
+            <CellRight>TEE LOPPUUN</CellRight>
           </Row>
           <Row>
             <td>Kurinpito</td>
-            <td>{data?.DisciplinaryContact}</td>
+            <CellRight>{data?.DisciplinaryContact}</CellRight>
           </Row>
           <Row>
             <td>Erätauko</td>
-            <td>{data?.IntermissionTimeBetweenPeriods ?? 0} min</td>
+            <CellRight>
+              {data?.IntermissionTimeBetweenPeriods ?? 0} min
+            </CellRight>
           </Row>
           <Row>
             <td>Erätauko (Jatkoaika)</td>
-            <td>{data?.IntermissionTimeBetweenPeriods ?? 0} min</td>
+            <CellRight>
+              {data?.IntermissionTimeBetweenPeriods ?? 0} min
+            </CellRight>
           </Row>
           <Row>
             <td>Lämmittely</td>
-            <td>{data?.WarmUpTime ?? 0} min</td>
+            <CellRight>{data?.WarmUpTime ?? 0} min</CellRight>
           </Row>
           <Row>
             <td>Erotuomarimäärä</td>
-            <td>{data?.NumberOfReferees ?? 0}</td>
+            <CellRight>{data?.NumberOfReferees ?? 0}</CellRight>
           </Row>
           <Row>
             <td>Erotuomaritaso</td>
-            <td>Taso {data?.LevelOfReferees ?? 0}</td>
+            <CellRight>Taso {data?.LevelOfReferees ?? 0}</CellRight>
           </Row>
           <Row>
             <td>Erän pituus</td>
-            <td>{data?.GameRules?.PeriodLengthMinutes ?? 0} min</td>
+            <CellRight>
+              {data?.GameRules?.PeriodLengthMinutes ?? 0} min
+            </CellRight>
           </Row>
           <Row>
             <td>Erien määrä</td>
-            <td>{data?.GameRules?.NumberOfPeriods} kpl</td>
+            <CellRight>{data?.GameRules?.NumberOfPeriods} kpl</CellRight>
           </Row>
         </tbody>
       </table>

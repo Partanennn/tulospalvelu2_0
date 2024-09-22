@@ -12,6 +12,10 @@ export const navbarItems: NavbarItem[] = [
     url: "/schedule",
   },
   {
+    text: "Tulevat",
+    url: "/incoming",
+  },
+  {
     text: "Säännöt",
     url: "/rules",
   },

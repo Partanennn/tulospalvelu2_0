@@ -2,7 +2,7 @@ import Games from "@/components/Schedule";
 
 const Otteluohjelma = () => {
   return (
-    <div className="flex flex-col w-full justify-around items-center pt-7">
+    <div className="flex justify-around pt-7 gap-3">
       <Games />
     </div>
   );

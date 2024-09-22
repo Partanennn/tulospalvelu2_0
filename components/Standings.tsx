@@ -51,29 +51,31 @@ const Standings = () => {
   ));
 
   return (
-    <table className="mx-5">
-      <thead>
-        <tr>
-          <TableHeader colSpan={11}>
-            Sarjataulukko {selectedSeason?.SeasonName}
-          </TableHeader>
-        </tr>
-        <tr className="text-lg">
-          <th></th>
-          <th>Joukkue</th>
-          <th>O</th>
-          <th>V</th>
-          <th>T</th>
-          <th>H</th>
-          <th>TM</th>
-          <th></th>
-          <th>PM</th>
-          <th>JM</th>
-          <th>P</th>
-        </tr>
-      </thead>
-      <tbody>{teams}</tbody>
-    </table>
+    <div>
+      <table className="mx-5">
+        <thead>
+          <tr>
+            <TableHeader colSpan={11}>
+              Sarjataulukko {selectedSeason?.SeasonName}
+            </TableHeader>
+          </tr>
+          <tr className="text-lg">
+            <th></th>
+            <th>Joukkue</th>
+            <th>O</th>
+            <th>V</th>
+            <th>T</th>
+            <th>H</th>
+            <th>TM</th>
+            <th></th>
+            <th>PM</th>
+            <th>JM</th>
+            <th>P</th>
+          </tr>
+        </thead>
+        <tbody>{teams}</tbody>
+      </table>
+    </div>
   );
 };
 

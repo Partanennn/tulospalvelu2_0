@@ -22,5 +22,25 @@ export type ChildrenType = {
   children: ReactNode;
 };
 
-export const imageUrl =
-  "https://tulospalvelu.leijonat.fi/images/associations/weblogos/200x200";
+export type StandingTeam = {
+  Games: string;
+  GoalDiff: string;
+  GoalsAgainst: string;
+  GoalsFor: string;
+  Looses: string;
+  OtLooses: string;
+  OtWins: string;
+  PenaltyMinutes: string;
+  Points: string;
+  PointsPerGame: string;
+  Ranking: string;
+  SeasonID: string;
+  StatGroupID: string;
+  TeamAbbrv: string;
+  TeamAssociation: string;
+  TeamID: string;
+  TeamImg: string;
+  Ties: string;
+  UniqueID: string;
+  Wins: string;
+};

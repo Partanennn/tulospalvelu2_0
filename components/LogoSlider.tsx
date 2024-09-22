@@ -4,7 +4,7 @@ import { IMAGE_URL } from "@/app/api/_lib/urls";
 import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
-import { Standing, useStandingStore } from "@/stores/standing-store";
+import { TeamStats, useTeamStatsStore } from "@/stores/team-stats-store";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -15,12 +15,13 @@ const LogoSlider = () => {
   const [iconsStart, setIconsStart] = useState(0);
   const [iconsEnd, setIconsEnd] = useState(10);
 
-  const { standing, updateStanding } = useStandingStore();
+  const { teamStats: standing, updateTeamStats: updateStanding } =
+    useTeamStatsStore();
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
   const { selectedLevel } = useLevelStore();
 
-  const { data: standingsData } = useFetch<Standing>("/api/standings", {
+  const { data: standingsData } = useFetch<TeamStats>("/api/teamStats", {
     method: "POST",
     body: JSON.stringify({
       season: selectedSeason?.SeasonNumber,
@@ -37,7 +38,7 @@ const LogoSlider = () => {
   const logos = standing?.Teams.slice(iconsStart, iconsEnd).map((team) => {
     return (
       <Image
-        key={team.UniqueID}
+        key={team.TeamID}
         src={`${IMAGE_URL}/${team.TeamImg}`}
         alt={team.TeamAbbrv}
         width={50}

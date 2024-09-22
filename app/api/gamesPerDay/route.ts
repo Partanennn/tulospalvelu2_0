@@ -18,7 +18,7 @@ export const POST = async (req: Request) => {
 
   const body = new FormData();
 
-  if (reqBody.gameDays === "future") {
+  if (reqBody.gameDays === "incoming") {
     body.append("gamedays", "2");
   } else if (reqBody.gameDays === "played") {
     body.append("gamedays", "1");
@@ -32,7 +32,7 @@ export const POST = async (req: Request) => {
   body.append("stgid", reqBody.stgid);
   body.append("teamid", "0");
   body.append("districtid", "0");
-  body.append("dog", "2024-09-20");
+  body.append("dog", new Date().toISOString().split("T")[0]);
 
   const res = await fetch(url, {
     method: "POST",

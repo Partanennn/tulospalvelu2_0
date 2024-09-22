@@ -58,6 +58,8 @@ const LogoSlider = () => {
           src={arrowIcon}
           alt="left arrow icon"
           className="rotate-90 hover:cursor-pointer"
+          height={30}
+          width={30}
           onClick={() => {
             if (iconsStart > 0) {
               setIconsStart((oldValue) => oldValue - 1);
@@ -72,6 +74,8 @@ const LogoSlider = () => {
           src={arrowIcon}
           alt="right arrow icon"
           className="-rotate-90 hover:cursor-pointer"
+          height={30}
+          width={30}
           onClick={() => {
             if (standing?.Teams && iconsEnd < standing?.Teams?.length) {
               setIconsEnd((oldValue) => oldValue + 1);

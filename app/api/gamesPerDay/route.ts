@@ -34,15 +34,12 @@ export const POST = async (req: Request) => {
   body.append("districtid", "0");
   body.append("dog", new Date().toISOString().split("T")[0]);
 
-  console.log(body);
-
   const res = await fetch(url, {
     method: "POST",
     body: body,
   });
 
   const data = await res.json();
-  console.log(data);
 
   return Response.json(data);
 };

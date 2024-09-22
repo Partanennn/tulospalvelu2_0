@@ -22,6 +22,8 @@ export const POST = async (req: Request) => {
     body.append("gamedays", "2");
   } else if (reqBody.gameDays === "played") {
     body.append("gamedays", "1");
+  } else if (reqBody.gameDays === "today") {
+    body.append("gamedays", "0");
   } else {
     // All games
     body.append("gamedays", "3");

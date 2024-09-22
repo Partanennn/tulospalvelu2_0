@@ -1,11 +1,11 @@
 "use client";
 
+import { IMAGE_URL } from "@/app/api/_lib/urls";
 import { GameDay } from "@/app/api/gamesPerDay/route";
 import useFetch from "@/hooks/useFetch";
 import { useGamesStore } from "@/stores/games-store";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
-import { imageUrl } from "@/utils/types";
 import Image from "next/image";
 import { useEffect } from "react";
 import Cell from "./Table/Cell";
@@ -52,7 +52,7 @@ const Schedule = () => {
           <Cell className="flex justify-start">
             <div className="mx-2">
               <Image
-                src={`${imageUrl}/${game.HomeImg}`}
+                src={`${IMAGE_URL}/${game.HomeImg}`}
                 height={30}
                 width={30}
                 alt={game.HomeTeamAbbrv}
@@ -67,7 +67,7 @@ const Schedule = () => {
             <div className="flex justify-start">
               <div className="mx-2">
                 <Image
-                  src={`${imageUrl}/${game.AwayImg}`}
+                  src={`${IMAGE_URL}/${game.AwayImg}`}
                   height={30}
                   width={30}
                   alt={game.AwayTeamAbbrv}

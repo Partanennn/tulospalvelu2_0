@@ -12,3 +12,5 @@ export const GET_STANDINGS_URL =
   "https://tulospalvelu.leijonat.fi/serie/helpers/getStandings.php";
 export const GET_SERIE_INFO_URL =
   "https://tulospalvelu.leijonat.fi/helpers/getSerieInfo.php";
+export const GET_TEAM_STATS_URL =
+  "https://tulospalvelu.leijonat.fi/helpers/getTeamStats.php";

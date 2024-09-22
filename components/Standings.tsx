@@ -2,17 +2,18 @@
 import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
-import { Standing, useStandingStore } from "@/stores/standing-store";
+import { TeamStats, useTeamStatsStore } from "@/stores/team-stats-store";
 import { useEffect } from "react";
 import Cell from "./Table/Cell";
 import TableHeader from "./Table/TableHeader";
 
 const Standings = () => {
   const { selectedSeason } = useSeasonStore();
-  const { standing, updateStanding } = useStandingStore();
+  const { teamStats, updateTeamStats } = useTeamStatsStore();
   const { selectedGroup } = useGroupStore();
+  const stats = teamStats ? { ...teamStats } : null;
 
-  const { data: standingData } = useFetch<Standing>("/api/standings", {
+  const { data: standingData } = useFetch<TeamStats>("/api/teamStats", {
     method: "POST",
     body: JSON.stringify({
       season: selectedSeason?.SeasonNumber,
@@ -22,33 +23,35 @@ const Standings = () => {
 
   useEffect(() => {
     if (standingData) {
-      updateStanding(standingData);
+      updateTeamStats(standingData);
     }
-  }, [standingData, updateStanding]);
+  }, [standingData, updateTeamStats]);
 
-  const teams = standing?.Teams.map((team, index) => (
-    <tr
-      key={team.UniqueID}
-      className="odd:bg-neutral-300"
-      style={{
-        borderBottom: standing.StandingLines.includes((index + 1).toString())
-          ? "1px solid black"
-          : "",
-      }}
-    >
-      <Cell>{team.Ranking}</Cell>
-      <Cell>{team.TeamAbbrv}</Cell>
-      <Cell>{team.Games}</Cell>
-      <Cell>{team.Wins}</Cell>
-      <Cell>{team.Ties}</Cell>
-      <Cell>{team.Looses}</Cell>
-      <Cell>{team.GoalsFor}</Cell>
-      <Cell>-</Cell>
-      <Cell>{team.GoalsAgainst}</Cell>
-      <Cell>{team.PenaltyMinutes}</Cell>
-      <Cell>{team.Points}</Cell>
-    </tr>
-  ));
+  const teams = stats?.Teams?.sort((a, b) => b.TeamPoints - a.TeamPoints).map(
+    (team, index) => (
+      <tr
+        key={team.TeamID}
+        className="odd:bg-neutral-300"
+        style={{
+          borderBottom: stats.StandingLines.includes((index + 1).toString())
+            ? "1px solid black"
+            : "",
+        }}
+      >
+        <Cell>{team.Ranking}</Cell>
+        <Cell>{team.TeamAbbrv}</Cell>
+        <Cell>{team.TeamGames}</Cell>
+        <Cell>{team.TeamWins}</Cell>
+        <Cell>{team.TeamTies}</Cell>
+        <Cell>{team.TeamLosses}</Cell>
+        <Cell>{team.TeamGoalsFor}</Cell>
+        <Cell>-</Cell>
+        <Cell>{team.TeamGoalsAgainst}</Cell>
+        <Cell>{team.TeamPenaltyMin}</Cell>
+        <Cell>{team.TeamPoints}</Cell>
+      </tr>
+    )
+  );
 
   return (
     <div>

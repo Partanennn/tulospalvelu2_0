@@ -10,11 +10,11 @@ import Image from "next/image";
 import { useEffect } from "react";
 import Cell from "./Table/Cell";
 import LinkCell from "./Table/LinkCell";
-import TableHeader from "./Table/TableHeader";
+import TableHeaderRow from "./Table/TableHeaderRow";
 
 const colCount = 10;
 
-const Schedule = () => {
+const Games = () => {
   const { gamesPerDay, updateGamesPerDay: updateGames } = useGamesStore();
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
@@ -103,13 +103,26 @@ const Schedule = () => {
   return (
     <table className="mx-5">
       <thead>
-        <tr>
-          <TableHeader colSpan={colCount}>Kaikki Ottelut</TableHeader>
-        </tr>
+        <TableHeaderRow
+          colSpan={colCount}
+          onClick={() => {
+            if (gamesPerDay.length > 0) {
+              updateGames([]);
+            } else if (
+              gamesData &&
+              gamesData.length > 0 &&
+              gamesPerDay.length === 0
+            ) {
+              updateGames(gamesData);
+            }
+          }}
+        >
+          Kaikki Ottelut
+        </TableHeaderRow>
       </thead>
       <tbody>{gameItems}</tbody>
     </table>
   );
 };
 
-export default Schedule;
+export default Games;

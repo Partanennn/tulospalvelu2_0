@@ -8,9 +8,9 @@ import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import Image from "next/image";
 import { useEffect } from "react";
-import Cell from "./Table/Cell";
-import LinkCell from "./Table/LinkCell";
-import TableHeaderRow from "./Table/TableHeaderRow";
+import Cell from "../Table/Cell";
+import LinkCell from "../Table/LinkCell";
+import TableHeaderRow from "../Table/TableHeaderRow";
 
 const colCount = 10;
 

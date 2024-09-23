@@ -5,9 +5,9 @@ import { GameDay } from "@/app/api/gamesPerDay/route";
 import { useSeasonStore } from "@/stores/season-store";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
-import Cell from "./Table/Cell";
-import LinkCell from "./Table/LinkCell";
-import TableHeaderRow from "./Table/TableHeaderRow";
+import Cell from "../Table/Cell";
+import LinkCell from "../Table/LinkCell";
+import TableHeaderRow from "../Table/TableHeaderRow";
 
 const COL_COUNT = 7;
 

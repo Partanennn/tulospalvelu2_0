@@ -44,3 +44,51 @@ export type StandingTeam = {
   UniqueID: string;
   Wins: string;
 };
+
+export type PlayerStatsBase = {
+  Count: number;
+  Players: PlayerStats[];
+  PlayersID: string[];
+  SortedBy: string;
+  TeamID: number;
+};
+
+export type PlayerStats = {
+  CurrentTeam: string;
+  CurrentTeamAssID: string;
+  FirstName: string;
+  Img: string;
+  JerseyNr: string;
+  LastName: string;
+  LinkID: string;
+  PlayerAssists: number;
+  PlayerGames: number;
+  PlayerGoals: number;
+  PlayerGoalsPP: number;
+  PlayerGoalsSH: number;
+  PlayerID: number;
+  PlayerMinus: number;
+  PlayerPS: number;
+  PlayerPSFailed: number;
+  PlayerPen2Min: number;
+  PlayerPen5min: number;
+  PlayerPen10min: number;
+  PlayerPen20min: number;
+  PlayerPen25min: number;
+  PlayerPenaltyMin: number;
+  PlayerPlus: number;
+  PlayerPlusMinus: number;
+  PlayerPoints: number;
+  PlayerShifts: number;
+  PlayerTimeOnIce: number;
+  PlayerTimeOnIcePerGame: number;
+  PlayerWinGoal: number;
+  Ranking: number;
+  RoleAbbrv: string;
+  RoleID: string;
+  TeamAbbrv: string;
+  TeamImg: string;
+  TeamStats: any[];
+  ToiStats: any[];
+  Yob: string;
+};

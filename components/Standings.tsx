@@ -5,7 +5,7 @@ import { useSeasonStore } from "@/stores/season-store";
 import { TeamStats, useTeamStatsStore } from "@/stores/team-stats-store";
 import { useEffect } from "react";
 import Cell from "./Table/Cell";
-import TableHeader from "./Table/TableHeader";
+import TableHeaderRow from "./Table/TableHeaderRow";
 
 const Standings = () => {
   const { selectedSeason } = useSeasonStore();
@@ -38,7 +38,7 @@ const Standings = () => {
             : "",
         }}
       >
-        <Cell>{team.Ranking}</Cell>
+        <Cell>{index + 1}</Cell>
         <Cell>{team.TeamAbbrv}</Cell>
         <Cell>{team.TeamGames}</Cell>
         <Cell>{team.TeamWins}</Cell>
@@ -57,11 +57,9 @@ const Standings = () => {
     <div>
       <table className="mx-5">
         <thead>
-          <tr>
-            <TableHeader colSpan={11}>
-              Sarjataulukko {selectedSeason?.SeasonName}
-            </TableHeader>
-          </tr>
+          <TableHeaderRow colSpan={11}>
+            Sarjataulukko {selectedSeason?.SeasonName}
+          </TableHeaderRow>
           <tr className="text-lg">
             <th></th>
             <th>Joukkue</th>

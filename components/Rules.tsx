@@ -6,7 +6,7 @@ import { useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { ChildrenType } from "@/utils/types";
-import TableHeader from "./Table/TableHeader";
+import TableHeaderRow from "./Table/TableHeaderRow";
 
 const Row = ({ children }: ChildrenType) => (
   <tr className="text-center odd:bg-neutral-300 even:bg-neutral-100">
@@ -36,9 +36,7 @@ const Rules = () => {
     <div>
       <table>
         <thead>
-          <tr>
-            <TableHeader>Sarjan säännöt</TableHeader>
-          </tr>
+          <TableHeaderRow colSpan={1}>Sarjan säännöt</TableHeaderRow>
         </thead>
         <tbody>
           <Row>

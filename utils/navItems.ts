@@ -8,12 +8,8 @@ export const navbarItems: NavbarItem[] = [
     url: "/",
   },
   {
-    text: "Otteluohjelma",
-    url: "/schedule",
-  },
-  {
-    text: "Tulevat",
-    url: "/incoming",
+    text: "Ottelut",
+    url: "/matches",
   },
   {
     text: "Säännöt",

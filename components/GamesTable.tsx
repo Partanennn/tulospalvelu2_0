@@ -4,21 +4,29 @@ import { IMAGE_URL } from "@/app/api/_lib/urls";
 import { GameDay } from "@/app/api/gamesPerDay/route";
 import { useSeasonStore } from "@/stores/season-store";
 import Image from "next/image";
+import { Dispatch, SetStateAction } from "react";
 import Cell from "./Table/Cell";
 import LinkCell from "./Table/LinkCell";
-import TableHeader from "./Table/TableHeader";
+import TableHeaderRow from "./Table/TableHeaderRow";
 
 const COL_COUNT = 7;
 
-type GamesTable = {
+type GamesTableProps = {
   data: GameDay[] | null;
+  tempData: GameDay[];
+  updateTempData: Dispatch<SetStateAction<GameDay[]>>;
   header: string;
 };
 
-const GamesTable = ({ data, header }: GamesTable) => {
+const GamesTable = ({
+  data,
+  header,
+  tempData,
+  updateTempData,
+}: GamesTableProps) => {
   const { selectedSeason } = useSeasonStore();
 
-  const gameItems = data?.map((gameDay) => {
+  const gameItems = tempData.map((gameDay) => {
     let gameDate = "";
     const basicRows = gameDay.Games.map((game) => {
       gameDate = game.DowFI + " " + game.GameDate;
@@ -85,9 +93,23 @@ const GamesTable = ({ data, header }: GamesTable) => {
     <div>
       <table>
         <thead>
-          <tr>
-            <TableHeader colSpan={COL_COUNT}>{header}</TableHeader>
-          </tr>
+          <TableHeaderRow
+            onClick={() => {
+              if (tempData && tempData.length > 0) {
+                updateTempData([]);
+              } else if (
+                data &&
+                tempData &&
+                data.length > 0 &&
+                tempData.length === 0
+              ) {
+                updateTempData(data);
+              }
+            }}
+            colSpan={COL_COUNT}
+          >
+            {header}
+          </TableHeaderRow>
         </thead>
         <tbody>{gameItems}</tbody>
       </table>

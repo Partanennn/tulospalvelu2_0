@@ -1,5 +1,5 @@
 import GamesToday from "@/components/Games/GamesToday";
-import PlayerStats from "@/components/PlayerStats";
+import PlayerStats from "@/components/Players/PlayerStats";
 import Scoreboard from "@/components/Standings";
 
 const Tulospalvelu = async () => {

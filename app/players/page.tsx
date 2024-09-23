@@ -1,9 +1,11 @@
-import PlayerStats from "@/components/PlayerStats";
+import PlayerPenaltyStats from "@/components/Players/PlayerPenaltyStats";
+import PlayerStats from "@/components/Players/PlayerStats";
 
 const PlayersPage = () => {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center gap-5">
       <PlayerStats />
+      <PlayerPenaltyStats />
     </div>
   );
 };

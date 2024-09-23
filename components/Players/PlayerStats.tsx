@@ -6,8 +6,8 @@ import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { PlayerStatsBase } from "@/utils/types";
 import Image from "next/image";
-import Cell from "./Table/Cell";
-import TableHeaderRow from "./Table/TableHeaderRow";
+import Cell from "../Table/Cell";
+import TableHeaderRow from "../Table/TableHeaderRow";
 
 const PlayerStats = () => {
   const { selectedSeason } = useSeasonStore();
@@ -18,7 +18,7 @@ const PlayerStats = () => {
     body: JSON.stringify({
       season: selectedSeason?.SeasonNumber,
       stgid: selectedGroup?.StatGroupID,
-      sortedby: "PlayerPoints",
+      sortedBy: "PlayerPoints",
     }),
   });
 
@@ -40,6 +40,7 @@ const PlayerStats = () => {
         {player.FirstName} {player.LastName}
       </Cell>
       <Cell>{player.CurrentTeam}</Cell>
+      <Cell>{player.PlayerGames}</Cell>
       <Cell>{player.PlayerGoals}</Cell>
       <Cell>+</Cell>
       <Cell>{player.PlayerAssists}</Cell>
@@ -52,7 +53,18 @@ const PlayerStats = () => {
     <div className="my-5">
       <table>
         <thead>
-          <TableHeaderRow colSpan={8}>Pistepörssi</TableHeaderRow>
+          <TableHeaderRow colSpan={9}>Pistepörssi</TableHeaderRow>
+          <tr>
+            <th></th>
+            <th>Pelaaja</th>
+            <th>Joukkue</th>
+            <th>Ottelut</th>
+            <th>Maalit</th>
+            <th></th>
+            <th>Syötöt</th>
+            <th></th>
+            <th>Pisteet</th>
+          </tr>
         </thead>
         <tbody>{items}</tbody>
       </table>

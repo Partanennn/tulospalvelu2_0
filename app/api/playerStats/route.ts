@@ -1,6 +1,10 @@
 import { GET_PLAYER_STATS_URL } from "../_lib/urls";
 
-export type PlayerStatsSortedBy = "PlayerPoints" | "PlayerPenaltyMin" | "";
+export type PlayerStatsSortedBy =
+  | "PlayerPoints"
+  | "PlayerPenaltyMin"
+  | "PlayerGoals"
+  | "";
 export type PlayerStatsTotal = "avg" | "";
 export type PlayerStatsSortOrder = "DESC" | "ASC";
 export type PlayerStatsGames = "Home" | "Away" | "";

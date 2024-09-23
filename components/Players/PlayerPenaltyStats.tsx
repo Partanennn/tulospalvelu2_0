@@ -18,7 +18,6 @@ const PlayerPenaltyStats = () => {
     body: JSON.stringify({
       season: selectedSeason?.SeasonNumber,
       stgid: selectedGroup?.StatGroupID,
-      nop: "15",
       sortedBy: "PlayerPenaltyMin",
     }),
   });
@@ -37,6 +36,7 @@ const PlayerPenaltyStats = () => {
           className="rounded-full"
         />
       </Cell>
+      <Cell>#{player.JerseyNr}</Cell>
       <Cell>
         {player.FirstName} {player.LastName}
       </Cell>
@@ -54,6 +54,7 @@ const PlayerPenaltyStats = () => {
         <thead>
           <TableHeaderRow colSpan={8}>Jäähypörssi</TableHeaderRow>
           <tr>
+            <th></th>
             <th></th>
             <th>Pelaaja</th>
             <th>Joukkue</th>

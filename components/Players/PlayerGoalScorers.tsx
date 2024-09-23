@@ -9,7 +9,7 @@ import Image from "next/image";
 import Cell from "../Table/Cell";
 import TableHeaderRow from "../Table/TableHeaderRow";
 
-const PlayerStats = () => {
+const PlayerGoalScorers = () => {
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
 
@@ -18,7 +18,7 @@ const PlayerStats = () => {
     body: JSON.stringify({
       season: selectedSeason?.SeasonNumber,
       stgid: selectedGroup?.StatGroupID,
-      sortedBy: "PlayerPoints",
+      sortedBy: "PlayerGoals",
     }),
   });
 
@@ -29,7 +29,7 @@ const PlayerStats = () => {
     >
       <Cell>
         <Image
-          alt="" //{`${player.FirstName} ${player.LastName} image`}
+          alt=""
           src={`${PLAYER_IMAGE_URL}/${player.Img}`}
           width={40}
           height={40}
@@ -54,7 +54,7 @@ const PlayerStats = () => {
     <div className="my-5">
       <table>
         <thead>
-          <TableHeaderRow colSpan={10}>Pistepörssi</TableHeaderRow>
+          <TableHeaderRow colSpan={10}>Maalipörssi</TableHeaderRow>
           <tr>
             <th></th>
             <th></th>
@@ -74,4 +74,4 @@ const PlayerStats = () => {
   );
 };
 
-export default PlayerStats;
+export default PlayerGoalScorers;

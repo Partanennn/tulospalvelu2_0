@@ -40,8 +40,6 @@ export const POST = async (req: Request) => {
   body.append("filters[RoleID]", reqBody.roleid ?? "-1");
   body.append("stgid", reqBody.stgid); // REQUIRED
 
-  console.log(body);
-
   try {
     const res = await fetch(url, {
       method: "POST",

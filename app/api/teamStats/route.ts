@@ -6,7 +6,7 @@ export type TeamStatsSortOrder = "DESC" | "ASC";
 export type TeamStatsGames = "Home" | "Away" | "";
 export type TeamStatsPeriod = "1st" | "2nd" | "3rd" | "OT" | "";
 
-export async function POST(req: Request) {
+export const POST = async (req: Request) => {
   const url = GET_TEAM_STATS_URL;
 
   const reqBody = await req.json();
@@ -31,4 +31,4 @@ export async function POST(req: Request) {
   const data = await res.json();
 
   return Response.json(data);
-}
+};

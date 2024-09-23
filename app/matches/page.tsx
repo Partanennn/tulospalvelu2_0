@@ -1,6 +1,6 @@
-import Games from "@/components/Games";
-import GamesToday from "@/components/GamesToday";
-import IncomingGames from "@/components/IncomingGames";
+import Games from "@/components/Games/Games";
+import GamesToday from "@/components/Games/GamesToday";
+import IncomingGames from "@/components/Games/IncomingGames";
 
 const MatchesPage = () => {
   return (

@@ -12,12 +12,12 @@ export const navbarItems: NavbarItem[] = [
     url: "/matches",
   },
   {
-    text: "Säännöt",
-    url: "/rules",
+    text: "Pelaajat",
+    url: "/players",
   },
   {
-    text: "Pelaajat",
-    url: "/",
+    text: "Säännöt",
+    url: "/rules",
   },
   {
     text: "Tilastot",

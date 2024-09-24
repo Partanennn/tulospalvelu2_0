@@ -42,7 +42,7 @@ const GamesTable = ({
             Lähetys
           </LinkCell>
           <Cell className="flex justify-start">
-            <div className="mx-2">
+            <div className="mx-2 hidden sm:table-cell">
               <Image
                 src={`${IMAGE_URL}/${game.HomeImg}`}
                 height={30}
@@ -57,7 +57,7 @@ const GamesTable = ({
           <Cell>-</Cell>
           <Cell>
             <div className="flex justify-start">
-              <div className="mx-2">
+              <div className="mx-2 hidden sm:table-cell">
                 <Image
                   src={`${IMAGE_URL}/${game.AwayImg}`}
                   height={30}

@@ -71,10 +71,10 @@ export type PlayerStats = {
   PlayerPS: number;
   PlayerPSFailed: number;
   PlayerPen2Min: number;
-  PlayerPen5min: number;
-  PlayerPen10min: number;
-  PlayerPen20min: number;
-  PlayerPen25min: number;
+  PlayerPen5Min: number;
+  PlayerPen10Min: number;
+  PlayerPen20Min: number;
+  PlayerPen25Min: number;
   PlayerPenaltyMin: number;
   PlayerPlus: number;
   PlayerPlusMinus: number;

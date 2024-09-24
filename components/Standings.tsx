@@ -48,7 +48,7 @@ const Standings = () => {
         <Cell>-</Cell>
         <Cell>{team.TeamGoalsAgainst}</Cell>
         <Cell>{team.TeamPenaltyMin}</Cell>
-        <Cell>{team.TeamPoints}</Cell>
+        <Cell className="font-bold">{team.TeamPoints}</Cell>
       </tr>
     )
   );

@@ -4,7 +4,7 @@ import Scoreboard from "@/components/Standings";
 
 const Tulospalvelu = async () => {
   return (
-    <div className="flex flex-col justify-evenly items-center pt-7 gap-4 2xl:flex-row 2xl:items-start">
+    <div className="flex flex-col flex-wrap justify-evenly items-center pt-7 gap-4 2xl:flex-row 2xl:items-start">
       <Scoreboard />
       <GamesToday />
       <PlayerTotalPoints />

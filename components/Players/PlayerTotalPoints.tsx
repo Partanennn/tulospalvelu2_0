@@ -7,6 +7,7 @@ import { useSeasonStore } from "@/stores/season-store";
 import { PlayerStatsBase } from "@/utils/types";
 import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
+import HiddableCell from "../Table/HiddableCell";
 import TableHeaderRow from "../Table/TableHeaderRow";
 
 const PlayerTotalPoints = () => {
@@ -27,7 +28,7 @@ const PlayerTotalPoints = () => {
       key={player.PlayerID}
       className="odd:bg-neutral-500 even: bg-neutral-300"
     >
-      <Cell>
+      <HiddableCell>
         <MyImage
           alt=""
           src={`${PLAYER_IMAGE_URL}/${player.Img}`}
@@ -35,16 +36,18 @@ const PlayerTotalPoints = () => {
           height={40}
           className="rounded-full"
         />
-      </Cell>
-      <Cell>#{player.JerseyNr}</Cell>
+      </HiddableCell>
+      <HiddableCell>#{player.JerseyNr}</HiddableCell>
       <Cell>
-        {player.FirstName} {player.LastName}
+        <div className="flex gap-0 sm:gap-2 px-0">
+          <div className="hidden sm:block">{player.FirstName}</div>
+          <div>{player.LastName}</div>
+        </div>
       </Cell>
       <Cell>{player.CurrentTeam}</Cell>
       <Cell>{player.PlayerGames}</Cell>
       <Cell>{player.PlayerGoals}</Cell>
       <Cell>{player.PlayerAssists}</Cell>
-      <Cell>=</Cell>
       <Cell className="font-bold">{player.PlayerPoints}</Cell>
     </tr>
   ));
@@ -55,14 +58,13 @@ const PlayerTotalPoints = () => {
         <thead>
           <TableHeaderRow colSpan={10}>Pistepörssi</TableHeaderRow>
           <tr>
-            <th></th>
-            <th></th>
+            <HiddableCell> </HiddableCell>
+            <HiddableCell> </HiddableCell>
             <th>Pelaaja</th>
             <th>Joukkue</th>
             <th>O</th>
             <th>M</th>
             <th>S</th>
-            <th></th>
             <th>Pisteet</th>
           </tr>
         </thead>

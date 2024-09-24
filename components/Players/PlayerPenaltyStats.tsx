@@ -5,9 +5,11 @@ import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { PlayerStatsBase } from "@/utils/types";
-import Cell from "../Table/Cell";
-import TableHeaderRow from "../Table/TableHeaderRow";
 import MyImage from "../MyImage";
+import Cell from "../Table/Cell";
+import HiddableCell from "../Table/HiddableCell";
+import HiddableHeaderCell from "../Table/HiddableHeaderCell";
+import TableHeaderRow from "../Table/TableHeaderRow";
 
 const PlayerPenaltyStats = () => {
   const { selectedSeason } = useSeasonStore();
@@ -27,7 +29,7 @@ const PlayerPenaltyStats = () => {
       key={player.PlayerID}
       className="odd:bg-neutral-500 even: bg-neutral-300"
     >
-      <Cell>
+      <HiddableCell>
         <MyImage
           alt=""
           src={`${PLAYER_IMAGE_URL}/${player.Img}`}
@@ -35,16 +37,16 @@ const PlayerPenaltyStats = () => {
           height={40}
           className="rounded-full"
         />
-      </Cell>
-      <Cell>#{player.JerseyNr}</Cell>
+      </HiddableCell>
+      <HiddableCell>#{player.JerseyNr}</HiddableCell>
       <Cell>
         {player.FirstName} {player.LastName}
       </Cell>
       <Cell>{player.CurrentTeam}</Cell>
       <Cell>{player.PlayerGames}</Cell>
-      <Cell>{player.PlayerPen25min}</Cell>
+      <HiddableCell>{player.PlayerPen20Min}</HiddableCell>
       <Cell>{player.PlayerPen2Min}</Cell>
-      <Cell>{player.PlayerPenaltyMin}</Cell>
+      <Cell>{player.PlayerPenaltyMin} min</Cell>
     </tr>
   ));
 
@@ -54,14 +56,14 @@ const PlayerPenaltyStats = () => {
         <thead>
           <TableHeaderRow colSpan={8}>Jäähypörssi</TableHeaderRow>
           <tr>
-            <th></th>
-            <th></th>
+            <HiddableHeaderCell> </HiddableHeaderCell>
+            <HiddableHeaderCell> </HiddableHeaderCell>
             <th>Pelaaja</th>
             <th>Joukkue</th>
             <th>Ottelut</th>
-            <th>PR</th>
+            <HiddableHeaderCell>PR</HiddableHeaderCell>
             <th>2min</th>
-            <th>Minuutit</th>
+            <th>Yht</th>
           </tr>
         </thead>
         <tbody>{items}</tbody>

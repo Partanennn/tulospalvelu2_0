@@ -9,11 +9,11 @@ export const navbarItems: NavbarItem[] = [
   },
   {
     text: "Ottelut",
-    url: "/matches",
+    url: "/games",
   },
   {
-    text: "Pelaajat",
-    url: "/players",
+    text: "Pörssit",
+    url: "/playerStats",
   },
   {
     text: "Säännöt",

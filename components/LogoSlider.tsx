@@ -8,12 +8,26 @@ import { TeamStats, useTeamStatsStore } from "@/stores/team-stats-store";
 import { useEffect, useState } from "react";
 
 import arrowIcon from "@/assets/Logos/arrow.png";
+import useWindowSize from "@/hooks/useWindowSize";
 import { useLevelStore } from "@/stores/level-store";
+import {
+  EXTRA_SMALL_DESKTOP_SIZE,
+  LARGE_DESKTOP_SIZE,
+  MEDIUM_DESKTOP_SIZE,
+  MOBILE_SIZE,
+  SMALL_DESKTOP_SIZE,
+  SMALL_MOBILE_SIZE,
+  TABLET_SIZE,
+} from "@/utils/windowSizes";
 import MyImage from "./MyImage";
 
+const ICONS_SHOWN_COUNT = 8;
+
 const LogoSlider = () => {
+  const [iconCount, setIconCount] = useState(ICONS_SHOWN_COUNT);
   const [iconsStart, setIconsStart] = useState(0);
-  const [iconsEnd, setIconsEnd] = useState(10);
+  const [iconsEnd, setIconsEnd] = useState(ICONS_SHOWN_COUNT);
+  const { height, width } = useWindowSize();
 
   const { teamStats: standing, updateTeamStats: updateStanding } =
     useTeamStatsStore();
@@ -48,9 +62,31 @@ const LogoSlider = () => {
   });
 
   useEffect(() => {
+    if (width) {
+      if (width > LARGE_DESKTOP_SIZE) {
+        setIconCount(14);
+      } else if (width > MEDIUM_DESKTOP_SIZE) {
+        setIconCount(12);
+      } else if (width > SMALL_DESKTOP_SIZE) {
+        setIconCount(9);
+      } else if (width > EXTRA_SMALL_DESKTOP_SIZE) {
+        setIconCount(7);
+      } else if (width > TABLET_SIZE) {
+        setIconCount(6);
+      } else if (width > MOBILE_SIZE) {
+        setIconCount(5);
+      } else if (width > SMALL_MOBILE_SIZE) {
+        setIconCount(4);
+      } else {
+        setIconCount(3);
+      }
+    }
+  }, [height, width]);
+
+  useEffect(() => {
     setIconsStart(0);
-    setIconsEnd(10);
-  }, [selectedGroup, selectedSeason, selectedLevel]);
+    setIconsEnd(iconCount);
+  }, [selectedGroup, selectedSeason, selectedLevel, iconCount]);
 
   return (
     <div className="flex flex-row grow w-full justify-evenly items-center my-3">

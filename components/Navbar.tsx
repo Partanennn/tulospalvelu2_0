@@ -1,21 +1,23 @@
 "use client";
 import { Level } from "@/app/api/levels/route";
-import leijonaPNG from "@/assets/Logos/leijona.png";
+import HamburgerIcon from "@/assets/Logos/Hamburger.png";
 import useFetch from "@/hooks/useFetch";
 import { Group, useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { Season, useSeasonStore } from "@/stores/season-store";
 import { navbarItems } from "@/utils/navItems";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import TextButton from "./Buttons/TextButton";
+import MyImage from "./MyImage";
 import Select from "./Select";
 
 const NavBar = () => {
+  const [selectedPage, setSelectedPage] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const pathName = usePathname();
   const router = useRouter();
-  const [selectedPage, setSelectedPage] = useState("");
 
   const { levels, selectedLevel, updateLevels, updateSelectedLevel } =
     useLevelStore();
@@ -72,15 +74,17 @@ const NavBar = () => {
       key={item.text}
       value={item.text}
       isSelected={selectedPage === item.text}
-      onClick={() => router.push(item.url)}
+      onClick={() => {
+        router.push(item.url);
+        setIsMenuOpen(false);
+      }}
     />
   ));
 
   return (
-    <div className="flex bg-primary-800 text-white justify-between py-5">
+    <div className="flex flex-col items-center bg-primary-800 text-white justify-evenly py-5 gap-5 2xl:flex-row">
       <div className="flex flex-row gap-[3rem]">
-        <Image className="ml-4" src={leijonaPNG} alt="leijona" width={63} />
-        <div className="flex gap-[3rem] items-center">
+        <div className="flex flex-wrap flex-col 2xl:flex-row gap-[3rem] justify-center items-center">
           <Select
             value={selectedSeason?.SeasonName ?? ""}
             values={seasons.map((season) => ({
@@ -123,11 +127,23 @@ const NavBar = () => {
               updateSelectedGroup(selected ?? groups[0]);
             }}
           />
-          {/* <Button value="Hae" onClick={getStandings} /> */}
         </div>
       </div>
-      <div className="flex flex-row justify-between items-center text-lg gap-[3rem] mx-[6rem]">
+      <div className="hidden flex-row justify-between items-center text-lg gap-[3rem] mx-[6rem] 2xl:flex">
         {navItems}
+      </div>
+      <div className="flex justify-center px-5 2xl:hidden">
+        <MyImage
+          alt="Hamburger menu"
+          src={HamburgerIcon}
+          width={40}
+          onClick={() => setIsMenuOpen((oldValue) => !oldValue)}
+        />
+        {isMenuOpen && (
+          <div className="flex flex-col bg-primary-600 gap-3 p-4 mt-10 rounded-md absolute 2xl:hidden">
+            {navItems}
+          </div>
+        )}
       </div>
     </div>
   );

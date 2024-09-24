@@ -5,11 +5,11 @@ import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { PlayerStatsBase } from "@/utils/types";
+import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
 import TableHeaderRow from "../Table/TableHeaderRow";
-import MyImage from "../MyImage";
 
-const PlayerStats = () => {
+const PlayerTotalPoints = () => {
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
 
@@ -43,7 +43,6 @@ const PlayerStats = () => {
       <Cell>{player.CurrentTeam}</Cell>
       <Cell>{player.PlayerGames}</Cell>
       <Cell>{player.PlayerGoals}</Cell>
-      <Cell>+</Cell>
       <Cell>{player.PlayerAssists}</Cell>
       <Cell>=</Cell>
       <Cell className="font-bold">{player.PlayerPoints}</Cell>
@@ -60,10 +59,9 @@ const PlayerStats = () => {
             <th></th>
             <th>Pelaaja</th>
             <th>Joukkue</th>
-            <th>Ottelut</th>
-            <th>Maalit</th>
-            <th></th>
-            <th>Syötöt</th>
+            <th>O</th>
+            <th>M</th>
+            <th>S</th>
             <th></th>
             <th>Pisteet</th>
           </tr>
@@ -74,4 +72,4 @@ const PlayerStats = () => {
   );
 };
 
-export default PlayerStats;
+export default PlayerTotalPoints;

@@ -55,7 +55,7 @@ const Standings = () => {
 
   return (
     <div>
-      <table className="mx-5">
+      <table>
         <thead>
           <TableHeaderRow colSpan={11}>
             Sarjataulukko {selectedSeason?.SeasonName}

@@ -5,9 +5,9 @@ import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { PlayerStatsBase } from "@/utils/types";
-import Image from "next/image";
 import Cell from "../Table/Cell";
 import TableHeaderRow from "../Table/TableHeaderRow";
+import MyImage from "../MyImage";
 
 const PlayerPenaltyStats = () => {
   const { selectedSeason } = useSeasonStore();
@@ -28,7 +28,7 @@ const PlayerPenaltyStats = () => {
       className="odd:bg-neutral-500 even: bg-neutral-300"
     >
       <Cell>
-        <Image
+        <MyImage
           alt=""
           src={`${PLAYER_IMAGE_URL}/${player.Img}`}
           width={40}

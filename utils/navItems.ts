@@ -9,7 +9,7 @@ export const navbarItems: NavbarItem[] = [
   },
   {
     text: "Ottelut",
-    url: "/matches",
+    url: "/games",
   },
   {
     text: "Pörssit",

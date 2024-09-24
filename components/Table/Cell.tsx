@@ -8,7 +8,7 @@ type CellProps = {
 const Cell = ({ children, className = "" }: CellProps) => {
   return (
     <td
-      className={`text-sm px-2 sm:px-2 md:px-5  py-1.5 text-center ${className}`}
+      className={`text-sm px-2 sm:px-2 md:px-5 py-1.5 text-center ${className}`}
     >
       {children}
     </td>

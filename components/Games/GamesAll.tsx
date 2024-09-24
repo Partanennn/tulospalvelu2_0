@@ -8,13 +8,15 @@ import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import Image from "next/image";
 import { useEffect } from "react";
+import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
+import HiddableCell from "../Table/HiddableCell";
 import LinkCell from "../Table/LinkCell";
 import TableHeaderRow from "../Table/TableHeaderRow";
 
 const colCount = 10;
 
-const Games = () => {
+const GamesAll = () => {
   const { gamesPerDay, updateGamesPerDay: updateGames } = useGamesStore();
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
@@ -49,23 +51,25 @@ const Games = () => {
           >
             Lähetys
           </LinkCell>
-          <Cell className="flex justify-start">
-            <div className="mx-2">
-              <Image
-                src={`${IMAGE_URL}/${game.HomeImg}`}
-                height={30}
-                width={30}
-                alt={game.HomeTeamAbbrv}
-              />
-            </div>
-            <div className="flex flex-grow justify-center items-center">
-              {game.HomeTeamAbbrv}
+          <Cell>
+            <div className="flex">
+              <div className="mx-2 hidden sm:table-cell">
+                <MyImage
+                  src={`${IMAGE_URL}/${game.HomeImg}`}
+                  height={30}
+                  width={30}
+                  alt={game.HomeTeamAbbrv}
+                />
+              </div>
+              <div className="flex flex-grow justify-center items-center">
+                {game.HomeTeamAbbrv}
+              </div>
             </div>
           </Cell>
           <Cell>-</Cell>
           <Cell>
-            <div className="flex justify-start">
-              <div className="mx-2">
+            <div className="flex">
+              <div className="mx-2 hidden sm:table-cell">
                 <Image
                   src={`${IMAGE_URL}/${game.AwayImg}`}
                   height={30}
@@ -81,8 +85,9 @@ const Games = () => {
           <Cell>{game.HomeGoals}</Cell>
           <Cell>-</Cell>
           <Cell>{game.AwayGoals}</Cell>
-          <Cell>{game.RinkName}</Cell>
+          <HiddableCell>{game.RinkName}</HiddableCell>
           <LinkCell
+            className="hidden sm:table-cell"
             url={`https://tulospalvelu.leijonat.fi/gamesheet/?gid=${game.GameID}&lang=fi&season=${selectedSeason?.SeasonNumber}`}
           >
             OPK
@@ -125,4 +130,4 @@ const Games = () => {
   );
 };
 
-export default Games;
+export default GamesAll;

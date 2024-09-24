@@ -3,9 +3,10 @@
 import { IMAGE_URL } from "@/app/api/_lib/urls";
 import { GameDay } from "@/app/api/gamesPerDay/route";
 import { useSeasonStore } from "@/stores/season-store";
-import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
+import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
+import HiddableCell from "../Table/HiddableCell";
 import LinkCell from "../Table/LinkCell";
 import TableHeaderRow from "../Table/TableHeaderRow";
 
@@ -41,16 +42,16 @@ const GamesTable = ({
           >
             Lähetys
           </LinkCell>
-          <Cell className="flex justify-start">
+          <Cell>
             <div className="mx-2 hidden sm:table-cell">
-              <Image
+              <MyImage
                 src={`${IMAGE_URL}/${game.HomeImg}`}
                 height={30}
                 width={30}
                 alt={game.HomeTeamAbbrv}
               />
             </div>
-            <div className="flex flex-grow justify-center items-center">
+            <div className="flex justify-center items-center">
               {game.HomeTeamAbbrv}
             </div>
           </Cell>
@@ -58,7 +59,7 @@ const GamesTable = ({
           <Cell>
             <div className="flex justify-start">
               <div className="mx-2 hidden sm:table-cell">
-                <Image
+                <MyImage
                   src={`${IMAGE_URL}/${game.AwayImg}`}
                   height={30}
                   width={30}
@@ -70,8 +71,9 @@ const GamesTable = ({
               </div>
             </div>
           </Cell>
-          <Cell>{game.RinkName}</Cell>
+          <HiddableCell>{game.RinkName}</HiddableCell>
           <LinkCell
+            className="hidden sm:table-cell"
             url={`https://tulospalvelu.leijonat.fi/gamesheet/?gid=${game.GameID}&lang=fi&season=${selectedSeason?.SeasonNumber}`}
           >
             OPK

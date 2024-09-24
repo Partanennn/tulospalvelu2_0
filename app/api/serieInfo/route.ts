@@ -17,8 +17,8 @@ export type SerieInfo = {
   SerieManagerName: string;
   SerieManagerPhone: string;
   SubSerieID: string;
-  SubSeries: any[];
-  Teams: any[];
+  // SubSeries: any[];
+  // Teams: any[];
   WarmUpTime: string;
 };
 

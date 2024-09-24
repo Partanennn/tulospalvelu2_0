@@ -2,12 +2,12 @@ import { Game } from "@/stores/games-store";
 import { GET_GAMES_URL } from "../_lib/urls";
 
 export type GameDay = {
-  GameDates: any[];
+  // GameDates: any[];
   Games: Game[];
   LevelID: string;
   LevelName: string;
-  PlayOffPhases: any[];
-  PlayOffTeams: any[];
+  // PlayOffPhases: any[];
+  // PlayOffTeams: any[];
   WebOrder: string;
 };
 

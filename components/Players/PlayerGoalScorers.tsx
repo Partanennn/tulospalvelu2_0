@@ -5,9 +5,11 @@ import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { PlayerStatsBase } from "@/utils/types";
-import Cell from "../Table/Cell";
-import TableHeaderRow from "../Table/TableHeaderRow";
 import MyImage from "../MyImage";
+import Cell from "../Table/Cell";
+import HiddableCell from "../Table/HiddableCell";
+import HiddableHeaderCell from "../Table/HiddableHeaderCell";
+import TableHeaderRow from "../Table/TableHeaderRow";
 
 const PlayerGoalScorers = () => {
   const { selectedSeason } = useSeasonStore();
@@ -27,7 +29,7 @@ const PlayerGoalScorers = () => {
       key={player.PlayerID}
       className="odd:bg-neutral-500 even: bg-neutral-300"
     >
-      <Cell>
+      <HiddableCell>
         <MyImage
           alt=""
           src={`${PLAYER_IMAGE_URL}/${player.Img}`}
@@ -35,17 +37,17 @@ const PlayerGoalScorers = () => {
           height={40}
           className="rounded-full"
         />
-      </Cell>
-      <Cell>#{player.JerseyNr}</Cell>
+      </HiddableCell>
+      <HiddableCell>#{player.JerseyNr}</HiddableCell>
       <Cell>
         {player.FirstName} {player.LastName}
       </Cell>
       <Cell>{player.CurrentTeam}</Cell>
       <Cell>{player.PlayerGames}</Cell>
       <Cell>{player.PlayerGoals}</Cell>
-      <Cell>+</Cell>
+      <HiddableCell>+</HiddableCell>
       <Cell>{player.PlayerAssists}</Cell>
-      <Cell>=</Cell>
+      <HiddableCell>=</HiddableCell>
       <Cell className="font-bold">{player.PlayerPoints}</Cell>
     </tr>
   ));
@@ -56,15 +58,15 @@ const PlayerGoalScorers = () => {
         <thead>
           <TableHeaderRow colSpan={10}>Maalipörssi</TableHeaderRow>
           <tr>
-            <th></th>
-            <th></th>
+            <HiddableHeaderCell> </HiddableHeaderCell>
+            <HiddableHeaderCell> </HiddableHeaderCell>
             <th>Pelaaja</th>
             <th>Joukkue</th>
-            <th>Ottelut</th>
-            <th>Maalit</th>
-            <th></th>
-            <th>Syötöt</th>
-            <th></th>
+            <th>O</th>
+            <th>M</th>
+            <HiddableHeaderCell> </HiddableHeaderCell>
+            <th>S</th>
+            <HiddableHeaderCell> </HiddableHeaderCell>
             <th>Pisteet</th>
           </tr>
         </thead>

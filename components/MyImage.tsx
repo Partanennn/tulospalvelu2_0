@@ -1,8 +1,8 @@
 "use client";
 
+import LeijonaPNG from "@/assets/Logos/leijona_musta.png";
 import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
-import LeijonaPNG from "@/assets/Logos/leijona_musta.png";
 
 type Props = {
   alt: string;
@@ -18,8 +18,8 @@ const MyImage = ({
   src,
   className = "",
   height = 50,
-  onClick = () => null,
   width = 50,
+  onClick = () => null,
 }: Props) => {
   const [imageSrc, setImageSrc] = useState(src);
 

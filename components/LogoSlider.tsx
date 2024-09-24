@@ -5,11 +5,11 @@ import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { TeamStats, useTeamStatsStore } from "@/stores/team-stats-store";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import arrowIcon from "@/assets/Logos/arrow.png";
 import { useLevelStore } from "@/stores/level-store";
+import MyImage from "./MyImage";
 
 const LogoSlider = () => {
   const [iconsStart, setIconsStart] = useState(0);
@@ -37,7 +37,7 @@ const LogoSlider = () => {
 
   const logos = standing?.Teams.slice(iconsStart, iconsEnd).map((team) => {
     return (
-      <Image
+      <MyImage
         key={team.TeamID}
         src={`${IMAGE_URL}/${team.TeamImg}`}
         alt={team.TeamAbbrv}
@@ -55,7 +55,7 @@ const LogoSlider = () => {
   return (
     <div className="flex flex-row grow w-full justify-evenly items-center my-3">
       {iconsStart !== 0 ? (
-        <Image
+        <MyImage
           src={arrowIcon}
           alt="left arrow icon"
           className="rotate-90 hover:cursor-pointer"
@@ -71,7 +71,7 @@ const LogoSlider = () => {
       ) : null}
       {logos}
       {standing?.Teams && iconsEnd < standing?.Teams?.length ? (
-        <Image
+        <MyImage
           src={arrowIcon}
           alt="right arrow icon"
           className="-rotate-90 hover:cursor-pointer"

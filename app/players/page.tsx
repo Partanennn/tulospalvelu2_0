@@ -4,7 +4,7 @@ import PlayerStats from "@/components/Players/PlayerStats";
 
 const PlayersPage = () => {
   return (
-    <div className="flex justify-center gap-5">
+    <div className="flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start gap-5">
       <PlayerStats />
       <PlayerPenaltyStats />
       <PlayerGoalScorers />

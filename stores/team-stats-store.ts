@@ -48,15 +48,7 @@ export const useTeamStatsStore = create<TeamStore>((set) => ({
   teamStats: null,
   updateTeamStats: (teamStats: TeamStats) =>
     set(() => {
-      teamStats.Teams.sort((a, b) => {
-        if (a.TeamAbbrv < b.TeamAbbrv) {
-          return -1;
-        } else if (a.TeamAbbrv > b.TeamAbbrv) {
-          return 1;
-        }
-
-        return 0;
-      });
+      teamStats.Teams.sort((a, b) => a.TeamAbbrv.localeCompare(b.TeamAbbrv));
       return { teamStats: teamStats };
     }),
 }));

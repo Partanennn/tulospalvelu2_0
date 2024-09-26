@@ -1,10 +1,12 @@
 "use client";
 
 import useFetch from "@/hooks/useFetch";
+import { useGroupStore } from "@/stores/group-store";
+import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { Team, useTeamStatsStore } from "@/stores/team-stats-store";
 import { TeamInfo } from "@/utils/types";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import ContactPersonTable from "./Tables/ContactPersonTable";
 import PlayersTable from "./Tables/PlayersTable";
@@ -15,9 +17,12 @@ const TeamLayer = () => {
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
 
   const { selectedSeason } = useSeasonStore();
+  const { selectedLevel } = useLevelStore();
+  const { selectedGroup } = useGroupStore();
   const { teamStats } = useTeamStatsStore();
 
   const params = useSearchParams();
+  const router = useRouter();
 
   const { data } = useFetch<TeamInfo>("/api/teaminfo", {
     method: "POST",
@@ -38,6 +43,12 @@ const TeamLayer = () => {
       }
     }
   }, [params]);
+
+  useEffect(() => {
+    if (data) {
+      router.push("/");
+    }
+  }, [selectedGroup, selectedLevel, selectedSeason]);
 
   return (
     <div>

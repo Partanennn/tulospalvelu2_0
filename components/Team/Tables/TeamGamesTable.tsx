@@ -1,3 +1,5 @@
+"use client";
+
 import { HandleTempClick } from "@/utils/helpers";
 import { TeamInfoGame } from "@/utils/types";
 import { useEffect, useState } from "react";

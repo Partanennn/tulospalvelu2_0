@@ -1,3 +1,5 @@
+"use client";
+
 import { HandleTempClick } from "@/utils/helpers";
 import { TeamInfoContactPerson } from "@/utils/types";
 import { useEffect, useState } from "react";

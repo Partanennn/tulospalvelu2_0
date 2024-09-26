@@ -18,3 +18,5 @@ export const GET_TEAM_STATS_URL =
   "https://tulospalvelu.leijonat.fi/helpers/getTeamStats.php";
 export const GET_PLAYER_STATS_URL =
   "https://tulospalvelu.leijonat.fi/helpers/getPlayers.php";
+export const GET_TEAM_INFO_URL =
+  "https://www.leijonat.fi/modules/mod_teamcardseasonstats/helper/getteamseasondata3.php";

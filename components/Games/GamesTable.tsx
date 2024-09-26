@@ -38,6 +38,7 @@ const GamesTable = ({
         >
           <Cell>{game.GameTime}</Cell>
           <LinkCell
+            className="hidden sm:table-cell"
             url={`https://www.leijonat.tv/fi/game?ext-id=${game.GameID}&season-id=${selectedSeason?.SeasonNumber}`}
           >
             Lähetys
@@ -73,7 +74,6 @@ const GamesTable = ({
           </Cell>
           <HiddableCell>{game.RinkName}</HiddableCell>
           <LinkCell
-            className="hidden sm:table-cell"
             url={`https://tulospalvelu.leijonat.fi/gamesheet/?gid=${game.GameID}&lang=fi&season=${selectedSeason?.SeasonNumber}`}
           >
             OPK

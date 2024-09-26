@@ -32,7 +32,7 @@ const TeamPage = () => {
 
   const params = useSearchParams();
 
-  const { data, error, isLoading } = useFetch<TeamInfo>("/api/teaminfo", {
+  const { data } = useFetch<TeamInfo>("/api/teaminfo", {
     method: "POST",
     body: JSON.stringify({
       teamId: params.get("teamid"),

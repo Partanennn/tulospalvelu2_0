@@ -4,15 +4,9 @@ type CellProps = {
   children: ReactNode;
   className?: string;
   colSpan?: number;
-  onClick?: () => void;
 };
 
-const Cell = ({
-  children,
-  className = "",
-  colSpan = 1,
-  onClick = () => null,
-}: CellProps) => {
+const Cell = ({ children, className = "", colSpan = 1 }: CellProps) => {
   return (
     <td
       colSpan={colSpan}

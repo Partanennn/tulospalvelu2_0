@@ -4,14 +4,18 @@ import { PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
 import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
-import { PlayerStatsBase } from "@/utils/types";
+import { PlayerStats, PlayerStatsBase } from "@/utils/types";
+import { useEffect, useState } from "react";
 import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
 import HiddableCell from "../Table/HiddableCell";
 import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
+import TableTitleRow from "../Table/TableTitleRow";
 
 const PlayerTotalPoints = () => {
+  const [tempData, setTempData] = useState<PlayerStats[]>([]);
+
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
 
@@ -24,7 +28,13 @@ const PlayerTotalPoints = () => {
     }),
   });
 
-  const items = data?.Players.map((player) => (
+  useEffect(() => {
+    if (data) {
+      setTempData(data.Players);
+    }
+  }, [data]);
+
+  const items = tempData.map((player) => (
     <tr
       key={player.PlayerID}
       className="odd:bg-neutral-500 even: bg-neutral-300"
@@ -46,10 +56,10 @@ const PlayerTotalPoints = () => {
         </div>
       </Cell>
       <Cell>{player.CurrentTeam}</Cell>
-      <Cell>{player.PlayerGames}</Cell>
-      <Cell>{player.PlayerGoals}</Cell>
-      <Cell>{player.PlayerAssists}</Cell>
-      <Cell className="font-bold">{player.PlayerPoints}</Cell>
+      <Cell className="text-center">{player.PlayerGames}</Cell>
+      <Cell className="text-center">{player.PlayerGoals}</Cell>
+      <Cell className="text-center">{player.PlayerAssists}</Cell>
+      <Cell className="font-bold text-center">{player.PlayerPoints}</Cell>
     </tr>
   ));
 
@@ -57,19 +67,32 @@ const PlayerTotalPoints = () => {
     <div className="my-5">
       <table>
         <thead>
-          <TableHeaderRow>
+          <TableHeaderRow
+            onClick={() => {
+              if (tempData.length > 0) {
+                setTempData([]);
+              } else if (
+                data &&
+                data.Players &&
+                data.Players.length > 0 &&
+                tempData.length === 0
+              ) {
+                setTempData(data.Players);
+              }
+            }}
+          >
             <TableHeader colSpan={10}>Pistepörssi</TableHeader>
           </TableHeaderRow>
-          <tr>
+          <TableTitleRow>
             <HiddableCell> </HiddableCell>
             <HiddableCell> </HiddableCell>
-            <th>Pelaaja</th>
-            <th>Joukkue</th>
-            <th>O</th>
-            <th>M</th>
-            <th>S</th>
-            <th>Pisteet</th>
-          </tr>
+            <Cell>Pelaaja</Cell>
+            <Cell>Joukkue</Cell>
+            <Cell>Ottelut</Cell>
+            <Cell>Maalit</Cell>
+            <Cell>Syötöt</Cell>
+            <Cell>Pisteet</Cell>
+          </TableTitleRow>
         </thead>
         <tbody>{items}</tbody>
       </table>

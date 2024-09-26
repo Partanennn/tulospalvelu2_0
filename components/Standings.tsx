@@ -3,15 +3,19 @@ import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { TeamStats, useTeamStatsStore } from "@/stores/team-stats-store";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Cell from "./Table/Cell";
 import TableHeader from "./Table/TableHeader";
 import TableHeaderRow from "./Table/TableHeaderRow";
 
 const Standings = () => {
+  const router = useRouter();
+
   const { selectedSeason } = useSeasonStore();
   const { teamStats, updateTeamStats } = useTeamStatsStore();
   const { selectedGroup } = useGroupStore();
+
   const stats = teamStats ? { ...teamStats } : null;
 
   const { data: standingData } = useFetch<TeamStats>("/api/teamStats", {
@@ -32,15 +36,28 @@ const Standings = () => {
     (team, index) => (
       <tr
         key={team.TeamID}
-        className="odd:bg-neutral-300"
+        className="odd:bg-neutral-300 hover:cursor-pointer"
         style={{
           borderBottom: stats.StandingLines.includes((index + 1).toString())
             ? "1px solid black"
             : "",
         }}
+        onClick={() => {
+          router.push(
+            `/team?teamid=${team.TeamID}&associationid=${team.AssociationID}`
+          );
+        }}
       >
         <Cell>{index + 1}</Cell>
-        <Cell>{team.TeamAbbrv}</Cell>
+        <Cell
+          onClick={() => {
+            router.push(
+              `/team?teamid=${team.TeamID}&associationid=${team.AssociationID}`
+            );
+          }}
+        >
+          {team.TeamAbbrv}
+        </Cell>
         <Cell>{team.TeamGames}</Cell>
         <Cell>{team.TeamWins}</Cell>
         <Cell>{team.TeamTies}</Cell>

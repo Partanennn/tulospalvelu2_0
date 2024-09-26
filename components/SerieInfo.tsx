@@ -6,6 +6,7 @@ import { useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { ChildrenType } from "@/utils/types";
+import TableHeader from "./Table/TableHeader";
 import TableHeaderRow from "./Table/TableHeaderRow";
 
 const Row = ({ children }: ChildrenType) => {
@@ -37,7 +38,9 @@ const SerieInfo = () => {
     <div>
       <table>
         <thead>
-          <TableHeaderRow colSpan={2}>Sarja info</TableHeaderRow>
+          <TableHeaderRow>
+            <TableHeader colSpan={2}>Sarja info</TableHeader>
+          </TableHeaderRow>
         </thead>
         <tbody>
           <Row>

@@ -8,6 +8,7 @@ import { PlayerStatsBase } from "@/utils/types";
 import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
 import HiddableCell from "../Table/HiddableCell";
+import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 
 const PlayerTotalPoints = () => {
@@ -56,7 +57,9 @@ const PlayerTotalPoints = () => {
     <div className="my-5">
       <table>
         <thead>
-          <TableHeaderRow colSpan={10}>Pistepörssi</TableHeaderRow>
+          <TableHeaderRow>
+            <TableHeader colSpan={10}>Pistepörssi</TableHeader>
+          </TableHeaderRow>
           <tr>
             <HiddableCell> </HiddableCell>
             <HiddableCell> </HiddableCell>

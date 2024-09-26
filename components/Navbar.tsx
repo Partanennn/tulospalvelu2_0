@@ -74,6 +74,7 @@ const NavBar = () => {
       key={item.text}
       value={item.text}
       isSelected={selectedPage === item.text}
+      borderStyle="border-primary-white border-2"
       onClick={() => {
         router.push(item.url);
         setIsMenuOpen(false);

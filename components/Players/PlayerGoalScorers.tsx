@@ -9,6 +9,7 @@ import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
 import HiddableCell from "../Table/HiddableCell";
 import HiddableHeaderCell from "../Table/HiddableHeaderCell";
+import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 
 const PlayerGoalScorers = () => {
@@ -56,7 +57,9 @@ const PlayerGoalScorers = () => {
     <div className="my-5">
       <table>
         <thead>
-          <TableHeaderRow colSpan={10}>Maalipörssi</TableHeaderRow>
+          <TableHeaderRow>
+            <TableHeader colSpan={10}>Maalipörssi</TableHeader>
+          </TableHeaderRow>
           <tr>
             <HiddableHeaderCell> </HiddableHeaderCell>
             <HiddableHeaderCell> </HiddableHeaderCell>

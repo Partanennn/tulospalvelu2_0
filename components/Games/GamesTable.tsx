@@ -8,6 +8,7 @@ import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
 import HiddableCell from "../Table/HiddableCell";
 import LinkCell from "../Table/LinkCell";
+import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 
 const COL_COUNT = 7;
@@ -108,9 +109,8 @@ const GamesTable = ({
                 updateTempData(data);
               }
             }}
-            colSpan={COL_COUNT}
           >
-            {header}
+            <TableHeader colSpan={COL_COUNT}>{header}</TableHeader>
           </TableHeaderRow>
         </thead>
         <tbody>{gameItems}</tbody>

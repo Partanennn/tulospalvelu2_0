@@ -19,11 +19,13 @@ import {
   SMALL_MOBILE_SIZE,
   TABLET_SIZE,
 } from "@/utils/windowSizes";
+import { useRouter } from "next/navigation";
 import MyImage from "./MyImage";
 
 const ICONS_SHOWN_COUNT = 8;
 
 const LogoSlider = () => {
+  const router = useRouter();
   const [iconCount, setIconCount] = useState(ICONS_SHOWN_COUNT);
   const [iconsStart, setIconsStart] = useState(0);
   const [iconsEnd, setIconsEnd] = useState(ICONS_SHOWN_COUNT);
@@ -57,6 +59,12 @@ const LogoSlider = () => {
         alt={team.TeamAbbrv}
         width={50}
         height={50}
+        className="hover:cursor-pointer"
+        onClick={() => {
+          router.push(
+            `/team?teamid=${team.TeamID}&associationid=${team.AssociationID}`
+          );
+        }}
       />
     );
   });

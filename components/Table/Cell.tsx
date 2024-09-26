@@ -3,12 +3,14 @@ import { ReactNode } from "react";
 type CellProps = {
   children: ReactNode;
   className?: string;
+  colSpan?: number;
 };
 
-const Cell = ({ children, className = "" }: CellProps) => {
+const Cell = ({ children, className = "", colSpan = 1 }: CellProps) => {
   return (
     <td
-      className={`text-sm px-2 sm:px-2 md:px-5 py-1.5 text-center ${className}`}
+      colSpan={colSpan}
+      className={`px-2 sm:px-2 md:px-5 py-1.5 ${className}`}
     >
       {children}
     </td>

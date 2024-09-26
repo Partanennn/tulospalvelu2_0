@@ -16,10 +16,6 @@ export const navbarItems: NavbarItem[] = [
     url: "/playerStats",
   },
   {
-    text: "Joukkue",
-    url: "/team",
-  },
-  {
     text: "Säännöt",
     url: "/rules",
   },

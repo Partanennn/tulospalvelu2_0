@@ -9,6 +9,7 @@ import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
 import HiddableCell from "../Table/HiddableCell";
 import HiddableHeaderCell from "../Table/HiddableHeaderCell";
+import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 
 const PlayerPenaltyStats = () => {
@@ -54,7 +55,9 @@ const PlayerPenaltyStats = () => {
     <div className="my-5">
       <table>
         <thead>
-          <TableHeaderRow colSpan={8}>Jäähypörssi</TableHeaderRow>
+          <TableHeaderRow>
+            <TableHeader colSpan={8}>Jäähypörssi</TableHeader>
+          </TableHeaderRow>
           <tr>
             <HiddableHeaderCell> </HiddableHeaderCell>
             <HiddableHeaderCell> </HiddableHeaderCell>

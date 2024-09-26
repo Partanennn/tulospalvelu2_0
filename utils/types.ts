@@ -88,7 +88,135 @@ export type PlayerStats = {
   RoleID: string;
   TeamAbbrv: string;
   TeamImg: string;
-  TeamStats: any[];
-  ToiStats: any[];
+  //TeamStats: any[];
+  //ToiStats: any[];
   Yob: string;
+};
+
+export type TeamMetaData = {
+  AreaID: string;
+  AssociationID: string;
+  AssociationName: string;
+  City: string;
+  Facebook: string;
+  Instagram: string;
+  LevelID: string;
+  StandingsRanking: string;
+  StatGroupID: string;
+  StatGroupName: string;
+  StreetAddress: string;
+  TeamAbbrv: string;
+  TeamName: string;
+  TeamNextGame: TeamMetaDataGame[];
+  Twitter: string;
+  Www: string;
+  Zip: string;
+};
+
+export type TeamMetaDataGame = {
+  AwayTeamName: string;
+  GameDate: string;
+  HomeTeamName: string;
+};
+
+export type TeamInfo = {
+  AssociationTeams: TeamInfoAssociationTeam[];
+  ContactPersons: TeamInfoContactPerson[];
+  Games: TeamInfoGame[];
+  Players: TeamInfoPlayer[];
+  Standings: TeamInfoStanding[];
+  StandingsEnabled: boolean;
+  StatGroups: TeamInfoGroup[];
+  TopScorers: TeamInfoTopScorer[];
+  TopScorersEnabled: boolean;
+};
+
+export type TeamInfoTopScorer = {
+  Assists: number;
+  AwayAssists: string;
+  AwayGoals: string;
+  FirstName: string;
+  Goals: number;
+  HomeAssists: string;
+  HomeGoals: string;
+  LastName: string;
+  PersonID: string;
+  PlayerID: string;
+  Points: number;
+  StatGroupID: string;
+};
+
+export type TeamInfoGroup = {
+  AreaID: string;
+  LevelID: string;
+  StatGroupID: string;
+  StatGroupName: string;
+};
+
+export type TeamInfoStanding = {
+  LevelID: string;
+  PointRules: string;
+  StatGroupID: string;
+  StatGroupName: string;
+  Teams: TeamInfoStandingTeam[];
+  WinPoints: string;
+};
+
+export type TeamInfoStandingTeam = {
+  Games: string;
+  GoalDiff: string;
+  GoalsAgainst: string;
+  GoalsFor: string;
+  Looses: string;
+  OtLooses: string;
+  OtWins: string;
+  PenaltyMinutes: string;
+  Points: string;
+  PointsPerGame: string;
+  Ranking: string;
+  SeasonID: string;
+  StatGroupID: string;
+  TeamAbbreviation: string;
+  TeamID: string;
+  Ties: string;
+  UniqueID: string;
+  Wins: string;
+};
+
+export type TeamInfoPlayer = {
+  DateOfBirth: string;
+  FirstName: string;
+  JerseyNr: string;
+  LastName: string;
+  PersonID: string;
+  PlayerAge: number;
+  RoleID: number;
+  RoleName: string;
+};
+
+export type TeamInfoGame = {
+  AwayGoals: string;
+  AwayTeamAbbreviation: string;
+  AwayTeamID: string;
+  FinishedType: string;
+  GameDate: string;
+  GameID: string;
+  GameStatus: string;
+  HomeGoals: string;
+  HomeTeamAbbreviation: string;
+  HomeTeamID: string;
+  LevelID: string;
+  ReportEnabled: boolean;
+  StatGroupID: string;
+};
+
+export type TeamInfoContactPerson = {
+  FirstName: string;
+  LastName: string;
+  RoleName: string;
+};
+
+export type TeamInfoAssociationTeam = {
+  TeamID: string;
+  TeamName: string;
 };

@@ -12,6 +12,7 @@ import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
 import HiddableCell from "../Table/HiddableCell";
 import LinkCell from "../Table/LinkCell";
+import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 
 const colCount = 10;
@@ -109,7 +110,6 @@ const GamesAll = () => {
     <table className="mx-5">
       <thead>
         <TableHeaderRow
-          colSpan={colCount}
           onClick={() => {
             if (gamesPerDay.length > 0) {
               updateGames([]);
@@ -122,7 +122,7 @@ const GamesAll = () => {
             }
           }}
         >
-          Kaikki Ottelut
+          <TableHeader colSpan={colCount}>Kaikki Ottelut</TableHeader>
         </TableHeaderRow>
       </thead>
       <tbody>{gameItems}</tbody>

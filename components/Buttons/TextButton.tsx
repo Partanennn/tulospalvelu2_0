@@ -4,12 +4,16 @@ interface TextButtonProps {
   value: string;
   onClick?: () => void;
   isSelected?: boolean;
+  className?: string;
+  borderStyle?: string;
 }
 
 const TextButton = ({
   value,
   onClick = () => null,
   isSelected = false,
+  className = "",
+  borderStyle = "border-primary-900 border-2",
 }: TextButtonProps) => {
   return (
     <Button
@@ -18,7 +22,7 @@ const TextButton = ({
       className={`
         bg-opacity-0 
         hover:bg-neutral-700
-        ${isSelected ? "border-white border-2" : ""}`}
+        ${isSelected ? borderStyle : ""} ${className}`}
     />
   );
 };

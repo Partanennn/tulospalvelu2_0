@@ -8,6 +8,7 @@ import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
 import HiddableCell from "../Table/HiddableCell";
 import LinkCell from "../Table/LinkCell";
+import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 
 const COL_COUNT = 7;
@@ -38,6 +39,7 @@ const GamesTable = ({
         >
           <Cell>{game.GameTime}</Cell>
           <LinkCell
+            className="hidden sm:table-cell"
             url={`https://www.leijonat.tv/fi/game?ext-id=${game.GameID}&season-id=${selectedSeason?.SeasonNumber}`}
           >
             Lähetys
@@ -73,7 +75,6 @@ const GamesTable = ({
           </Cell>
           <HiddableCell>{game.RinkName}</HiddableCell>
           <LinkCell
-            className="hidden sm:table-cell"
             url={`https://tulospalvelu.leijonat.fi/gamesheet/?gid=${game.GameID}&lang=fi&season=${selectedSeason?.SeasonNumber}`}
           >
             OPK
@@ -108,9 +109,8 @@ const GamesTable = ({
                 updateTempData(data);
               }
             }}
-            colSpan={COL_COUNT}
           >
-            {header}
+            <TableHeader colSpan={COL_COUNT}>{header}</TableHeader>
           </TableHeaderRow>
         </thead>
         <tbody>{gameItems}</tbody>

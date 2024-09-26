@@ -1,5 +1,3 @@
-"use client";
-
 import TeamLayer from "@/components/Team/TeamLayer";
 
 const TeamPage = () => {

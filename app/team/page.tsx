@@ -1,10 +1,11 @@
 import TeamLayer from "@/components/Team/TeamLayer";
+import { Suspense } from "react";
 
 const TeamPage = () => {
   return (
-    <div>
+    <Suspense>
       <TeamLayer />
-    </div>
+    </Suspense>
   );
 };
 

@@ -49,15 +49,7 @@ const Standings = () => {
         }}
       >
         <Cell>{index + 1}</Cell>
-        <Cell
-          onClick={() => {
-            router.push(
-              `/team?teamid=${team.TeamID}&associationid=${team.AssociationID}`
-            );
-          }}
-        >
-          {team.TeamAbbrv}
-        </Cell>
+        <Cell>{team.TeamAbbrv}</Cell>
         <Cell>{team.TeamGames}</Cell>
         <Cell>{team.TeamWins}</Cell>
         <Cell>{team.TeamTies}</Cell>

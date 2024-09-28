@@ -5,7 +5,7 @@ type TableTitleRowProps = {
 };
 
 const TableTitleRow = ({ children }: TableTitleRowProps) => {
-  return <tr className="font-bold">{children}</tr>;
+  return <tr className="font-bold bg-white">{children}</tr>;
 };
 
 export default TableTitleRow;

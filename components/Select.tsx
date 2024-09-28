@@ -23,7 +23,7 @@ const Select = <T,>({ values, setSelectedValue, value }: SelectProps<T>) => {
       onChange={(value) => {
         setSelectedValue(value.currentTarget.value);
       }}
-      className="bg-primary-600 rounded-full px-3 py-3 hover:bg-primary-500 hover:cursor-pointer text-center"
+      className="bg-primary-600 border-none rounded-full px-3 py-3 hover:bg-primary-500 hover:cursor-pointer text-center"
     >
       {options}
     </select>

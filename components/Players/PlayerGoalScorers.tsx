@@ -66,7 +66,7 @@ const PlayerGoalScorers = () => {
   ));
 
   return (
-    <div className="my-5">
+    <div>
       <table>
         <thead>
           <TableHeaderRow

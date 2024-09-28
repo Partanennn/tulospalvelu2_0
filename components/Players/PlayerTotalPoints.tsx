@@ -49,7 +49,7 @@ const PlayerTotalPoints = () => {
         />
       </HiddableCell>
       <HiddableCell>#{player.JerseyNr}</HiddableCell>
-      <Cell>
+      <Cell noTextCenter>
         <div className="flex gap-0 sm:gap-2 px-0">
           <div className="hidden sm:block">{player.FirstName}</div>
           <div>{player.LastName}</div>
@@ -88,9 +88,9 @@ const PlayerTotalPoints = () => {
             <HiddableCell> </HiddableCell>
             <Cell>Pelaaja</Cell>
             <Cell>Joukkue</Cell>
-            <Cell>Ottelut</Cell>
-            <Cell>Maalit</Cell>
-            <Cell>Syötöt</Cell>
+            <Cell>O</Cell>
+            <Cell>M</Cell>
+            <Cell>S</Cell>
             <Cell>Pisteet</Cell>
           </TableTitleRow>
         </thead>

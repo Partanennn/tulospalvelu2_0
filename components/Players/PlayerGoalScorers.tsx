@@ -1,6 +1,6 @@
 "use client";
 
-import { PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
+import { PLAYER_EXTERNAL_URL, PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
 import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
@@ -50,8 +50,14 @@ const PlayerGoalScorers = () => {
         />
       </HiddableCell>
       <HiddableCell>#{player.JerseyNr}</HiddableCell>
-      <Cell>
-        {player.FirstName} {player.LastName}
+      <Cell noTextCenter>
+        <a
+          className="hover:cursor-pointer"
+          target="_blank"
+          href={`${PLAYER_EXTERNAL_URL}${player.LinkID}`}
+        >
+          {player.FirstName} {player.LastName}
+        </a>
       </Cell>
       <Cell>{player.CurrentTeam}</Cell>
       <Cell>{player.PlayerGames}</Cell>

@@ -1,5 +1,6 @@
 "use client";
 
+import { PLAYER_EXTERNAL_URL } from "@/app/api/_lib/urls";
 import { HandleTempClick } from "@/utils/helpers";
 import { TeamInfoTopScorer } from "@/utils/types";
 import { useEffect, useState } from "react";
@@ -27,8 +28,14 @@ const TopScorersTable = ({ data }: TopScorersProps) => {
 
   const topScorerItems = topScorers.sort(sortTopScorers).map((player) => (
     <TableRow key={player.PlayerID}>
-      <Cell>
-        {player.LastName} {player.FirstName}
+      <Cell noTextCenter>
+        <a
+          className="hover:cursor-pointer"
+          target="_blank"
+          href={`${PLAYER_EXTERNAL_URL}${player.PersonID}`}
+        >
+          {player.LastName} {player.FirstName}
+        </a>
       </Cell>
       <Cell>{player.Goals}</Cell>
       <Cell>{player.Assists}</Cell>

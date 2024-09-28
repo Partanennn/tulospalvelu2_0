@@ -1,6 +1,6 @@
 "use client";
 
-import { PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
+import { PLAYER_EXTERNAL_URL, PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
 import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
@@ -50,14 +50,20 @@ const PlayerPenaltyStats = () => {
         />
       </HiddableCell>
       <HiddableCell>#{player.JerseyNr}</HiddableCell>
-      <Cell>
-        {player.FirstName} {player.LastName}
+      <Cell noTextCenter>
+        <a
+          className="hover:cursor-pointer"
+          target="_blank"
+          href={`${PLAYER_EXTERNAL_URL}${player.LinkID}`}
+        >
+          {player.FirstName} {player.LastName}
+        </a>
       </Cell>
       <Cell>{player.CurrentTeam}</Cell>
       <Cell>{player.PlayerGames}</Cell>
       <HiddableCell>{player.PlayerPen20Min}</HiddableCell>
       <Cell>{player.PlayerPen2Min}</Cell>
-      <Cell className="font-bold">{player.PlayerPenaltyMin} min</Cell>
+      <Cell className="font-bold">{player.PlayerPenaltyMin}</Cell>
     </tr>
   ));
 
@@ -86,7 +92,7 @@ const PlayerPenaltyStats = () => {
             <HiddableHeaderCell> </HiddableHeaderCell>
             <Cell>Pelaaja</Cell>
             <Cell>Joukkue</Cell>
-            <Cell>Ottelut</Cell>
+            <Cell>O</Cell>
             <HiddableHeaderCell>PR</HiddableHeaderCell>
             <Cell>2min</Cell>
             <Cell>Yht</Cell>

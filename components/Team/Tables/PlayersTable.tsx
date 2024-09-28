@@ -1,5 +1,6 @@
 "use client";
 
+import { PLAYER_EXTERNAL_URL } from "@/app/api/_lib/urls";
 import { HandleTempClick } from "@/utils/helpers";
 import { TeamInfoPlayer } from "@/utils/types";
 import { useEffect, useState } from "react";
@@ -29,8 +30,15 @@ const PlayersTable = ({ data }: PlayersProps) => {
   const playerItems = players.sort(sortPlayers).map((player) => (
     <TableRow key={player.PersonID}>
       <Cell>{player.JerseyNr}</Cell>
-      <Cell>{player.LastName}</Cell>
-      <Cell>{player.FirstName}</Cell>
+      <Cell noTextCenter>
+        <a
+          className="hover:cursor-pointer"
+          target="_blank"
+          href={`${PLAYER_EXTERNAL_URL}${player.PersonID}`}
+        >
+          {player.LastName} {player.FirstName}
+        </a>
+      </Cell>
       <Cell>{player.PlayerAge}</Cell>
       <Cell>{player.RoleName}</Cell>
     </TableRow>
@@ -53,9 +61,7 @@ const PlayersTable = ({ data }: PlayersProps) => {
           </TableHeaderRow>
           <TableTitleRow>
             <td></td>
-            <Cell colSpan={2} className="text-center">
-              Pelaaja
-            </Cell>
+            <Cell className="text-center">Pelaaja</Cell>
             <Cell>Ikä</Cell>
             <Cell>Rooli</Cell>
           </TableTitleRow>

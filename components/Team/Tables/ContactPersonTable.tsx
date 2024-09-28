@@ -20,8 +20,9 @@ const ContactPersonTable = ({ data }: ContactPersonProps) => {
 
   const contactPersonsItems = contactPersons.map((person) => (
     <TableRow key={`${person.FirstName}${person.LastName}${person.RoleName}`}>
-      <Cell>{person.LastName}</Cell>
-      <Cell>{person.FirstName}</Cell>
+      <Cell noTextCenter>
+        {person.LastName} {person.FirstName}
+      </Cell>
       <Cell>{person.RoleName}</Cell>
     </TableRow>
   ));
@@ -41,12 +42,10 @@ const ContactPersonTable = ({ data }: ContactPersonProps) => {
               HandleTempClick(data ?? [], contactPersons, setContactPersons)
             }
           >
-            <TableHeader colSpan={3}>Henkilöstö</TableHeader>
+            <TableHeader colSpan={2}>Henkilöstö</TableHeader>
           </TableHeaderRow>
           <TableTitleRow>
-            <Cell colSpan={2} className="text-center">
-              Pelaaja
-            </Cell>
+            <Cell className="text-center">Pelaaja</Cell>
             <Cell>Rooli</Cell>
           </TableTitleRow>
         </thead>

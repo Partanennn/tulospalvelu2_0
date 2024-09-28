@@ -22,3 +22,5 @@ export const GET_TEAM_INFO_URL =
   "https://www.leijonat.fi/modules/mod_teamcardseasonstats/helper/getteamseasondata3.php";
 export const GET_TEAM_META_DATA_URL =
   "https://www.leijonat.fi/modules/mod_teamcardmain/helper/getteammaindata.php";
+export const PLAYER_EXTERNAL_URL =
+  "https://www.leijonat.fi/index.php/pelaajat?lkq=";

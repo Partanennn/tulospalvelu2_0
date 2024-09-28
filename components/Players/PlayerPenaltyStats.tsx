@@ -68,7 +68,7 @@ const PlayerPenaltyStats = () => {
   ));
 
   return (
-    <div className="my-5">
+    <div>
       <table>
         <thead>
           <TableHeaderRow

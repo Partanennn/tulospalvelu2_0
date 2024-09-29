@@ -1,34 +1,56 @@
 "use client";
 
 import { IMAGE_URL } from "@/app/api/_lib/urls";
-import { GameDay } from "@/app/api/gamesPerDay/route";
 import { useSeasonStore } from "@/stores/season-store";
-import { Dispatch, SetStateAction } from "react";
-import MyImage from "../MyImage";
-import Cell from "../Table/Cell";
-import HiddableCell from "../Table/HiddableCell";
-import LinkCell from "../Table/LinkCell";
-import TableHeader from "../Table/TableHeader";
-import TableHeaderRow from "../Table/TableHeaderRow";
+import { useEffect, useState } from "react";
+import MyImage from "./MyImage";
+import Cell from "./Table/Cell";
+import HiddableCell from "./Table/HiddableCell";
+import LinkCell from "./Table/LinkCell";
+import TableHeader from "./Table/TableHeader";
+import TableHeaderRow from "./Table/TableHeaderRow";
+import {
+  GameDay,
+  gamesPerDayAction,
+  GamesPerDayGameDays,
+} from "@/app/_actions/gamesPerDayAction";
+import { useGroupStore } from "@/stores/group-store";
+import { useLevelStore } from "@/stores/level-store";
 
 const COL_COUNT = 7;
 
 type GamesTableProps = {
-  data: GameDay[] | null;
-  tempData: GameDay[];
-  updateTempData: Dispatch<SetStateAction<GameDay[]>>;
   header: string;
+  gameDays?: GamesPerDayGameDays;
 };
 
-const GamesTable = ({
-  data,
-  header,
-  tempData,
-  updateTempData,
-}: GamesTableProps) => {
-  const { selectedSeason } = useSeasonStore();
+const GamesTable = ({ header, gameDays = "all" }: GamesTableProps) => {
+  const [showData, setShowData] = useState<GameDay[]>([]);
+  const [data, setData] = useState<GameDay[] | null>([]);
 
-  const gameItems = tempData.map((gameDay) => {
+  const { selectedSeason } = useSeasonStore();
+  const { selectedGroup } = useGroupStore();
+  const { selectedLevel } = useLevelStore();
+
+  useEffect(() => {
+    if (selectedSeason && selectedGroup && selectedLevel) {
+      const getData = async () => {
+        const data = await gamesPerDayAction({
+          group: selectedGroup,
+          season: selectedSeason,
+          gameDays: gameDays,
+        });
+
+        if (data) {
+          setShowData(data);
+          setData(data);
+        }
+      };
+      getData();
+    }
+  }, [selectedSeason, selectedGroup, selectedLevel]);
+
+  const gameItems = showData.map((gameDay) => {
     let gameDate = "";
     const basicRows = gameDay.Games.map((game) => {
       gameDate = game.DowFI + " " + game.GameDate;
@@ -98,15 +120,15 @@ const GamesTable = ({
         <thead>
           <TableHeaderRow
             onClick={() => {
-              if (tempData && tempData.length > 0) {
-                updateTempData([]);
+              if (showData && showData.length > 0) {
+                setShowData([]);
               } else if (
                 data &&
-                tempData &&
+                showData &&
                 data.length > 0 &&
-                tempData.length === 0
+                showData.length === 0
               ) {
-                updateTempData(data);
+                setShowData(data);
               }
             }}
           >

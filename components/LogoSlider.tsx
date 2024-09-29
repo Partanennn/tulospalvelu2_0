@@ -1,12 +1,12 @@
 "use client";
 
 import { IMAGE_URL } from "@/app/api/_lib/urls";
-import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
-import { TeamStats, useTeamStatsStore } from "@/stores/team-stats-store";
+import { useTeamStatsStore } from "@/stores/team-stats-store";
 import { useEffect, useState } from "react";
 
+import { getTeamStats } from "@/app/_actions/teamStatsAction";
 import arrowIcon from "@/assets/Logos/arrow.png";
 import useWindowSize from "@/hooks/useWindowSize";
 import { useLevelStore } from "@/stores/level-store";
@@ -31,27 +31,30 @@ const LogoSlider = () => {
   const [iconsEnd, setIconsEnd] = useState(ICONS_SHOWN_COUNT);
   const { height, width } = useWindowSize();
 
-  const { teamStats: standing, updateTeamStats: updateStanding } =
+  const { teamStats: standings, updateTeamStats: updateStanding } =
     useTeamStatsStore();
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
   const { selectedLevel } = useLevelStore();
 
-  const { data: standingsData } = useFetch<TeamStats>("/api/teamStats", {
-    method: "POST",
-    body: JSON.stringify({
-      season: selectedSeason?.SeasonNumber,
-      stgid: selectedGroup?.StatGroupID,
-    }),
-  });
-
   useEffect(() => {
-    if (standingsData) {
-      updateStanding(standingsData);
-    }
-  }, [standingsData, updateStanding]);
+    if (selectedSeason && selectedGroup && !standings) {
+      // TODO: Move to layout etc.
+      const getStandings = async () => {
+        const data = await getTeamStats({
+          groupId: selectedGroup.StatGroupID,
+          seasonId: selectedSeason.SeasonNumber,
+        });
 
-  const logos = standing?.Teams.slice(iconsStart, iconsEnd).map((team) => {
+        if (data) {
+          updateStanding(data);
+        }
+      };
+      getStandings();
+    }
+  }, [selectedSeason, selectedGroup]);
+
+  const logos = standings?.Teams.slice(iconsStart, iconsEnd).map((team) => {
     return (
       <MyImage
         key={team.TeamID}
@@ -114,7 +117,7 @@ const LogoSlider = () => {
         />
       ) : null}
       {logos}
-      {standing?.Teams && iconsEnd < standing?.Teams?.length ? (
+      {standings?.Teams && iconsEnd < standings?.Teams?.length ? (
         <MyImage
           src={arrowIcon}
           alt="right arrow icon"
@@ -122,7 +125,7 @@ const LogoSlider = () => {
           height={30}
           width={30}
           onClick={() => {
-            if (standing?.Teams && iconsEnd < standing?.Teams?.length) {
+            if (standings?.Teams && iconsEnd < standings?.Teams?.length) {
               setIconsEnd((oldValue) => oldValue + 1);
               setIconsStart((oldValue) => oldValue + 1);
             }

@@ -4,8 +4,7 @@ import {
   getGroupsAction,
   getLevelsAction,
   getSeasonsAction,
-} from "@/app/actions";
-import useFetch from "@/hooks/useFetch";
+} from "@/app/_actions/actions";
 import { Group, useGroupStore } from "@/stores/group-store";
 import { Level, useLevelStore } from "@/stores/level-store";
 import { Season, useSeasonStore } from "@/stores/season-store";
@@ -16,8 +15,14 @@ const DEFAULT_SEASON: Season = {
   SeasonName: "2024-2025",
   SeasonNumber: "2025",
 };
-const DEFAULT_LEVEL: Level = { LevelID: "65", LevelName: "Mestis" };
-const DEFAULT_GROUP: Group = { StatGroupID: "168", StatGroupName: "Mestis" };
+const DEFAULT_LEVEL: Level = {
+  LevelID: "98",
+  LevelName: "U14 AA",
+};
+const DEFAULT_GROUP: Group = {
+  StatGroupID: "6430",
+  StatGroupName: "U14 AA alkusarja, lohko 2",
+};
 
 const DataSelector = () => {
   const { levels, selectedLevel, updateLevels, updateSelectedLevel } =
@@ -26,14 +31,6 @@ const DataSelector = () => {
     useSeasonStore();
   const { groups, selectedGroup, updateGroups, updateSelectedGroup } =
     useGroupStore();
-
-  const { data: groupsData } = useFetch<Group[]>("/api/groups", {
-    method: "POST",
-    body: JSON.stringify({
-      season: selectedSeason?.SeasonNumber,
-      levelId: selectedLevel?.LevelID ?? "65",
-    }),
-  });
 
   useEffect(() => {
     const getSeasonsValues = async () => {
@@ -84,7 +81,7 @@ const DataSelector = () => {
   }, [selectedSeason]);
 
   useEffect(() => {
-    if (groupsData) {
+    if (selectedLevel && selectedSeason) {
       const getGroups = async () => {
         const data = await getGroupsAction(
           selectedSeason ?? DEFAULT_SEASON,
@@ -101,7 +98,7 @@ const DataSelector = () => {
       };
       getGroups();
     }
-  }, [groupsData, updateGroups, updateSelectedGroup]);
+  }, [selectedLevel, selectedSeason]);
 
   return (
     <div className="flex flex-wrap flex-col gap-[2rem] justify-center items-center 2xl:flex-row text-white">

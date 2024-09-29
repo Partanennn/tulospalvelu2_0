@@ -3,15 +3,12 @@ import { ReactNode } from "react";
 type TableRowProps = {
   children: ReactNode;
   className?: string;
-  key?: string;
+  keyValue?: string;
 };
 
-const TableRow = ({ children, className = "", key = "" }: TableRowProps) => {
+const TableRow = ({ children, className = "" }: TableRowProps) => {
   return (
-    <tr
-      key={key}
-      className={`odd:bg-neutral-500 even: bg-neutral-300 ${className}`}
-    >
+    <tr className={`odd:bg-neutral-500 even: bg-neutral-300 ${className}`}>
       {children}
     </tr>
   );

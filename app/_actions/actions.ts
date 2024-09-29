@@ -7,7 +7,7 @@ import {
   GET_LEVELS_URL,
   GET_SEASONS_URL,
   GET_STAT_GROUP_URL,
-} from "./api/_lib/urls";
+} from "../api/_lib/urls";
 
 export const getSeasonsAction = async (): Promise<Season[] | null> => {
   const url = GET_SEASONS_URL;
@@ -15,7 +15,7 @@ export const getSeasonsAction = async (): Promise<Season[] | null> => {
   const results = await fetch(url, {
     method: "POST",
   });
-  const data = await results.json();
+  const data: Season[] | null = await results.json();
 
   return data;
 };
@@ -33,7 +33,7 @@ export const getLevelsAction = async (
     body: body,
   });
 
-  const data = await res.json();
+  const data: Level[] | null = await res.json();
 
   return data;
 };
@@ -54,7 +54,7 @@ export const getGroupsAction = async (
     body: body,
   });
 
-  const data = await res.json();
+  const data: Group[] | null = await res.json();
 
   return data;
 };

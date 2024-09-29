@@ -27,7 +27,7 @@ const TopScorersTable = ({ data }: TopScorersProps) => {
   };
 
   const topScorerItems = topScorers.sort(sortTopScorers).map((player) => (
-    <TableRow key={player.PlayerID}>
+    <TableRow key={player.PlayerID ?? player.PersonID}>
       <Cell noTextCenter>
         <a
           className="hover:cursor-pointer"

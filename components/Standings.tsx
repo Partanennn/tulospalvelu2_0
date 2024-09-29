@@ -1,8 +1,8 @@
 "use client";
-import useFetch from "@/hooks/useFetch";
+import { getTeamStats } from "@/app/_actions/teamStatsAction";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
-import { TeamStats, useTeamStatsStore } from "@/stores/team-stats-store";
+import { useTeamStatsStore } from "@/stores/team-stats-store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Cell from "./Table/Cell";
@@ -18,19 +18,22 @@ const Standings = () => {
 
   const stats = teamStats ? { ...teamStats } : null;
 
-  const { data: standingData } = useFetch<TeamStats>("/api/teamStats", {
-    method: "POST",
-    body: JSON.stringify({
-      season: selectedSeason?.SeasonNumber,
-      stgid: selectedGroup?.StatGroupID,
-    }),
-  });
-
   useEffect(() => {
-    if (standingData) {
-      updateTeamStats(standingData);
+    if (selectedSeason && selectedGroup && !teamStats) {
+      // TODO: Move to layout etc.
+      const getStandings = async () => {
+        const data = await getTeamStats({
+          groupId: selectedGroup.StatGroupID,
+          seasonId: selectedSeason.SeasonNumber,
+        });
+
+        if (data) {
+          updateTeamStats(data);
+        }
+      };
+      getStandings();
     }
-  }, [standingData, updateTeamStats]);
+  }, [selectedSeason, selectedGroup]);
 
   const teams = stats?.Teams?.sort((a, b) => b.TeamPoints - a.TeamPoints).map(
     (team, index) => (

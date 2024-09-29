@@ -1,12 +1,28 @@
 "use client";
 
-import { Level } from "@/app/api/levels/route";
-import useFetch from "@/hooks/useFetch";
+import {
+  getGroupsAction,
+  getLevelsAction,
+  getSeasonsAction,
+} from "@/app/_actions/actions";
 import { Group, useGroupStore } from "@/stores/group-store";
-import { useLevelStore } from "@/stores/level-store";
+import { Level, useLevelStore } from "@/stores/level-store";
 import { Season, useSeasonStore } from "@/stores/season-store";
 import { useEffect } from "react";
 import Select from "../Select";
+
+const DEFAULT_SEASON: Season = {
+  SeasonName: "2024-2025",
+  SeasonNumber: "2025",
+};
+const DEFAULT_LEVEL: Level = {
+  LevelID: "98",
+  LevelName: "U14 AA",
+};
+const DEFAULT_GROUP: Group = {
+  StatGroupID: "6430",
+  StatGroupName: "U14 AA alkusarja, lohko 2",
+};
 
 const DataSelector = () => {
   const { levels, selectedLevel, updateLevels, updateSelectedLevel } =
@@ -16,43 +32,73 @@ const DataSelector = () => {
   const { groups, selectedGroup, updateGroups, updateSelectedGroup } =
     useGroupStore();
 
-  const { data: seasonsData } = useFetch<Season[]>("/api/seasons");
-  const { data: levelsData } = useFetch<Level[]>("/api/levels", {
-    method: "POST",
-    body: JSON.stringify(selectedSeason?.SeasonNumber ?? "2025"),
-  });
-  const { data: groupsData } = useFetch<Group[]>("/api/groups", {
-    method: "POST",
-    body: JSON.stringify({
-      season: selectedSeason?.SeasonNumber,
-      levelId: selectedLevel?.LevelID ?? "65",
-    }),
-  });
+  useEffect(() => {
+    const getSeasonsValues = async () => {
+      // GET COOKIES
+
+      const seasonsData = await getSeasonsAction();
+      const seasonValue = DEFAULT_SEASON;
+
+      const levelsData = await getLevelsAction(seasonValue);
+      const levelValue = DEFAULT_LEVEL;
+
+      const groupsData = await getGroupsAction(seasonValue, levelValue);
+      const groupValue = DEFAULT_GROUP;
+
+      if (seasonsData) {
+        updateSeasons(seasonsData);
+        updateSelectedSeason(seasonValue);
+      }
+
+      if (levelsData) {
+        updateLevels(levelsData);
+        updateSelectedLevel(levelValue);
+      }
+
+      if (groupsData) {
+        updateGroups(groupsData);
+        updateSelectedGroup(groupValue);
+      }
+    };
+    getSeasonsValues();
+  }, []);
 
   useEffect(() => {
-    if (seasonsData) {
-      updateSeasons(seasonsData);
-      const selected = seasonsData.length > 0 ? seasonsData[0] : null;
-      updateSelectedSeason(selected);
+    if (selectedSeason) {
+      const getLevels = async () => {
+        const data = await getLevelsAction(selectedSeason ?? DEFAULT_LEVEL);
+
+        if (data) {
+          updateLevels(data);
+
+          if (selectedLevel !== DEFAULT_LEVEL) {
+            updateSelectedLevel(data[0]);
+          }
+        }
+      };
+      getLevels();
     }
-  }, [seasonsData, updateSelectedSeason, updateSeasons]);
+  }, [selectedSeason]);
 
   useEffect(() => {
-    if (levelsData) {
-      updateLevels(levelsData);
+    if (selectedLevel && selectedSeason) {
+      const getGroups = async () => {
+        const data = await getGroupsAction(
+          selectedSeason ?? DEFAULT_SEASON,
+          selectedLevel ?? DEFAULT_LEVEL
+        );
 
-      const selected = levelsData.length > 0 ? levelsData[0] : null;
-      updateSelectedLevel(selected);
-    }
-  }, [levelsData, updateSelectedLevel, updateLevels]);
+        if (data) {
+          updateGroups(data);
 
-  useEffect(() => {
-    if (groupsData) {
-      updateGroups(groupsData);
-      const selected = groupsData.length > 0 ? groupsData[0] : null;
-      updateSelectedGroup(selected);
+          if (selectedGroup !== DEFAULT_GROUP) {
+            updateSelectedGroup(data[0]);
+          }
+        }
+      };
+      getGroups();
     }
-  }, [groupsData, updateGroups, updateSelectedGroup]);
+  }, [selectedLevel, selectedSeason]);
 
   return (
     <div className="flex flex-wrap flex-col gap-[2rem] justify-center items-center 2xl:flex-row text-white">

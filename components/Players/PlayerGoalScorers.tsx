@@ -1,10 +1,8 @@
 "use client";
 
 import { PLAYER_EXTERNAL_URL, PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
-import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
-import { PlayerStats, PlayerStatsBase } from "@/utils/types";
 import { useEffect, useState } from "react";
 import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
@@ -13,29 +11,38 @@ import HiddableHeaderCell from "../Table/HiddableHeaderCell";
 import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 import TableTitleRow from "../Table/TableTitleRow";
+import {
+  PlayerStats,
+  playerStatsAction,
+  PlayerStatsBase,
+} from "@/app/_actions/playerStatsAction";
 
 const PlayerGoalScorers = () => {
-  const [tempData, setTempData] = useState<PlayerStats[]>([]);
+  const [data, setData] = useState<PlayerStatsBase | null>(null);
+  const [showData, setShowData] = useState<PlayerStats[] | null>([]);
 
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
 
-  const { data } = useFetch<PlayerStatsBase>("/api/playerStats", {
-    method: "POST",
-    body: JSON.stringify({
-      season: selectedSeason?.SeasonNumber,
-      stgid: selectedGroup?.StatGroupID,
-      sortedBy: "PlayerGoals",
-    }),
-  });
-
   useEffect(() => {
-    if (data) {
-      setTempData(data.Players);
-    }
-  }, [data]);
+    if (selectedSeason && selectedGroup) {
+      const getData = async () => {
+        const data = await playerStatsAction({
+          group: selectedGroup,
+          season: selectedSeason,
+          sortedBy: "PlayerGoals",
+        });
 
-  const items = tempData.map((player) => (
+        if (data) {
+          setData(data);
+          setShowData(data.Players);
+        }
+      };
+      getData();
+    }
+  }, [selectedSeason, selectedGroup]);
+
+  const items = showData?.map((player) => (
     <tr
       key={player.PlayerID}
       className="odd:bg-neutral-500 even: bg-neutral-300"
@@ -71,15 +78,16 @@ const PlayerGoalScorers = () => {
         <thead>
           <TableHeaderRow
             onClick={() => {
-              if (tempData.length > 0) {
-                setTempData([]);
+              if (showData && showData.length > 0) {
+                setShowData([]);
               } else if (
                 data &&
+                showData &&
                 data.Players &&
                 data.Players.length > 0 &&
-                tempData.length === 0
+                showData.length === 0
               ) {
-                setTempData(data.Players);
+                setShowData(data.Players);
               }
             }}
           >

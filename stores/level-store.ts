@@ -1,4 +1,3 @@
-import { Level } from "@/app/api/levels/route";
 import { create } from "zustand";
 
 type LevelStore = {
@@ -7,6 +6,11 @@ type LevelStore = {
   updateSelectedLevel: (level: Level | null) => void;
   updateLevels: (levels: Level[]) => void;
 };
+
+export interface Level {
+  LevelID: string;
+  LevelName: string;
+}
 
 export const useLevelStore = create<LevelStore>((set) => ({
   levels: [],

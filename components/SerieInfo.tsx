@@ -1,11 +1,14 @@
 "use client";
 
-import { SerieInfo as SerieInfoType } from "@/app/api/serieInfo/route";
-import useFetch from "@/hooks/useFetch";
+import {
+  getSerieInfo,
+  SerieInfo as SerieInfoData,
+} from "@/app/_actions/serieInfoAction";
 import { useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { ChildrenType } from "@/utils/types";
+import { useEffect, useState } from "react";
 import TableHeader from "./Table/TableHeader";
 import TableHeaderRow from "./Table/TableHeaderRow";
 
@@ -21,18 +24,27 @@ const CellLeft = ({ children }: ChildrenType) => (
 );
 
 const SerieInfo = () => {
+  const [data, setData] = useState<SerieInfoData | null>(null);
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
   const { selectedLevel } = useLevelStore();
 
-  const { data } = useFetch<SerieInfoType>("/api/serieInfo", {
-    method: "POST",
-    body: JSON.stringify({
-      season: selectedSeason?.SeasonNumber,
-      stgid: selectedGroup?.StatGroupID,
-      levelid: selectedLevel?.LevelID,
-    }),
-  });
+  useEffect(() => {
+    if (selectedSeason && selectedLevel && selectedGroup) {
+      const getInfo = async () => {
+        const data = await getSerieInfo(
+          selectedSeason,
+          selectedLevel,
+          selectedGroup
+        );
+
+        if (data) {
+          setData(data);
+        }
+      };
+      getInfo();
+    }
+  }, [selectedSeason, selectedLevel, selectedGroup]);
 
   return (
     <div>

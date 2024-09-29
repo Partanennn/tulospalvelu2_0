@@ -8,6 +8,7 @@ import {
 import { Group, useGroupStore } from "@/stores/group-store";
 import { Level, useLevelStore } from "@/stores/level-store";
 import { Season, useSeasonStore } from "@/stores/season-store";
+import { getCookie, setCookie } from "@/utils/cookies";
 import { useEffect, useState } from "react";
 import Select from "../Select";
 
@@ -39,27 +40,33 @@ const DataSelector = () => {
     // GET COOKIES
     const getSeasonsValues = async () => {
       const seasonsData = await getSeasonsAction();
-      const seasonValue = DEFAULT_SEASON;
+      const seasonCookie = getCookie<Season>("season") ?? DEFAULT_SEASON;
 
-      const levelsData = await getLevelsAction(seasonValue);
-      const levelValue = DEFAULT_LEVEL;
+      const levelsData = await getLevelsAction(seasonCookie);
+      const levelCookie = getCookie<Level>("level") ?? DEFAULT_LEVEL;
 
-      const groupsData = await getGroupsAction(seasonValue, levelValue);
-      const groupValue = DEFAULT_GROUP;
+      const groupsData = await getGroupsAction(seasonCookie, levelCookie);
+      const groupCookie = getCookie<Group>("group") ?? DEFAULT_GROUP;
+
+      console.log({
+        seasonCookie,
+        levelCookie,
+        groupCookie,
+      });
 
       if (seasonsData) {
         updateSeasons(seasonsData);
-        updateSelectedSeason(seasonValue);
+        updateSelectedSeason(seasonCookie);
       }
 
       if (levelsData) {
         updateLevels(levelsData);
-        updateSelectedLevel(levelValue);
+        updateSelectedLevel(levelCookie);
       }
 
       if (groupsData) {
         updateGroups(groupsData);
-        updateSelectedGroup(groupValue);
+        updateSelectedGroup(groupCookie);
       }
     };
     getSeasonsValues();
@@ -69,6 +76,8 @@ const DataSelector = () => {
   useEffect(() => {
     if (selectedSeason) {
       const getLevels = async () => {
+        const seasonCookie = getCookie<Season>("season") ?? DEFAULT_SEASON;
+        const levelCookie = getCookie<Level>("level") ?? DEFAULT_LEVEL;
         const data = await getLevelsAction(selectedSeason);
 
         if (data) {
@@ -89,7 +98,21 @@ const DataSelector = () => {
   useEffect(() => {
     if (selectedLevel && selectedSeason) {
       const getGroups = async () => {
-        const data = await getGroupsAction(selectedSeason, selectedLevel);
+        const seasonCookie = getCookie<Season>("season") ?? DEFAULT_SEASON;
+        const levelCookie = getCookie<Level>("level") ?? DEFAULT_LEVEL;
+        const groupCookie = getCookie<Group>("group") ?? DEFAULT_GROUP;
+
+        console.log("GETTER: ", {
+          level: getCookie<Level>("level"),
+          levelCookie,
+          group: getCookie<Group>("group"),
+          groupCookie,
+        });
+
+        const data = await getGroupsAction(
+          selectedSeason ?? seasonCookie,
+          selectedLevel ?? levelCookie
+        );
 
         if (data) {
           updateGroups(data);
@@ -104,6 +127,16 @@ const DataSelector = () => {
       getGroups();
     }
   }, [selectedSeason, selectedLevel]);
+
+  // Cookie update
+  useEffect(() => {
+    if (selectedSeason && selectedLevel && selectedGroup) {
+      setCookie("season", selectedSeason);
+      setCookie("level", selectedLevel);
+      setCookie("group", selectedGroup);
+      console.log("SETTER: ", { selectedLevel, selectedSeason, selectedGroup });
+    }
+  }, [selectedSeason, selectedLevel, selectedGroup]);
 
   return (
     <div className="flex flex-wrap flex-col gap-[2rem] justify-center items-center 2xl:flex-row text-white">

@@ -32,7 +32,7 @@ const NavBar = () => {
   ));
 
   return (
-    <div className="flex flex-col items-center bg-primary-800 text-white justify-evenly py-5 gap-5 2xl:flex-row">
+    <nav className="flex flex-col items-center bg-primary-800 text-white justify-evenly py-5 gap-5 2xl:flex-row">
       <div className="hidden flex-row justify-between items-center text-lg gap-[3rem] mx-[6rem] 2xl:flex">
         {navItems}
       </div>
@@ -49,7 +49,7 @@ const NavBar = () => {
           </div>
         )}
       </div>
-    </div>
+    </nav>
   );
 };
 

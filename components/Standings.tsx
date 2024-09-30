@@ -1,70 +1,70 @@
 "use client";
-import { getTeamStats } from "@/app/_actions/teamStatsAction";
-import { useGroupStore } from "@/stores/group-store";
+
 import { useSeasonStore } from "@/stores/season-store";
-import { useTeamStatsStore } from "@/stores/team-stats-store";
+import { Team, useTeamStatsStore } from "@/stores/team-stats-store";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Cell from "./Table/Cell";
 import TableHeader from "./Table/TableHeader";
 import TableHeaderRow from "./Table/TableHeaderRow";
 
 const Standings = () => {
+  const [teamsData, setTeamsData] = useState<Team[]>([]);
   const router = useRouter();
 
+  const { teamStats } = useTeamStatsStore();
   const { selectedSeason } = useSeasonStore();
-  const { teamStats, updateTeamStats } = useTeamStatsStore();
-  const { selectedGroup } = useGroupStore();
-
-  const stats = teamStats ? { ...teamStats } : null;
 
   useEffect(() => {
-    if (selectedSeason && selectedGroup && !teamStats) {
-      // TODO: Move to layout etc.
-      const getStandings = async () => {
-        const data = await getTeamStats({
-          groupId: selectedGroup.StatGroupID,
-          seasonId: selectedSeason.SeasonNumber,
-        });
-
-        if (data) {
-          updateTeamStats(data);
-        }
-      };
-      getStandings();
+    if (teamStats) {
+      setTeamsData([...teamStats.Teams]);
     }
-  }, [selectedSeason, selectedGroup]);
+  }, [teamStats]);
 
-  const teams = stats?.Teams?.sort((a, b) => b.TeamPoints - a.TeamPoints).map(
-    (team, index) => (
-      <tr
-        key={team.TeamID}
-        className="odd:bg-neutral-300 hover:cursor-pointer"
-        style={{
-          borderBottom: stats.StandingLines.includes((index + 1).toString())
-            ? "1px solid black"
-            : "",
-        }}
-        onClick={() => {
-          router.push(
-            `/team?teamid=${team.TeamID}&associationid=${team.AssociationID}`
-          );
-        }}
-      >
-        <Cell>{index + 1}</Cell>
-        <Cell>{team.TeamAbbrv}</Cell>
-        <Cell>{team.TeamGames}</Cell>
-        <Cell>{team.TeamWins}</Cell>
-        <Cell>{team.TeamTies}</Cell>
-        <Cell>{team.TeamLosses}</Cell>
-        <Cell>{team.TeamGoalsFor}</Cell>
-        <Cell>-</Cell>
-        <Cell>{team.TeamGoalsAgainst}</Cell>
-        <Cell>{team.TeamPenaltyMin}</Cell>
-        <Cell className="font-bold">{team.TeamPoints}</Cell>
-      </tr>
-    )
-  );
+  const sortFunc = (a: Team, b: Team) => {
+    if (a.TeamPoints !== b.TeamPoints) {
+      return b.TeamPoints - a.TeamPoints;
+    }
+
+    if (a.TeamGoalDiff !== b.TeamGoalDiff) {
+      return b.TeamGoalDiff - a.TeamGoalDiff;
+    }
+
+    if (a.TeamGoalsFor !== b.TeamGoalsFor) {
+      return b.TeamGoalsFor - a.TeamGoalsFor;
+    }
+
+    return a.TeamAbbrv.localeCompare(b.TeamAbbrv);
+  };
+
+  const teams = teamsData.sort(sortFunc).map((team, index) => (
+    <tr
+      key={team.TeamID}
+      className="odd:bg-neutral-300 hover:cursor-pointer"
+      style={{
+        borderBottom: teamStats?.StandingLines.includes((index + 1).toString())
+          ? "1px solid black"
+          : "",
+      }}
+      onClick={() => {
+        router.push(
+          `/team?teamid=${team.TeamID}&associationid=${team.AssociationID}`
+        );
+      }}
+    >
+      <Cell>{index + 1}</Cell>
+      <Cell>{team.TeamAbbrv}</Cell>
+      <Cell>{team.TeamGames}</Cell>
+      <Cell>{team.TeamWins}</Cell>
+      <Cell>{team.TeamTies}</Cell>
+      <Cell>{team.TeamLosses}</Cell>
+      <Cell>{team.TeamGoalsFor}</Cell>
+      <Cell>-</Cell>
+      <Cell>{team.TeamGoalsAgainst}</Cell>
+      <Cell>{team.TeamPenaltyMin}</Cell>
+      <Cell className="font-bold">{team.TeamPoints}</Cell>
+    </tr>
+  ));
 
   return (
     <div>

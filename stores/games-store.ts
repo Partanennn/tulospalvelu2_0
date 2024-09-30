@@ -1,4 +1,4 @@
-import { GameDay } from "@/app/api/gamesPerDay/route";
+import { GameDay } from "@/app/_actions/gamesPerDayAction";
 import { create } from "zustand";
 
 export type Game = {

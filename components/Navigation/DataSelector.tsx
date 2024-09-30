@@ -1,14 +1,34 @@
 "use client";
 
-import { Level } from "@/app/api/levels/route";
-import useFetch from "@/hooks/useFetch";
+import {
+  getGroupsAction,
+  getLevelsAction,
+  getSeasonsAction,
+} from "@/app/_actions/actions";
 import { Group, useGroupStore } from "@/stores/group-store";
-import { useLevelStore } from "@/stores/level-store";
+import { Level, useLevelStore } from "@/stores/level-store";
 import { Season, useSeasonStore } from "@/stores/season-store";
-import { useEffect } from "react";
+import { getCookie, setCookie } from "@/utils/cookies";
+import { useEffect, useState } from "react";
 import Select from "../Select";
 
+const DEFAULT_SEASON: Season = {
+  SeasonName: "2024-2025",
+  SeasonNumber: "2025",
+};
+const DEFAULT_LEVEL: Level = {
+  LevelID: "65",
+  LevelName: "Mestis",
+};
+const DEFAULT_GROUP: Group = {
+  StatGroupID: "168",
+  StatGroupName: "Mestis",
+};
+
 const DataSelector = () => {
+  const [isLevelFirstFetch, setIsLevelFirstFetch] = useState(true);
+  const [isGroupFirstFetch, setIsGroupFirstFetch] = useState(true);
+
   const { levels, selectedLevel, updateLevels, updateSelectedLevel } =
     useLevelStore();
   const { selectedSeason, seasons, updateSelectedSeason, updateSeasons } =
@@ -16,43 +36,92 @@ const DataSelector = () => {
   const { groups, selectedGroup, updateGroups, updateSelectedGroup } =
     useGroupStore();
 
-  const { data: seasonsData } = useFetch<Season[]>("/api/seasons");
-  const { data: levelsData } = useFetch<Level[]>("/api/levels", {
-    method: "POST",
-    body: JSON.stringify(selectedSeason?.SeasonNumber ?? "2025"),
-  });
-  const { data: groupsData } = useFetch<Group[]>("/api/groups", {
-    method: "POST",
-    body: JSON.stringify({
-      season: selectedSeason?.SeasonNumber,
-      levelId: selectedLevel?.LevelID ?? "65",
-    }),
-  });
-
   useEffect(() => {
-    if (seasonsData) {
-      updateSeasons(seasonsData);
-      const selected = seasonsData.length > 0 ? seasonsData[0] : null;
-      updateSelectedSeason(selected);
-    }
-  }, [seasonsData, updateSelectedSeason, updateSeasons]);
+    // Set values from cookies on first fetch
+    const getSeasonsValues = async () => {
+      const seasonsData = await getSeasonsAction();
+      const seasonCookie = getCookie<Season>("season") ?? DEFAULT_SEASON;
 
+      const levelsData = await getLevelsAction(seasonCookie);
+      const levelCookie = getCookie<Level>("level") ?? DEFAULT_LEVEL;
+
+      const groupsData = await getGroupsAction(seasonCookie, levelCookie);
+      const groupCookie = getCookie<Group>("group") ?? DEFAULT_GROUP;
+
+      if (seasonsData) {
+        updateSeasons(seasonsData);
+        updateSelectedSeason(seasonCookie);
+      }
+
+      if (levelsData) {
+        updateLevels(levelsData);
+        updateSelectedLevel(levelCookie);
+      }
+
+      if (groupsData) {
+        updateGroups(groupsData);
+        updateSelectedGroup(groupCookie);
+      }
+    };
+    getSeasonsValues();
+  }, []);
+
+  // Level handler
   useEffect(() => {
-    if (levelsData) {
-      updateLevels(levelsData);
+    if (selectedSeason) {
+      const getLevels = async () => {
+        const data = await getLevelsAction(selectedSeason);
 
-      const selected = levelsData.length > 0 ? levelsData[0] : null;
-      updateSelectedLevel(selected);
+        if (data) {
+          updateLevels(data);
+
+          // Don't overwrite selected level on first time
+          if (isLevelFirstFetch) {
+            setIsLevelFirstFetch(false);
+          } else {
+            updateSelectedLevel(data[0]);
+          }
+        }
+      };
+      getLevels();
     }
-  }, [levelsData, updateSelectedLevel, updateLevels]);
+  }, [selectedSeason]);
 
+  // Group handler
   useEffect(() => {
-    if (groupsData) {
-      updateGroups(groupsData);
-      const selected = groupsData.length > 0 ? groupsData[0] : null;
-      updateSelectedGroup(selected);
+    if (selectedLevel && selectedSeason) {
+      const getGroups = async () => {
+        const seasonCookie = getCookie<Season>("season") ?? DEFAULT_SEASON;
+        const levelCookie = getCookie<Level>("level") ?? DEFAULT_LEVEL;
+
+        const data = await getGroupsAction(
+          selectedSeason ?? seasonCookie,
+          selectedLevel ?? levelCookie
+        );
+
+        if (data) {
+          updateGroups(data);
+
+          // Don't overwrite selected group on first time
+          if (isGroupFirstFetch) {
+            setIsGroupFirstFetch(false);
+          } else {
+            updateSelectedGroup(data[0]);
+          }
+        }
+      };
+      getGroups();
     }
-  }, [groupsData, updateGroups, updateSelectedGroup]);
+  }, [selectedSeason, selectedLevel]);
+
+  // Cookie update
+  useEffect(() => {
+    if (selectedSeason && selectedLevel && selectedGroup) {
+      setCookie("season", selectedSeason);
+      setCookie("level", selectedLevel);
+      setCookie("group", selectedGroup);
+    }
+  }, [selectedSeason, selectedLevel, selectedGroup]);
 
   return (
     <div className="flex flex-wrap flex-col gap-[2rem] justify-center items-center 2xl:flex-row text-white">

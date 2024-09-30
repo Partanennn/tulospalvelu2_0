@@ -1,4 +1,9 @@
-import { GET_SERIE_INFO_URL } from "../_lib/urls";
+"use server";
+
+import { Group } from "@/stores/group-store";
+import { Level } from "@/stores/level-store";
+import { Season } from "@/stores/season-store";
+import { GET_SERIE_INFO_URL } from "../api/_lib/urls";
 
 export type SerieInfo = {
   BeginDate: string;
@@ -56,22 +61,24 @@ type GameRules = {
   TimeOnIce: number;
 };
 
-export const POST = async (req: Request) => {
+export const getSerieInfo = async (
+  season: Season,
+  level: Level,
+  group: Group
+): Promise<SerieInfo | null> => {
   const url = GET_SERIE_INFO_URL;
 
-  const reqBody = await req.json();
-
   const body = new FormData();
-  body.append("season", reqBody.season);
-  body.append("stgid", reqBody.stgid);
-  body.append("levelid", reqBody.levelid);
+  body.append("season", season.SeasonNumber);
+  body.append("stgid", group.StatGroupID);
+  body.append("levelid", level.LevelID);
 
   const res = await fetch(url, {
     method: "POST",
     body: body,
   });
 
-  const data = await res.json();
+  const data: SerieInfo | null = await res.json();
 
-  return Response.json(data);
+  return data;
 };

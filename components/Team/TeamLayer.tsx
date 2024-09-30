@@ -1,6 +1,6 @@
 "use client";
 
-import useFetch from "@/hooks/useFetch";
+import { teamInfoAction } from "@/app/_actions/teamInfoAction";
 import { useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
@@ -15,6 +15,7 @@ import TopScorersTable from "./Tables/TopScorersTable";
 
 const TeamLayer = () => {
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
+  const [data, setData] = useState<TeamInfo | null>(null);
 
   const { selectedSeason } = useSeasonStore();
   const { selectedLevel } = useLevelStore();
@@ -24,14 +25,19 @@ const TeamLayer = () => {
   const params = useSearchParams();
   const router = useRouter();
 
-  const { data } = useFetch<TeamInfo>("/api/teaminfo", {
-    method: "POST",
-    body: JSON.stringify({
-      teamId: params.get("teamid"),
-      associationId: params.get("associationid"),
-      seasonNumber: selectedSeason?.SeasonNumber,
-    }),
-  });
+  useEffect(() => {
+    if (selectedSeason && params.get("teamid") && params.get("associationid")) {
+      const getData = async () => {
+        const data = await teamInfoAction({
+          associationId: params.get("associationid") ?? "",
+          season: selectedSeason,
+          teamId: params.get("teamid") ?? "",
+        });
+        setData(data);
+      };
+      getData();
+    }
+  }, [selectedSeason, params]);
 
   useEffect(() => {
     if (params.get("teamid")) {

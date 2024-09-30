@@ -1,10 +1,13 @@
 "use client";
 
+import {
+  PlayerStats,
+  playerStatsAction,
+  PlayerStatsBase,
+} from "@/app/_actions/playerStatsAction";
 import { PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
-import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
-import { PlayerStats, PlayerStatsBase } from "@/utils/types";
 import { useEffect, useState } from "react";
 import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
@@ -14,27 +17,31 @@ import TableHeaderRow from "../Table/TableHeaderRow";
 import TableTitleRow from "../Table/TableTitleRow";
 
 const PlayerTotalPoints = () => {
-  const [tempData, setTempData] = useState<PlayerStats[]>([]);
+  const [showData, setShowData] = useState<PlayerStats[] | null>([]);
+  const [data, setData] = useState<PlayerStatsBase | null>(null);
 
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
 
-  const { data } = useFetch<PlayerStatsBase>("/api/playerStats", {
-    method: "POST",
-    body: JSON.stringify({
-      season: selectedSeason?.SeasonNumber,
-      stgid: selectedGroup?.StatGroupID,
-      sortedBy: "PlayerPoints",
-    }),
-  });
-
   useEffect(() => {
-    if (data) {
-      setTempData(data.Players);
-    }
-  }, [data]);
+    if (selectedSeason && selectedGroup) {
+      const getData = async () => {
+        const playerStats = await playerStatsAction({
+          group: selectedGroup,
+          season: selectedSeason,
+          sortedBy: "PlayerPoints",
+        });
 
-  const items = tempData.map((player) => (
+        if (playerStats) {
+          setData(playerStats);
+          setShowData(playerStats.Players);
+        }
+      };
+      getData();
+    }
+  }, [selectedSeason, selectedGroup]);
+
+  const items = showData?.map((player) => (
     <tr
       key={player.PlayerID}
       className="odd:bg-neutral-500 even: bg-neutral-300"
@@ -69,15 +76,15 @@ const PlayerTotalPoints = () => {
         <thead>
           <TableHeaderRow
             onClick={() => {
-              if (tempData.length > 0) {
-                setTempData([]);
+              if (showData && showData.length > 0) {
+                setShowData([]);
               } else if (
                 data &&
-                data.Players &&
+                showData &&
                 data.Players.length > 0 &&
-                tempData.length === 0
+                showData.length === 0
               ) {
-                setTempData(data.Players);
+                setShowData(data.Players);
               }
             }}
           >

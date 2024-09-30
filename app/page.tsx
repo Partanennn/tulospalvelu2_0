@@ -6,8 +6,8 @@ const Tulospalvelu = async () => {
   return (
     <div className="flex flex-col flex-wrap justify-evenly items-center pt-7 gap-4 2xl:flex-row 2xl:items-start">
       <Scoreboard />
-      <GamesTable header="Tulevat Ottelut" gameDays="incoming" />
       <PlayerTotalPoints />
+      <GamesTable header="Tulevat Ottelut" gameDays="incoming" />
     </div>
   );
 };

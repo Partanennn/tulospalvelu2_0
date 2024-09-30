@@ -42,7 +42,7 @@ const Standings = () => {
       key={team.TeamID}
       className="odd:bg-neutral-300 hover:cursor-pointer"
       style={{
-        borderBottom: teamStats?.StandingLines.includes((index + 1).toString())
+        borderBottom: teamStats?.StandingLines?.includes((index + 1).toString())
           ? "1px solid black"
           : "",
       }}

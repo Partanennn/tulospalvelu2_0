@@ -1,5 +1,5 @@
 import GamesTable from "@/components/GamesTable";
-import PlayerTotalPoints from "@/components/Players/PlayerTotalPoints";
+import PlayerTotalPoints from "@/components/PlayerStats/TotalPoints";
 import Scoreboard from "@/components/Standings";
 
 export const revalidate = 60;

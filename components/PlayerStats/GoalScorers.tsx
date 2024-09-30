@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  PlayerStats,
+  playerStatsAction,
+  PlayerStatsBase,
+} from "@/app/_actions/playerStatsAction";
 import { PLAYER_EXTERNAL_URL, PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
@@ -11,13 +16,8 @@ import HiddableHeaderCell from "../Table/HiddableHeaderCell";
 import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 import TableTitleRow from "../Table/TableTitleRow";
-import {
-  PlayerStats,
-  playerStatsAction,
-  PlayerStatsBase,
-} from "@/app/_actions/playerStatsAction";
 
-const PlayerGoalScorers = () => {
+const GoalScorers = () => {
   const [data, setData] = useState<PlayerStatsBase | null>(null);
   const [showData, setShowData] = useState<PlayerStats[] | null>([]);
 
@@ -108,4 +108,4 @@ const PlayerGoalScorers = () => {
   );
 };
 
-export default PlayerGoalScorers;
+export default GoalScorers;

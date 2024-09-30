@@ -5,19 +5,20 @@ import {
   playerStatsAction,
   PlayerStatsBase,
 } from "@/app/_actions/playerStatsAction";
-import { PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
+import { PLAYER_EXTERNAL_URL, PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { useEffect, useState } from "react";
 import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
 import HiddableCell from "../Table/HiddableCell";
+import HiddableHeaderCell from "../Table/HiddableHeaderCell";
 import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 import TableTitleRow from "../Table/TableTitleRow";
 
-const PlayerTotalPoints = () => {
-  const [showData, setShowData] = useState<PlayerStats[] | null>([]);
+const PenaltyStats = () => {
+  const [showData, setShowData] = useState<PlayerStats[]>([]);
   const [data, setData] = useState<PlayerStatsBase | null>(null);
 
   const { selectedSeason } = useSeasonStore();
@@ -26,22 +27,22 @@ const PlayerTotalPoints = () => {
   useEffect(() => {
     if (selectedSeason && selectedGroup) {
       const getData = async () => {
-        const playerStats = await playerStatsAction({
+        const data = await playerStatsAction({
           group: selectedGroup,
           season: selectedSeason,
-          sortedBy: "PlayerPoints",
+          sortedBy: "PlayerGoals",
         });
 
-        if (playerStats) {
-          setData(playerStats);
-          setShowData(playerStats.Players);
+        if (data) {
+          setData(data);
+          setShowData(data.Players);
         }
       };
       getData();
     }
   }, [selectedSeason, selectedGroup]);
 
-  const items = showData?.map((player) => (
+  const items = showData.map((player) => (
     <tr
       key={player.PlayerID}
       className="odd:bg-neutral-500 even: bg-neutral-300"
@@ -57,16 +58,19 @@ const PlayerTotalPoints = () => {
       </HiddableCell>
       <HiddableCell>#{player.JerseyNr}</HiddableCell>
       <Cell noTextCenter>
-        <div className="flex gap-0 sm:gap-2 px-0">
-          <div className="hidden sm:block">{player.FirstName}</div>
-          <div>{player.LastName}</div>
-        </div>
+        <a
+          className="hover:cursor-pointer"
+          target="_blank"
+          href={`${PLAYER_EXTERNAL_URL}${player.LinkID}`}
+        >
+          {player.FirstName} {player.LastName}
+        </a>
       </Cell>
       <Cell>{player.CurrentTeam}</Cell>
-      <Cell className="text-center">{player.PlayerGames}</Cell>
-      <Cell className="text-center">{player.PlayerGoals}</Cell>
-      <Cell className="text-center">{player.PlayerAssists}</Cell>
-      <Cell className="font-bold text-center">{player.PlayerPoints}</Cell>
+      <Cell>{player.PlayerGames}</Cell>
+      <HiddableCell>{player.PlayerPen20Min}</HiddableCell>
+      <Cell>{player.PlayerPen2Min}</Cell>
+      <Cell className="font-bold">{player.PlayerPenaltyMin}</Cell>
     </tr>
   ));
 
@@ -76,11 +80,11 @@ const PlayerTotalPoints = () => {
         <thead>
           <TableHeaderRow
             onClick={() => {
-              if (showData && showData.length > 0) {
+              if (showData.length > 0) {
                 setShowData([]);
               } else if (
                 data &&
-                showData &&
+                data.Players &&
                 data.Players.length > 0 &&
                 showData.length === 0
               ) {
@@ -88,17 +92,17 @@ const PlayerTotalPoints = () => {
               }
             }}
           >
-            <TableHeader colSpan={10}>Pistepörssi</TableHeader>
+            <TableHeader colSpan={8}>Jäähypörssi</TableHeader>
           </TableHeaderRow>
           <TableTitleRow>
-            <HiddableCell> </HiddableCell>
-            <HiddableCell> </HiddableCell>
+            <HiddableHeaderCell> </HiddableHeaderCell>
+            <HiddableHeaderCell> </HiddableHeaderCell>
             <Cell>Pelaaja</Cell>
             <Cell>Joukkue</Cell>
             <Cell>O</Cell>
-            <Cell>M</Cell>
-            <Cell>S</Cell>
-            <Cell>Pisteet</Cell>
+            <HiddableHeaderCell>PR</HiddableHeaderCell>
+            <Cell>2min</Cell>
+            <Cell>Yht</Cell>
           </TableTitleRow>
         </thead>
         <tbody>{items}</tbody>
@@ -107,4 +111,4 @@ const PlayerTotalPoints = () => {
   );
 };
 
-export default PlayerTotalPoints;
+export default PenaltyStats;

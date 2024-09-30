@@ -24,3 +24,9 @@ export const GET_TEAM_META_DATA_URL =
   "https://www.leijonat.fi/modules/mod_teamcardmain/helper/getteammaindata.php";
 export const PLAYER_EXTERNAL_URL =
   "https://www.leijonat.fi/index.php/pelaajat?lkq=";
+export const PLAYER_BASIC_INFO_URL =
+  "https://www.leijonat.fi/modules/mod_playercardmain/helper/getplayerbasicdata6.php?lkq=";
+export const PLAYER_SEASON_DATA_URL =
+  "https://www.leijonat.fi/modules/mod_playercardmain/helper/getseasonstatsdata.php";
+export const PLAYER_ALL_STATS_URL =
+  "https://www.leijonat.fi/modules/mod_playercardallstats/helper/getplayerallstats5.php?lkq=";

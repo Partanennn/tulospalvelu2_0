@@ -37,7 +37,7 @@ const DataSelector = () => {
     useGroupStore();
 
   useEffect(() => {
-    // GET COOKIES
+    // Set values from cookies on first fetch
     const getSeasonsValues = async () => {
       const seasonsData = await getSeasonsAction();
       const seasonCookie = getCookie<Season>("season") ?? DEFAULT_SEASON;
@@ -47,12 +47,6 @@ const DataSelector = () => {
 
       const groupsData = await getGroupsAction(seasonCookie, levelCookie);
       const groupCookie = getCookie<Group>("group") ?? DEFAULT_GROUP;
-
-      console.log({
-        seasonCookie,
-        levelCookie,
-        groupCookie,
-      });
 
       if (seasonsData) {
         updateSeasons(seasonsData);
@@ -76,13 +70,12 @@ const DataSelector = () => {
   useEffect(() => {
     if (selectedSeason) {
       const getLevels = async () => {
-        const seasonCookie = getCookie<Season>("season") ?? DEFAULT_SEASON;
-        const levelCookie = getCookie<Level>("level") ?? DEFAULT_LEVEL;
         const data = await getLevelsAction(selectedSeason);
 
         if (data) {
           updateLevels(data);
 
+          // Don't overwrite selected level on first time
           if (isLevelFirstFetch) {
             setIsLevelFirstFetch(false);
           } else {
@@ -100,14 +93,6 @@ const DataSelector = () => {
       const getGroups = async () => {
         const seasonCookie = getCookie<Season>("season") ?? DEFAULT_SEASON;
         const levelCookie = getCookie<Level>("level") ?? DEFAULT_LEVEL;
-        const groupCookie = getCookie<Group>("group") ?? DEFAULT_GROUP;
-
-        console.log("GETTER: ", {
-          level: getCookie<Level>("level"),
-          levelCookie,
-          group: getCookie<Group>("group"),
-          groupCookie,
-        });
 
         const data = await getGroupsAction(
           selectedSeason ?? seasonCookie,
@@ -117,6 +102,7 @@ const DataSelector = () => {
         if (data) {
           updateGroups(data);
 
+          // Don't overwrite selected group on first time
           if (isGroupFirstFetch) {
             setIsGroupFirstFetch(false);
           } else {
@@ -134,7 +120,6 @@ const DataSelector = () => {
       setCookie("season", selectedSeason);
       setCookie("level", selectedLevel);
       setCookie("group", selectedGroup);
-      console.log("SETTER: ", { selectedLevel, selectedSeason, selectedGroup });
     }
   }, [selectedSeason, selectedLevel, selectedGroup]);
 

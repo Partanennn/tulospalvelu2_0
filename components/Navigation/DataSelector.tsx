@@ -162,10 +162,6 @@ const DataSelector = () => {
           const selected = groups.find(
             (group) => group.StatGroupName === value
           );
-          console.log("Group: ", {
-            selected,
-            first: groups[0],
-          });
           updateSelectedGroup(selected ?? groups[0]);
         }}
       />

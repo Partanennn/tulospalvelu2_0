@@ -37,7 +37,7 @@ const LogoSlider = () => {
   const { selectedLevel } = useLevelStore();
 
   useEffect(() => {
-    if (selectedSeason && selectedGroup && selectedLevel) {
+    if (selectedSeason && selectedGroup) {
       // TODO: Move to layout etc.
       const getStandings = async () => {
         const data = await getTeamStats({

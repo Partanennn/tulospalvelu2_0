@@ -1,6 +1,6 @@
 "use client";
 
-import useFetch from "@/hooks/useFetch";
+import { teamInfoAction } from "@/app/_actions/teamInfoAction";
 import { useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
@@ -12,7 +12,6 @@ import ContactPersonTable from "./Tables/ContactPersonTable";
 import PlayersTable from "./Tables/PlayersTable";
 import TeamGamesTable from "./Tables/TeamGamesTable";
 import TopScorersTable from "./Tables/TopScorersTable";
-import { teamInfoAction } from "@/app/_actions/teamInfoAction";
 
 const TeamLayer = () => {
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);

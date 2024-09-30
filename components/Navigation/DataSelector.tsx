@@ -8,6 +8,7 @@ import {
 import { Group, useGroupStore } from "@/stores/group-store";
 import { Level, useLevelStore } from "@/stores/level-store";
 import { Season, useSeasonStore } from "@/stores/season-store";
+import { getCookie, setCookie } from "@/utils/cookies";
 import { useEffect, useState } from "react";
 import Select from "../Select";
 
@@ -36,30 +37,30 @@ const DataSelector = () => {
     useGroupStore();
 
   useEffect(() => {
-    // GET COOKIES
+    // Set values from cookies on first fetch
     const getSeasonsValues = async () => {
       const seasonsData = await getSeasonsAction();
-      const seasonValue = DEFAULT_SEASON;
+      const seasonCookie = getCookie<Season>("season") ?? DEFAULT_SEASON;
 
-      const levelsData = await getLevelsAction(seasonValue);
-      const levelValue = DEFAULT_LEVEL;
+      const levelsData = await getLevelsAction(seasonCookie);
+      const levelCookie = getCookie<Level>("level") ?? DEFAULT_LEVEL;
 
-      const groupsData = await getGroupsAction(seasonValue, levelValue);
-      const groupValue = DEFAULT_GROUP;
+      const groupsData = await getGroupsAction(seasonCookie, levelCookie);
+      const groupCookie = getCookie<Group>("group") ?? DEFAULT_GROUP;
 
       if (seasonsData) {
         updateSeasons(seasonsData);
-        updateSelectedSeason(seasonValue);
+        updateSelectedSeason(seasonCookie);
       }
 
       if (levelsData) {
         updateLevels(levelsData);
-        updateSelectedLevel(levelValue);
+        updateSelectedLevel(levelCookie);
       }
 
       if (groupsData) {
         updateGroups(groupsData);
-        updateSelectedGroup(groupValue);
+        updateSelectedGroup(groupCookie);
       }
     };
     getSeasonsValues();
@@ -74,6 +75,7 @@ const DataSelector = () => {
         if (data) {
           updateLevels(data);
 
+          // Don't overwrite selected level on first time
           if (isLevelFirstFetch) {
             setIsLevelFirstFetch(false);
           } else {
@@ -89,11 +91,18 @@ const DataSelector = () => {
   useEffect(() => {
     if (selectedLevel && selectedSeason) {
       const getGroups = async () => {
-        const data = await getGroupsAction(selectedSeason, selectedLevel);
+        const seasonCookie = getCookie<Season>("season") ?? DEFAULT_SEASON;
+        const levelCookie = getCookie<Level>("level") ?? DEFAULT_LEVEL;
+
+        const data = await getGroupsAction(
+          selectedSeason ?? seasonCookie,
+          selectedLevel ?? levelCookie
+        );
 
         if (data) {
           updateGroups(data);
 
+          // Don't overwrite selected group on first time
           if (isGroupFirstFetch) {
             setIsGroupFirstFetch(false);
           } else {
@@ -104,6 +113,15 @@ const DataSelector = () => {
       getGroups();
     }
   }, [selectedSeason, selectedLevel]);
+
+  // Cookie update
+  useEffect(() => {
+    if (selectedSeason && selectedLevel && selectedGroup) {
+      setCookie("season", selectedSeason);
+      setCookie("level", selectedLevel);
+      setCookie("group", selectedGroup);
+    }
+  }, [selectedSeason, selectedLevel, selectedGroup]);
 
   return (
     <div className="flex flex-wrap flex-col gap-[2rem] justify-center items-center 2xl:flex-row text-white">

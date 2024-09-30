@@ -1,47 +1,36 @@
 "use client";
-import { getTeamStats } from "@/app/_actions/teamStatsAction";
-import { useGroupStore } from "@/stores/group-store";
+
 import { useSeasonStore } from "@/stores/season-store";
-import { useTeamStatsStore } from "@/stores/team-stats-store";
+import { Team, useTeamStatsStore } from "@/stores/team-stats-store";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Cell from "./Table/Cell";
 import TableHeader from "./Table/TableHeader";
 import TableHeaderRow from "./Table/TableHeaderRow";
 
 const Standings = () => {
+  const [teamsData, setTeamsData] = useState<Team[]>([]);
   const router = useRouter();
 
+  const { teamStats } = useTeamStatsStore();
   const { selectedSeason } = useSeasonStore();
-  const { teamStats, updateTeamStats } = useTeamStatsStore();
-  const { selectedGroup } = useGroupStore();
-
-  const stats = teamStats ? { ...teamStats } : null;
 
   useEffect(() => {
-    if (selectedSeason && selectedGroup && !teamStats) {
-      // TODO: Move to layout etc.
-      const getStandings = async () => {
-        const data = await getTeamStats({
-          groupId: selectedGroup.StatGroupID,
-          seasonId: selectedSeason.SeasonNumber,
-        });
-
-        if (data) {
-          updateTeamStats(data);
-        }
-      };
-      getStandings();
+    if (teamStats) {
+      setTeamsData([...teamStats.Teams]);
     }
-  }, [selectedSeason, selectedGroup]);
+  }, [teamStats]);
 
-  const teams = stats?.Teams?.sort((a, b) => b.TeamPoints - a.TeamPoints).map(
-    (team, index) => (
+  const teams = teamsData
+    .sort((a, b) => b.TeamPoints - a.TeamPoints)
+    .map((team, index) => (
       <tr
         key={team.TeamID}
         className="odd:bg-neutral-300 hover:cursor-pointer"
         style={{
-          borderBottom: stats.StandingLines.includes((index + 1).toString())
+          borderBottom: teamStats?.StandingLines.includes(
+            (index + 1).toString()
+          )
             ? "1px solid black"
             : "",
         }}
@@ -63,8 +52,7 @@ const Standings = () => {
         <Cell>{team.TeamPenaltyMin}</Cell>
         <Cell className="font-bold">{team.TeamPoints}</Cell>
       </tr>
-    )
-  );
+    ));
 
   return (
     <div>

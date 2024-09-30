@@ -31,14 +31,13 @@ const LogoSlider = () => {
   const [iconsEnd, setIconsEnd] = useState(ICONS_SHOWN_COUNT);
   const { height, width } = useWindowSize();
 
-  const { teamStats: standings, updateTeamStats: updateStanding } =
-    useTeamStatsStore();
+  const { teamStats, updateTeamStats } = useTeamStatsStore();
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
   const { selectedLevel } = useLevelStore();
 
   useEffect(() => {
-    if (selectedSeason && selectedGroup && !standings) {
+    if (selectedSeason && selectedGroup && selectedLevel) {
       // TODO: Move to layout etc.
       const getStandings = async () => {
         const data = await getTeamStats({
@@ -47,14 +46,14 @@ const LogoSlider = () => {
         });
 
         if (data) {
-          updateStanding(data);
+          updateTeamStats(data);
         }
       };
       getStandings();
     }
   }, [selectedSeason, selectedGroup]);
 
-  const logos = standings?.Teams.slice(iconsStart, iconsEnd).map((team) => {
+  const logos = teamStats?.Teams.slice(iconsStart, iconsEnd).map((team) => {
     return (
       <MyImage
         key={team.TeamID}
@@ -117,7 +116,7 @@ const LogoSlider = () => {
         />
       ) : null}
       {logos}
-      {standings?.Teams && iconsEnd < standings?.Teams?.length ? (
+      {teamStats?.Teams && iconsEnd < teamStats?.Teams?.length ? (
         <MyImage
           src={arrowIcon}
           alt="right arrow icon"
@@ -125,7 +124,7 @@ const LogoSlider = () => {
           height={30}
           width={30}
           onClick={() => {
-            if (standings?.Teams && iconsEnd < standings?.Teams?.length) {
+            if (teamStats?.Teams && iconsEnd < teamStats?.Teams?.length) {
               setIconsEnd((oldValue) => oldValue + 1);
               setIconsStart((oldValue) => oldValue + 1);
             }

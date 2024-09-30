@@ -8,7 +8,7 @@ import {
 import { Group, useGroupStore } from "@/stores/group-store";
 import { Level, useLevelStore } from "@/stores/level-store";
 import { Season, useSeasonStore } from "@/stores/season-store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Select from "../Select";
 
 const DEFAULT_SEASON: Season = {
@@ -16,15 +16,18 @@ const DEFAULT_SEASON: Season = {
   SeasonNumber: "2025",
 };
 const DEFAULT_LEVEL: Level = {
-  LevelID: "98",
-  LevelName: "U14 AA",
+  LevelID: "65",
+  LevelName: "Mestis",
 };
 const DEFAULT_GROUP: Group = {
-  StatGroupID: "6430",
-  StatGroupName: "U14 AA alkusarja, lohko 2",
+  StatGroupID: "168",
+  StatGroupName: "Mestis",
 };
 
 const DataSelector = () => {
+  const [isLevelFirstFetch, setIsLevelFirstFetch] = useState(true);
+  const [isGroupFirstFetch, setIsGroupFirstFetch] = useState(true);
+
   const { levels, selectedLevel, updateLevels, updateSelectedLevel } =
     useLevelStore();
   const { selectedSeason, seasons, updateSelectedSeason, updateSeasons } =
@@ -33,9 +36,8 @@ const DataSelector = () => {
     useGroupStore();
 
   useEffect(() => {
+    // GET COOKIES
     const getSeasonsValues = async () => {
-      // GET COOKIES
-
       const seasonsData = await getSeasonsAction();
       const seasonValue = DEFAULT_SEASON;
 
@@ -63,15 +65,18 @@ const DataSelector = () => {
     getSeasonsValues();
   }, []);
 
+  // Level handler
   useEffect(() => {
     if (selectedSeason) {
       const getLevels = async () => {
-        const data = await getLevelsAction(selectedSeason ?? DEFAULT_LEVEL);
+        const data = await getLevelsAction(selectedSeason);
 
         if (data) {
           updateLevels(data);
 
-          if (selectedLevel !== DEFAULT_LEVEL) {
+          if (isLevelFirstFetch) {
+            setIsLevelFirstFetch(false);
+          } else {
             updateSelectedLevel(data[0]);
           }
         }
@@ -80,25 +85,25 @@ const DataSelector = () => {
     }
   }, [selectedSeason]);
 
+  // Group handler
   useEffect(() => {
     if (selectedLevel && selectedSeason) {
       const getGroups = async () => {
-        const data = await getGroupsAction(
-          selectedSeason ?? DEFAULT_SEASON,
-          selectedLevel ?? DEFAULT_LEVEL
-        );
+        const data = await getGroupsAction(selectedSeason, selectedLevel);
 
         if (data) {
           updateGroups(data);
 
-          if (selectedGroup !== DEFAULT_GROUP) {
+          if (isGroupFirstFetch) {
+            setIsGroupFirstFetch(false);
+          } else {
             updateSelectedGroup(data[0]);
           }
         }
       };
       getGroups();
     }
-  }, [selectedLevel, selectedSeason]);
+  }, [selectedSeason, selectedLevel]);
 
   return (
     <div className="flex flex-wrap flex-col gap-[2rem] justify-center items-center 2xl:flex-row text-white">
@@ -139,6 +144,10 @@ const DataSelector = () => {
           const selected = groups.find(
             (group) => group.StatGroupName === value
           );
+          console.log("Group: ", {
+            selected,
+            first: groups[0],
+          });
           updateSelectedGroup(selected ?? groups[0]);
         }}
       />

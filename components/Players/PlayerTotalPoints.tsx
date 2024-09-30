@@ -1,7 +1,11 @@
 "use client";
 
+import {
+  PlayerStats,
+  playerStatsAction,
+  PlayerStatsBase,
+} from "@/app/_actions/playerStatsAction";
 import { PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
-import useFetch from "@/hooks/useFetch";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { useEffect, useState } from "react";
@@ -11,11 +15,6 @@ import HiddableCell from "../Table/HiddableCell";
 import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 import TableTitleRow from "../Table/TableTitleRow";
-import {
-  PlayerStats,
-  playerStatsAction,
-  PlayerStatsBase,
-} from "@/app/_actions/playerStatsAction";
 
 const PlayerTotalPoints = () => {
   const [showData, setShowData] = useState<PlayerStats[] | null>([]);
@@ -34,6 +33,7 @@ const PlayerTotalPoints = () => {
         });
 
         if (playerStats) {
+          setData(playerStats);
           setShowData(playerStats.Players);
         }
       };

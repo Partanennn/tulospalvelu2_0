@@ -21,38 +21,50 @@ const Standings = () => {
     }
   }, [teamStats]);
 
-  const teams = teamsData
-    .sort((a, b) => b.TeamPoints - a.TeamPoints)
-    .map((team, index) => (
-      <tr
-        key={team.TeamID}
-        className="odd:bg-neutral-300 hover:cursor-pointer"
-        style={{
-          borderBottom: teamStats?.StandingLines.includes(
-            (index + 1).toString()
-          )
-            ? "1px solid black"
-            : "",
-        }}
-        onClick={() => {
-          router.push(
-            `/team?teamid=${team.TeamID}&associationid=${team.AssociationID}`
-          );
-        }}
-      >
-        <Cell>{index + 1}</Cell>
-        <Cell>{team.TeamAbbrv}</Cell>
-        <Cell>{team.TeamGames}</Cell>
-        <Cell>{team.TeamWins}</Cell>
-        <Cell>{team.TeamTies}</Cell>
-        <Cell>{team.TeamLosses}</Cell>
-        <Cell>{team.TeamGoalsFor}</Cell>
-        <Cell>-</Cell>
-        <Cell>{team.TeamGoalsAgainst}</Cell>
-        <Cell>{team.TeamPenaltyMin}</Cell>
-        <Cell className="font-bold">{team.TeamPoints}</Cell>
-      </tr>
-    ));
+  const sortFunc = (a: Team, b: Team) => {
+    if (a.TeamPoints !== b.TeamPoints) {
+      return b.TeamPoints - a.TeamPoints;
+    }
+
+    if (a.TeamGoalDiff !== b.TeamGoalDiff) {
+      return b.TeamGoalDiff - a.TeamGoalDiff;
+    }
+
+    if (a.TeamGoalsFor !== b.TeamGoalsFor) {
+      return b.TeamGoalsFor - a.TeamGoalsFor;
+    }
+
+    return a.TeamAbbrv.localeCompare(b.TeamAbbrv);
+  };
+
+  const teams = teamsData.sort(sortFunc).map((team, index) => (
+    <tr
+      key={team.TeamID}
+      className="odd:bg-neutral-300 hover:cursor-pointer"
+      style={{
+        borderBottom: teamStats?.StandingLines.includes((index + 1).toString())
+          ? "1px solid black"
+          : "",
+      }}
+      onClick={() => {
+        router.push(
+          `/team?teamid=${team.TeamID}&associationid=${team.AssociationID}`
+        );
+      }}
+    >
+      <Cell>{index + 1}</Cell>
+      <Cell>{team.TeamAbbrv}</Cell>
+      <Cell>{team.TeamGames}</Cell>
+      <Cell>{team.TeamWins}</Cell>
+      <Cell>{team.TeamTies}</Cell>
+      <Cell>{team.TeamLosses}</Cell>
+      <Cell>{team.TeamGoalsFor}</Cell>
+      <Cell>-</Cell>
+      <Cell>{team.TeamGoalsAgainst}</Cell>
+      <Cell>{team.TeamPenaltyMin}</Cell>
+      <Cell className="font-bold">{team.TeamPoints}</Cell>
+    </tr>
+  ));
 
   return (
     <div>

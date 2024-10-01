@@ -15,10 +15,13 @@ import HiddableCell from "../Table/HiddableCell";
 import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 import TableTitleRow from "../Table/TableTitleRow";
+import { useRouter } from "next/navigation";
 
 const TotalPoints = () => {
   const [showData, setShowData] = useState<PlayerStats[] | null>([]);
   const [data, setData] = useState<PlayerStatsBase | null>(null);
+
+  const router = useRouter();
 
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
@@ -57,7 +60,13 @@ const TotalPoints = () => {
       </HiddableCell>
       <HiddableCell>#{player.JerseyNr}</HiddableCell>
       <Cell noTextCenter>
-        <div className="flex gap-0 sm:gap-2 px-0">
+        <div
+          onClick={() => {
+            console.log(player.LinkID);
+            router.push(`/player?playerid=${player.LinkID}`);
+          }}
+          className="flex gap-0 sm:gap-2 px-0"
+        >
           <div className="hidden sm:block">{player.FirstName}</div>
           <div>{player.LastName}</div>
         </div>

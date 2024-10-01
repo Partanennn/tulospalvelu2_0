@@ -2,7 +2,7 @@ import PlayerStats from "@/components/Player/PlayerStats";
 
 const PlayerPage = () => {
   return (
-    <div>
+    <div className="flex justify-center">
       <PlayerStats />
     </div>
   );

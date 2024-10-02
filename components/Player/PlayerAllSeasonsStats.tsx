@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import Cell from "../Table/Cell";
-import TableRow from "../Table/TableRow";
-import TableTitleRow from "../Table/TableTitleRow";
-import { useSeasonStore } from "@/stores/season-store";
+import { PlayerBasicInfo } from "@/app/_actions/playerBasicInfoAction";
 import {
   playerSeasoDataAction,
   PlayerSeasonData,
 } from "@/app/_actions/playerSeasonDataAction";
-import { PlayerBasicInfo } from "@/app/_actions/playerBasicInfoAction";
+import { useSeasonStore } from "@/stores/season-store";
+import { useEffect, useState } from "react";
+import Cell from "../Table/Cell";
+import TableRow from "../Table/TableRow";
+import TableTitleRow from "../Table/TableTitleRow";
 
 type PlayerRecentStatsProps = {
   basicInfo: PlayerBasicInfo | null;
@@ -27,11 +27,6 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
           playerId: playerId,
           season: "2025",
         });
-        console.log({
-          age: basicInfo?.Age,
-          playerId,
-          season: seasons,
-        });
         setData(result);
       };
       getData();
@@ -48,7 +43,7 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
             <Cell>M</Cell>
             <Cell>S</Cell>
             <Cell>P</Cell>
-            <Cell>Vaihdot</Cell>
+            <Cell>JM</Cell>
           </TableTitleRow>
         </thead>
         <tbody>
@@ -58,7 +53,7 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
             <Cell>{data?.SkaterGoals ?? 0}</Cell>
             <Cell>{data?.SkaterAssists ?? 0}</Cell>
             <Cell>{data?.SkaterPoints ?? 0}</Cell>
-            <Cell>{data?.Skaterhifts ?? 0}</Cell>
+            <Cell>{data?.SkaterPenaltyMinutes ?? 0}min</Cell>
           </TableRow>
           <TableRow>
             <Cell>Pisteet Uralla</Cell>

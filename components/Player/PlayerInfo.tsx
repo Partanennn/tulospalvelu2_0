@@ -1,14 +1,15 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import {
   PlayerBasicInfo,
   playerBasicInfoAction,
 } from "@/app/_actions/playerBasicInfoAction";
+import { PLAYER_EXTERNAL_URL } from "@/app/api/_lib/urls";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import MyImage from "../MyImage";
-import BasicInfo from "./PlayerBasicInfo";
 import PlayerAllSeasonsStats from "./PlayerAllSeasonsStats";
+import BasicInfo from "./PlayerBasicInfo";
 
 const PlayerInfo = () => {
   const [basicInfo, setBasicInfo] = useState<PlayerBasicInfo | null>(null);
@@ -33,18 +34,20 @@ const PlayerInfo = () => {
 
   return (
     <div className="flex flex-col gap-5 items-center">
-      {basicInfo !== undefined && (
+      {basicInfo !== undefined && basicInfo?.PlayerIMG && (
         <MyImage
           alt={`${basicInfo?.FirstName} ${basicInfo?.LastName}`}
-          src={basicInfo?.PlayerIMG ?? ""}
+          src={basicInfo.PlayerIMG}
           width={100}
         />
       )}
 
       <div>
-        <p className="font-semibold">
-          {basicInfo?.FirstName} {basicInfo?.LastName}
-        </p>
+        <a href={`${PLAYER_EXTERNAL_URL}${params.get("playerid")}`}>
+          <p className="font-semibold">
+            {basicInfo?.FirstName} {basicInfo?.LastName}
+          </p>
+        </a>
       </div>
       <div className="flex flex-col justify-center items-center md:items-start gap-5 md:flex-row">
         <BasicInfo basicInfo={basicInfo} />

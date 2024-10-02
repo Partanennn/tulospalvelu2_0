@@ -1,9 +1,9 @@
-import PlayerStats from "@/components/Player/PlayerStats";
+import PlayerInfo from "@/components/Player/PlayerInfo";
 
 const PlayerPage = () => {
   return (
     <div className="flex justify-center">
-      <PlayerStats />
+      <PlayerInfo />
     </div>
   );
 };

@@ -16,10 +16,12 @@ import HiddableHeaderCell from "../Table/HiddableHeaderCell";
 import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 import TableTitleRow from "../Table/TableTitleRow";
+import { useRouter } from "next/navigation";
 
 const PenaltyStats = () => {
   const [showData, setShowData] = useState<PlayerStats[]>([]);
   const [data, setData] = useState<PlayerStatsBase | null>(null);
+  const router = useRouter();
 
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
@@ -30,7 +32,7 @@ const PenaltyStats = () => {
         const data = await playerStatsAction({
           group: selectedGroup,
           season: selectedSeason,
-          sortedBy: "PlayerGoals",
+          sortedBy: "PlayerPenaltyMin",
         });
 
         if (data) {
@@ -57,14 +59,14 @@ const PenaltyStats = () => {
         />
       </HiddableCell>
       <HiddableCell>#{player.JerseyNr}</HiddableCell>
-      <Cell noTextCenter>
-        <a
-          className="hover:cursor-pointer"
-          target="_blank"
-          href={`${PLAYER_EXTERNAL_URL}${player.LinkID}`}
-        >
-          {player.FirstName} {player.LastName}
-        </a>
+      <Cell
+        noTextCenter
+        className="hover:cursor-pointer"
+        onClick={() => {
+          router.push(`/player?playerid=${player.LinkID}`);
+        }}
+      >
+        {player.FirstName} {player.LastName}
       </Cell>
       <Cell>{player.CurrentTeam}</Cell>
       <Cell>{player.PlayerGames}</Cell>

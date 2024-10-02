@@ -59,14 +59,13 @@ const TotalPoints = () => {
         />
       </HiddableCell>
       <HiddableCell>#{player.JerseyNr}</HiddableCell>
-      <Cell noTextCenter>
-        <div
-          onClick={() => {
-            console.log(player.LinkID);
-            router.push(`/player?playerid=${player.LinkID}`);
-          }}
-          className="flex gap-0 sm:gap-2 px-0"
-        >
+      <Cell
+        noTextCenter
+        onClick={() => {
+          router.push(`/player?playerid=${player.LinkID}`);
+        }}
+      >
+        <div className="flex gap-0 px-0 hover:cursor-pointer sm:gap-2">
           <div className="hidden sm:block">{player.FirstName}</div>
           <div>{player.LastName}</div>
         </div>

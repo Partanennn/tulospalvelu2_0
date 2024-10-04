@@ -4,7 +4,7 @@ import {
   PlayerBasicInfo,
   playerBasicInfoAction,
 } from "@/app/_actions/playerBasicInfoAction";
-import { PLAYER_EXTERNAL_URL } from "@/app/api/_lib/urls";
+import { PLAYER_EXTERNAL_URL } from "@/app/_lib/urls";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import MyImage from "../MyImage";

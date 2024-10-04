@@ -1,6 +1,6 @@
 "use server";
 
-import { PLAYER_SEASONS_DATA_URL } from "../api/_lib/urls";
+import { PLAYER_SEASONS_DATA_URL } from "../_lib/urls";
 
 export type PlayerSeasonsData = {
   GoalKeeper: PlayerSeasonsDataInfo[];

@@ -1,8 +1,8 @@
 "use server";
 
 import { Season } from "@/stores/season-store";
-import { GET_TEAM_INFO_URL } from "../api/_lib/urls";
 import { TeamInfo } from "@/utils/types";
+import { GET_TEAM_INFO_URL } from "../_lib/urls";
 
 type TeamInfoProps = {
   teamId: string;

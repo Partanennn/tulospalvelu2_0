@@ -5,9 +5,10 @@ import {
   playerStatsAction,
   PlayerStatsBase,
 } from "@/app/_actions/playerStatsAction";
-import { PLAYER_EXTERNAL_URL, PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
+import { PLAYER_IMAGE_URL } from "@/app/_lib/urls";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
@@ -16,7 +17,6 @@ import HiddableHeaderCell from "../Table/HiddableHeaderCell";
 import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 import TableTitleRow from "../Table/TableTitleRow";
-import { useRouter } from "next/navigation";
 
 const GoalScorers = () => {
   const [data, setData] = useState<PlayerStatsBase | null>(null);

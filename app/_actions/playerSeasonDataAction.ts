@@ -1,6 +1,6 @@
 "use server";
 
-import { PLAYER_ALL_STATS_URL } from "../api/_lib/urls";
+import { PLAYER_ALL_STATS_URL } from "../_lib/urls";
 
 export type PlayerSeasonData = {
   GameLength: string;
@@ -55,7 +55,7 @@ export const playerSeasonDataAction = async ({
   age,
   season,
 }: PlayerSeasonInfoProps): Promise<PlayerSeasonData | null> => {
-  const url = `${PLAYER_ALL_STATS_URL}${playerId}&age=${age}&season=${season}`;
+  const url = `${PLAYER_ALL_STATS_URL}?lkq=${playerId}&age=${age}&season=${season}`;
 
   const res = await fetch(url, {
     method: "POST",

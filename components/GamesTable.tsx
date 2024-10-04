@@ -5,7 +5,7 @@ import {
   gamesPerDayAction,
   GamesPerDayGameDays,
 } from "@/app/_actions/gamesPerDayAction";
-import { IMAGE_URL } from "@/app/api/_lib/urls";
+import { IMAGE_URL } from "@/app/_lib/urls";
 import { useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";

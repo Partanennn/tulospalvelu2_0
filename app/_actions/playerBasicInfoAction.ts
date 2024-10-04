@@ -1,6 +1,6 @@
 "use server";
 
-import { PLAYER_BASIC_INFO_URL } from "../api/_lib/urls";
+import { PLAYER_BASIC_INFO_URL } from "../_lib/urls";
 
 export type PlayerBasicInfo = {
   Age: string;

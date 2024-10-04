@@ -17,11 +17,26 @@ type PlayerRecentStatsProps = {
   playerId: string;
 };
 
+type PlayerTotalPoints = {
+  goals: number;
+  assists: number;
+  games: number;
+  penaltyMinutes: number;
+  points: number;
+};
+
 const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
   const [seasonData, setSeasonData] = useState<PlayerSeasonData | null>();
   const [recentSeasons, setRecentSeasons] = useState<
     PlayerSeasonsDataInfo[] | null
   >([]);
+  const [totalPoints, setTotalPoints] = useState<PlayerTotalPoints>({
+    assists: 0,
+    games: 0,
+    goals: 0,
+    penaltyMinutes: 0,
+    points: 0,
+  });
 
   useEffect(() => {
     if (basicInfo && playerId && recentSeasons && recentSeasons?.length > 0) {
@@ -57,6 +72,50 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
     }
   }, [playerId]);
 
+  // Calculate data from all seasons
+  useEffect(() => {
+    if (recentSeasons && recentSeasons.length > 0) {
+      const getData = async () => {
+        const handledSeasons = new Set();
+        const allValues: PlayerTotalPoints = {
+          assists: 0,
+          games: 0,
+          goals: 0,
+          penaltyMinutes: 0,
+          points: 0,
+        };
+
+        recentSeasons.forEach(async (season) => {
+          if (!handledSeasons.has(season.SeasonNumber)) {
+            handledSeasons.add(season.SeasonNumber);
+
+            const seasonData = await playerSeasonDataAction({
+              playerId,
+              age: basicInfo?.Age ?? "",
+              season: season.SeasonNumber,
+            });
+
+            if (seasonData && seasonData.IsSkaterStats) {
+              const goals = parseInt(seasonData.SkaterGoals);
+              const assists = parseInt(seasonData.SkaterAssists);
+              const games = parseInt(seasonData.SkaterGames);
+              const points = parseInt(seasonData.SkaterPoints);
+              const penaltyMinutes = parseInt(seasonData.SkaterPenaltyMinutes);
+
+              allValues.assists += assists;
+              allValues.games += games;
+              allValues.goals += goals;
+              allValues.penaltyMinutes += penaltyMinutes;
+              allValues.points += points;
+            }
+          }
+        });
+        setTotalPoints(allValues);
+      };
+      getData();
+    }
+  }, [recentSeasons]);
+
   return (
     <div>
       <table>
@@ -73,10 +132,10 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
         <tbody>
           <TableRow>
             <Cell>
+              Kausi{" "}
               {recentSeasons &&
                 recentSeasons.length > 0 &&
-                recentSeasons[0].SeasonName}{" "}
-              Season
+                recentSeasons[0].SeasonName}
             </Cell>
             <Cell>{seasonData?.SkaterGames ?? 0}</Cell>
             <Cell>{seasonData?.SkaterGoals ?? 0}</Cell>
@@ -86,11 +145,11 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
           </TableRow>
           <TableRow>
             <Cell>Pisteet Uralla</Cell>
-            <Cell>Season</Cell>
-            <Cell>Season</Cell>
-            <Cell>Season</Cell>
-            <Cell>Season</Cell>
-            <Cell>Season</Cell>
+            <Cell>{totalPoints.games}</Cell>
+            <Cell>{totalPoints.goals}</Cell>
+            <Cell>{totalPoints.assists}</Cell>
+            <Cell>{totalPoints.points}</Cell>
+            <Cell>{totalPoints.penaltyMinutes}min</Cell>
           </TableRow>
         </tbody>
       </table>

@@ -5,7 +5,7 @@ import {
   playerStatsAction,
   PlayerStatsBase,
 } from "@/app/_actions/playerStatsAction";
-import { PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
+import { PLAYER_IMAGE_URL } from "@/app/_lib/urls";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { useRouter } from "next/navigation";

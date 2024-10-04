@@ -1,9 +1,9 @@
 "use server";
 
 import { Game } from "@/stores/games-store";
-import { GET_GAMES_URL } from "../api/_lib/urls";
-import { Season } from "@/stores/season-store";
 import { Group } from "@/stores/group-store";
+import { Season } from "@/stores/season-store";
+import { GET_GAMES_URL } from "../_lib/urls";
 
 export type GameDay = {
   // GameDates: any[];

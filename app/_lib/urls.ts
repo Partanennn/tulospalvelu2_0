@@ -28,7 +28,7 @@ export const PLAYER_BASIC_INFO_URL =
   "https://www.leijonat.fi/modules/mod_playercardmain/helper/getplayerbasicdata6.php?lkq=";
 export const PLAYER_SEASONS_DATA_URL =
   "https://www.leijonat.fi/modules/mod_playercardmain/helper/getseasonstatsdata.php";
-export const PLAYER_ALL_STATS_URL = // Needs age, season
-  "https://www.leijonat.fi/modules/mod_playercardallstats/helper/getplayerallstats5.php?lkq=";
+export const PLAYER_ALL_STATS_URL =
+  "https://www.leijonat.fi/modules/mod_playercardallstats/helper/getplayerallstats5.php";
 export const PLAYER_SEASON_STATS_URL = // Needs age, season, isgoalie, isskater
   "https://www.leijonat.fi/modules/mod_playercardseriestats/helper/getplayerseriestats5.php?lkq=";

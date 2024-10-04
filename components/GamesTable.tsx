@@ -1,6 +1,13 @@
 "use client";
 
+import {
+  GameDay,
+  gamesPerDayAction,
+  GamesPerDayGameDays,
+} from "@/app/_actions/gamesPerDayAction";
 import { IMAGE_URL } from "@/app/api/_lib/urls";
+import { useGroupStore } from "@/stores/group-store";
+import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
 import { useEffect, useState } from "react";
 import MyImage from "./MyImage";
@@ -9,13 +16,6 @@ import HiddableCell from "./Table/HiddableCell";
 import LinkCell from "./Table/LinkCell";
 import TableHeader from "./Table/TableHeader";
 import TableHeaderRow from "./Table/TableHeaderRow";
-import {
-  GameDay,
-  gamesPerDayAction,
-  GamesPerDayGameDays,
-} from "@/app/_actions/gamesPerDayAction";
-import { useGroupStore } from "@/stores/group-store";
-import { useLevelStore } from "@/stores/level-store";
 
 const COL_COUNT = 7;
 
@@ -67,16 +67,18 @@ const GamesTable = ({ header, gameDays = "all" }: GamesTableProps) => {
             Lähetys
           </LinkCell>
           <Cell>
-            <div className="mx-2 hidden sm:table-cell">
-              <MyImage
-                src={`${IMAGE_URL}/${game.HomeImg}`}
-                height={30}
-                width={30}
-                alt={game.HomeTeamAbbrv}
-              />
-            </div>
-            <div className="flex justify-center items-center">
-              {game.HomeTeamAbbrv}
+            <div className="flex justify-start">
+              <div className="mx-2 hidden sm:table-cell">
+                <MyImage
+                  src={`${IMAGE_URL}/${game.HomeImg}`}
+                  height={30}
+                  width={30}
+                  alt={game.HomeTeamAbbrv}
+                />
+              </div>
+              <div className="flex flex-grow justify-center items-center">
+                {game.HomeTeamAbbrv}
+              </div>
             </div>
           </Cell>
           <Cell>-</Cell>

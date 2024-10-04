@@ -1,11 +1,11 @@
 "use client";
 import HamburgerIcon from "@/assets/Logos/Hamburger.png";
+import { useGroupStore } from "@/stores/group-store";
 import { navbarItems } from "@/utils/navItems";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import TextButton from "../Buttons/TextButton";
 import MyImage from "../MyImage";
-import { useGroupStore } from "@/stores/group-store";
 import DataSelector from "./DataSelector";
 
 const NavBar = () => {

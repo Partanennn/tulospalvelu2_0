@@ -39,6 +39,10 @@ const BasicInfo = ({ basicInfo }: PlayerBasicInfoProps) => {
             <Cell>{basicInfo?.Hand ?? "Ei määritelty"}</Cell>
           </TableRow>
           <TableRow>
+            <Cell>Ikä</Cell>
+            <Cell>{basicInfo?.Age ?? 0} vuotta</Cell>
+          </TableRow>
+          <TableRow>
             <Cell>Varaus</Cell>
             <Cell>
               {basicInfo?.NHLDraft === null ? (

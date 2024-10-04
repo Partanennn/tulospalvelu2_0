@@ -50,7 +50,7 @@ type PlayerSeasonInfoProps = {
   season: string;
 };
 
-export const playerSeasoDataAction = async ({
+export const playerSeasonDataAction = async ({
   playerId,
   age,
   season,

@@ -1,9 +1,12 @@
 import { PlayerBasicInfo } from "@/app/_actions/playerBasicInfoAction";
 import {
-  playerSeasoDataAction,
   PlayerSeasonData,
+  playerSeasonDataAction,
 } from "@/app/_actions/playerSeasonDataAction";
-import { useSeasonStore } from "@/stores/season-store";
+import {
+  playerSeasonsDataAction,
+  PlayerSeasonsDataInfo,
+} from "@/app/_actions/playerSeasonsDataAction";
 import { useEffect, useState } from "react";
 import Cell from "../Table/Cell";
 import TableRow from "../Table/TableRow";
@@ -16,22 +19,43 @@ type PlayerRecentStatsProps = {
 
 const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
   const [seasonData, setSeasonData] = useState<PlayerSeasonData | null>();
-
-  const { seasons } = useSeasonStore();
+  const [recentSeasons, setRecentSeasons] = useState<
+    PlayerSeasonsDataInfo[] | null
+  >([]);
 
   useEffect(() => {
-    if (basicInfo && playerId && seasons) {
+    if (basicInfo && playerId && recentSeasons && recentSeasons?.length > 0) {
       const getSeasonData = async () => {
-        const result = await playerSeasoDataAction({
+        const result = await playerSeasonDataAction({
           age: basicInfo?.Age ?? "",
           playerId: playerId,
-          season: "2025",
+          season: recentSeasons[0].SeasonNumber,
         });
+
         setSeasonData(result);
       };
+
       getSeasonData();
     }
   }, [playerId, basicInfo]);
+
+  useEffect(() => {
+    if (playerId) {
+      const getRecentSeasonData = async () => {
+        const result = await playerSeasonsDataAction({ playerId });
+
+        if (result) {
+          if (result.Skater && result.Skater.length > 0) {
+            setRecentSeasons(result.Skater);
+          } else if (result.GoalKeeper && result.GoalKeeper.length > 0) {
+            setRecentSeasons(result.GoalKeeper);
+          }
+        }
+      };
+
+      getRecentSeasonData();
+    }
+  }, [playerId]);
 
   return (
     <div>
@@ -48,7 +72,12 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
         </thead>
         <tbody>
           <TableRow>
-            <Cell>2023-2024 Season</Cell>
+            <Cell>
+              {recentSeasons &&
+                recentSeasons.length > 0 &&
+                recentSeasons[0].SeasonName}{" "}
+              Season
+            </Cell>
             <Cell>{seasonData?.SkaterGames ?? 0}</Cell>
             <Cell>{seasonData?.SkaterGoals ?? 0}</Cell>
             <Cell>{seasonData?.SkaterAssists ?? 0}</Cell>

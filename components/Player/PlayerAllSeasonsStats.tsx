@@ -72,7 +72,6 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
     }
   }, [playerId]);
 
-  // Calculate data from all seasons
   useEffect(() => {
     if (recentSeasons && recentSeasons.length > 0) {
       const getData = async () => {
@@ -96,17 +95,13 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
             });
 
             if (seasonData && seasonData.IsSkaterStats) {
-              const goals = parseInt(seasonData.SkaterGoals);
-              const assists = parseInt(seasonData.SkaterAssists);
-              const games = parseInt(seasonData.SkaterGames);
-              const points = parseInt(seasonData.SkaterPoints);
-              const penaltyMinutes = parseInt(seasonData.SkaterPenaltyMinutes);
-
-              allValues.assists += assists;
-              allValues.games += games;
-              allValues.goals += goals;
-              allValues.penaltyMinutes += penaltyMinutes;
-              allValues.points += points;
+              allValues.games += parseInt(seasonData.SkaterGames);
+              allValues.goals += parseInt(seasonData.SkaterGoals);
+              allValues.assists += parseInt(seasonData.SkaterAssists);
+              allValues.points += parseInt(seasonData.SkaterPoints);
+              allValues.penaltyMinutes += parseInt(
+                seasonData.SkaterPenaltyMinutes
+              );
             }
           }
         });

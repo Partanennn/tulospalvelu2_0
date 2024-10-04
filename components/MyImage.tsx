@@ -33,7 +33,7 @@ const MyImage = ({
       src={imageSrc}
       height={height}
       width={width}
-      className={className}
+      className={`min-w-12 ${className}`}
       onClick={onClick}
       onError={errorHandler}
     />

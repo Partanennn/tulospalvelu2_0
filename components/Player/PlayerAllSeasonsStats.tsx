@@ -15,21 +15,21 @@ type PlayerRecentStatsProps = {
 };
 
 const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
-  const [data, setData] = useState<PlayerSeasonData | null>();
+  const [seasonData, setSeasonData] = useState<PlayerSeasonData | null>();
 
   const { seasons } = useSeasonStore();
 
   useEffect(() => {
     if (basicInfo && playerId && seasons) {
-      const getData = async () => {
+      const getSeasonData = async () => {
         const result = await playerSeasoDataAction({
           age: basicInfo?.Age ?? "",
           playerId: playerId,
           season: "2025",
         });
-        setData(result);
+        setSeasonData(result);
       };
-      getData();
+      getSeasonData();
     }
   }, [playerId, basicInfo]);
 
@@ -49,11 +49,11 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
         <tbody>
           <TableRow>
             <Cell>2023-2024 Season</Cell>
-            <Cell>{data?.SkaterGames ?? 0}</Cell>
-            <Cell>{data?.SkaterGoals ?? 0}</Cell>
-            <Cell>{data?.SkaterAssists ?? 0}</Cell>
-            <Cell>{data?.SkaterPoints ?? 0}</Cell>
-            <Cell>{data?.SkaterPenaltyMinutes ?? 0}min</Cell>
+            <Cell>{seasonData?.SkaterGames ?? 0}</Cell>
+            <Cell>{seasonData?.SkaterGoals ?? 0}</Cell>
+            <Cell>{seasonData?.SkaterAssists ?? 0}</Cell>
+            <Cell>{seasonData?.SkaterPoints ?? 0}</Cell>
+            <Cell>{seasonData?.SkaterPenaltyMinutes ?? 0}min</Cell>
           </TableRow>
           <TableRow>
             <Cell>Pisteet Uralla</Cell>

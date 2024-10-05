@@ -25,8 +25,12 @@ type PlayerTotalPoints = {
   points: number;
 };
 
+type SeasonsData = {
+  [key: string]: PlayerSeasonData;
+};
+
 const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
-  const [seasonData, setSeasonData] = useState<PlayerSeasonData | null>();
+  const [seasonsData] = useState<SeasonsData>({});
   const [recentSeasons, setRecentSeasons] = useState<
     PlayerSeasonsDataInfo[] | null
   >([]);
@@ -39,26 +43,9 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
   });
 
   useEffect(() => {
-    if (basicInfo && playerId && recentSeasons && recentSeasons?.length > 0) {
-      const getSeasonData = async () => {
-        const result = await playerSeasonDataAction({
-          age: basicInfo?.Age ?? "",
-          playerId: playerId,
-          season: recentSeasons[0].SeasonNumber,
-        });
-
-        setSeasonData(result);
-      };
-
-      getSeasonData();
-    }
-  }, [playerId, basicInfo]);
-
-  useEffect(() => {
     if (playerId) {
       const getRecentSeasonData = async () => {
         const result = await playerSeasonsDataAction({ playerId });
-
         if (result) {
           if (result.Skater && result.Skater.length > 0) {
             setRecentSeasons(result.Skater);
@@ -70,46 +57,57 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
 
       getRecentSeasonData();
     }
-  }, [playerId]);
+  }, []);
 
   useEffect(() => {
     if (recentSeasons && recentSeasons.length > 0) {
       const getData = async () => {
         const handledSeasons = new Set();
-        const allValues: PlayerTotalPoints = {
-          assists: 0,
-          games: 0,
-          goals: 0,
-          penaltyMinutes: 0,
-          points: 0,
-        };
 
         recentSeasons.forEach(async (season) => {
           if (!handledSeasons.has(season.SeasonNumber)) {
             handledSeasons.add(season.SeasonNumber);
-
             const seasonData = await playerSeasonDataAction({
               playerId,
               age: basicInfo?.Age ?? "",
               season: season.SeasonNumber,
             });
 
-            if (seasonData && seasonData.IsSkaterStats) {
-              allValues.games += parseInt(seasonData.SkaterGames);
-              allValues.goals += parseInt(seasonData.SkaterGoals);
-              allValues.assists += parseInt(seasonData.SkaterAssists);
-              allValues.points += parseInt(seasonData.SkaterPoints);
-              allValues.penaltyMinutes += parseInt(
-                seasonData.SkaterPenaltyMinutes
-              );
+            if (seasonData) {
+              if (seasonData.IsSkaterStats && !seasonsData[season.SeasonName]) {
+                seasonsData[season.SeasonName] = seasonData;
+
+                setTotalPoints((oldValue) => ({
+                  assists:
+                    oldValue.assists + parseInt(seasonData.SkaterAssists),
+                  games: oldValue.games + parseInt(seasonData.SkaterGames),
+                  goals: oldValue.goals + parseInt(seasonData.SkaterGoals),
+                  penaltyMinutes:
+                    oldValue.penaltyMinutes +
+                    parseInt(seasonData.SkaterPenaltyMinutes),
+                  points: oldValue.points + parseInt(seasonData.SkaterPoints),
+                }));
+              }
             }
           }
         });
-        setTotalPoints(allValues);
       };
       getData();
     }
   }, [recentSeasons]);
+
+  const allSeasonsItems = Object.entries(seasonsData).map(
+    ([seasonName, season]) => (
+      <TableRow key={seasonName}>
+        <Cell>Kausi {seasonName}</Cell>
+        <Cell>{season.SkaterGames ?? 0}</Cell>
+        <Cell>{season.SkaterGoals ?? 0}</Cell>
+        <Cell>{season.SkaterAssists ?? 0}</Cell>
+        <Cell>{season.SkaterPoints ?? 0}</Cell>
+        <Cell>{season.SkaterPenaltyMinutes ?? 0}min</Cell>
+      </TableRow>
+    )
+  );
 
   return (
     <div>
@@ -125,27 +123,17 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
           </TableTitleRow>
         </thead>
         <tbody>
-          <TableRow>
-            <Cell>
-              Kausi{" "}
-              {recentSeasons &&
-                recentSeasons.length > 0 &&
-                recentSeasons[0].SeasonName}
+          <TableRow className="border-b-2">
+            <Cell className="font-semibold">Pisteet Uralla</Cell>
+            <Cell className="font-semibold">{totalPoints.games}</Cell>
+            <Cell className="font-semibold">{totalPoints.goals}</Cell>
+            <Cell className="font-semibold">{totalPoints.assists}</Cell>
+            <Cell className="font-semibold">{totalPoints.points}</Cell>
+            <Cell className="font-semibold">
+              {totalPoints.penaltyMinutes}min
             </Cell>
-            <Cell>{seasonData?.SkaterGames ?? 0}</Cell>
-            <Cell>{seasonData?.SkaterGoals ?? 0}</Cell>
-            <Cell>{seasonData?.SkaterAssists ?? 0}</Cell>
-            <Cell>{seasonData?.SkaterPoints ?? 0}</Cell>
-            <Cell>{seasonData?.SkaterPenaltyMinutes ?? 0}min</Cell>
           </TableRow>
-          <TableRow>
-            <Cell>Pisteet Uralla</Cell>
-            <Cell>{totalPoints.games}</Cell>
-            <Cell>{totalPoints.goals}</Cell>
-            <Cell>{totalPoints.assists}</Cell>
-            <Cell>{totalPoints.points}</Cell>
-            <Cell>{totalPoints.penaltyMinutes}min</Cell>
-          </TableRow>
+          {allSeasonsItems}
         </tbody>
       </table>
     </div>

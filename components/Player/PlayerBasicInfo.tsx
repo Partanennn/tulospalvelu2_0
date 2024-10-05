@@ -27,13 +27,25 @@ const BasicInfo = ({ basicInfo }: PlayerBasicInfoProps) => {
             <Cell>{basicInfo?.Pob}</Cell>
           </TableRow>
           <TableRow>
-            <Cell>Pituus</Cell>
-            <Cell>{basicInfo?.Height ?? 0} cm</Cell>
+            <Cell>Joukkue</Cell>
+            <Cell>{basicInfo?.AssociationName}</Cell>
           </TableRow>
           <TableRow>
-            <Cell>Paino</Cell>
-            <Cell>{basicInfo?.Weight ?? 0} kg</Cell>
+            <Cell>Kansallisuus</Cell>
+            <Cell>{basicInfo?.Nationality}</Cell>
           </TableRow>
+          {parseInt(basicInfo?.Age ?? "0") > 14 && (
+            <>
+              <TableRow>
+                <Cell>Pituus</Cell>
+                <Cell>{basicInfo?.Height ?? 0} cm</Cell>
+              </TableRow>
+              <TableRow>
+                <Cell>Paino</Cell>
+                <Cell>{basicInfo?.Weight ?? 0} kg</Cell>
+              </TableRow>
+            </>
+          )}
           <TableRow>
             <Cell>Kätisyys</Cell>
             <Cell>{basicInfo?.Hand ?? "Ei määritelty"}</Cell>

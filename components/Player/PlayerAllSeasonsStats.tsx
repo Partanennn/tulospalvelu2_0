@@ -26,7 +26,9 @@ type PlayerTotalPoints = {
 };
 
 type SeasonsData = {
-  [key: string]: PlayerSeasonData;
+  [key: string]: PlayerSeasonData & {
+    teams: string[];
+  };
 };
 
 const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
@@ -75,7 +77,10 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
 
             if (seasonData) {
               if (seasonData.IsSkaterStats && !seasonsData[season.SeasonName]) {
-                seasonsData[season.SeasonName] = seasonData;
+                seasonsData[season.SeasonName] = {
+                  ...seasonData,
+                  teams: season.LevelTeams.map((team) => team.TeamAbbrv),
+                };
 
                 setTotalPoints((oldValue) => ({
                   assists:
@@ -105,6 +110,7 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
         <Cell>{season.SkaterAssists ?? 0}</Cell>
         <Cell>{season.SkaterPoints ?? 0}</Cell>
         <Cell>{season.SkaterPenaltyMinutes ?? 0}min</Cell>
+        <Cell>{season.teams.join(", ")}</Cell>
       </TableRow>
     )
   );
@@ -120,6 +126,7 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
             <Cell>S</Cell>
             <Cell>P</Cell>
             <Cell>JM</Cell>
+            <Cell>Joukkueet</Cell>
           </TableTitleRow>
         </thead>
         <tbody>
@@ -132,6 +139,7 @@ const PlayerRecentStats = ({ basicInfo, playerId }: PlayerRecentStatsProps) => {
             <Cell className="font-semibold">
               {totalPoints.penaltyMinutes}min
             </Cell>
+            <Cell> </Cell>
           </TableRow>
           {allSeasonsItems}
         </tbody>

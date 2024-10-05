@@ -1,8 +1,8 @@
 "use server";
 
-import { Season } from "@/stores/season-store";
-import { GET_PLAYER_STATS_URL } from "../api/_lib/urls";
 import { Group } from "@/stores/group-store";
+import { Season } from "@/stores/season-store";
+import { GET_PLAYER_STATS_URL } from "../_lib/urls";
 
 export type PlayerStatsSortedBy =
   | "PlayerPoints"

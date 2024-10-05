@@ -38,6 +38,15 @@ const config: Config = {
       white: "#FFFFFF",
       black: "#000000",
     },
+    screens: {
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
+      desktop: "1920px",
+      "large-desktop": "2300px",
+    },
     extend: {
       colors: {
         background: "var(--background)",

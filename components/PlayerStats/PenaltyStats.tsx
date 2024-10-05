@@ -1,8 +1,14 @@
 "use client";
 
-import { PLAYER_EXTERNAL_URL, PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
+import {
+  PlayerStats,
+  playerStatsAction,
+  PlayerStatsBase,
+} from "@/app/_actions/playerStatsAction";
+import { PLAYER_IMAGE_URL } from "@/app/_lib/urls";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
@@ -11,15 +17,11 @@ import HiddableHeaderCell from "../Table/HiddableHeaderCell";
 import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 import TableTitleRow from "../Table/TableTitleRow";
-import {
-  PlayerStats,
-  playerStatsAction,
-  PlayerStatsBase,
-} from "@/app/_actions/playerStatsAction";
 
-const PlayerGoalScorers = () => {
+const PenaltyStats = () => {
+  const [showData, setShowData] = useState<PlayerStats[]>([]);
   const [data, setData] = useState<PlayerStatsBase | null>(null);
-  const [showData, setShowData] = useState<PlayerStats[] | null>([]);
+  const router = useRouter();
 
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
@@ -30,7 +32,7 @@ const PlayerGoalScorers = () => {
         const data = await playerStatsAction({
           group: selectedGroup,
           season: selectedSeason,
-          sortedBy: "PlayerGoals",
+          sortedBy: "PlayerPenaltyMin",
         });
 
         if (data) {
@@ -42,7 +44,7 @@ const PlayerGoalScorers = () => {
     }
   }, [selectedSeason, selectedGroup]);
 
-  const items = showData?.map((player) => (
+  const items = showData.map((player) => (
     <tr
       key={player.PlayerID}
       className="odd:bg-neutral-500 even: bg-neutral-300"
@@ -57,18 +59,20 @@ const PlayerGoalScorers = () => {
         />
       </HiddableCell>
       <HiddableCell>#{player.JerseyNr}</HiddableCell>
-      <Cell noTextCenter>
-        <a
-          className="hover:cursor-pointer"
-          target="_blank"
-          href={`${PLAYER_EXTERNAL_URL}${player.LinkID}`}
-        >
-          {player.FirstName} {player.LastName}
-        </a>
+      <Cell
+        noTextCenter
+        className="hover:cursor-pointer"
+        onClick={() => {
+          router.push(`/player?playerid=${player.LinkID}`);
+        }}
+      >
+        {player.FirstName} {player.LastName}
       </Cell>
       <Cell>{player.CurrentTeam}</Cell>
       <Cell>{player.PlayerGames}</Cell>
-      <Cell className="font-bold">{player.PlayerGoals}</Cell>
+      <HiddableCell>{player.PlayerPen20Min}</HiddableCell>
+      <Cell>{player.PlayerPen2Min}</Cell>
+      <Cell className="font-bold">{player.PlayerPenaltyMin}</Cell>
     </tr>
   ));
 
@@ -78,11 +82,10 @@ const PlayerGoalScorers = () => {
         <thead>
           <TableHeaderRow
             onClick={() => {
-              if (showData && showData.length > 0) {
+              if (showData.length > 0) {
                 setShowData([]);
               } else if (
                 data &&
-                showData &&
                 data.Players &&
                 data.Players.length > 0 &&
                 showData.length === 0
@@ -91,15 +94,17 @@ const PlayerGoalScorers = () => {
               }
             }}
           >
-            <TableHeader colSpan={6}>Maalipörssi</TableHeader>
+            <TableHeader colSpan={8}>Jäähypörssi</TableHeader>
           </TableHeaderRow>
           <TableTitleRow>
             <HiddableHeaderCell> </HiddableHeaderCell>
             <HiddableHeaderCell> </HiddableHeaderCell>
             <Cell>Pelaaja</Cell>
             <Cell>Joukkue</Cell>
-            <Cell>Ottelut</Cell>
-            <Cell>Maalit</Cell>
+            <Cell>O</Cell>
+            <HiddableHeaderCell>PR</HiddableHeaderCell>
+            <Cell>2min</Cell>
+            <Cell>Yht</Cell>
           </TableTitleRow>
         </thead>
         <tbody>{items}</tbody>
@@ -108,4 +113,4 @@ const PlayerGoalScorers = () => {
   );
 };
 
-export default PlayerGoalScorers;
+export default PenaltyStats;

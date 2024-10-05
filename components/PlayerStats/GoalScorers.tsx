@@ -5,9 +5,10 @@ import {
   playerStatsAction,
   PlayerStatsBase,
 } from "@/app/_actions/playerStatsAction";
-import { PLAYER_EXTERNAL_URL, PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
+import { PLAYER_IMAGE_URL } from "@/app/_lib/urls";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
@@ -17,9 +18,10 @@ import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 import TableTitleRow from "../Table/TableTitleRow";
 
-const PlayerPenaltyStats = () => {
-  const [showData, setShowData] = useState<PlayerStats[]>([]);
+const GoalScorers = () => {
   const [data, setData] = useState<PlayerStatsBase | null>(null);
+  const [showData, setShowData] = useState<PlayerStats[] | null>([]);
+  const router = useRouter();
 
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
@@ -42,7 +44,7 @@ const PlayerPenaltyStats = () => {
     }
   }, [selectedSeason, selectedGroup]);
 
-  const items = showData.map((player) => (
+  const items = showData?.map((player) => (
     <tr
       key={player.PlayerID}
       className="odd:bg-neutral-500 even: bg-neutral-300"
@@ -57,20 +59,18 @@ const PlayerPenaltyStats = () => {
         />
       </HiddableCell>
       <HiddableCell>#{player.JerseyNr}</HiddableCell>
-      <Cell noTextCenter>
-        <a
-          className="hover:cursor-pointer"
-          target="_blank"
-          href={`${PLAYER_EXTERNAL_URL}${player.LinkID}`}
-        >
-          {player.FirstName} {player.LastName}
-        </a>
+      <Cell
+        noTextCenter
+        className="hover:cursor-pointer"
+        onClick={() => {
+          router.push(`/player?playerid=${player.LinkID}`);
+        }}
+      >
+        {player.FirstName} {player.LastName}
       </Cell>
       <Cell>{player.CurrentTeam}</Cell>
       <Cell>{player.PlayerGames}</Cell>
-      <HiddableCell>{player.PlayerPen20Min}</HiddableCell>
-      <Cell>{player.PlayerPen2Min}</Cell>
-      <Cell className="font-bold">{player.PlayerPenaltyMin}</Cell>
+      <Cell className="font-bold">{player.PlayerGoals}</Cell>
     </tr>
   ));
 
@@ -80,10 +80,11 @@ const PlayerPenaltyStats = () => {
         <thead>
           <TableHeaderRow
             onClick={() => {
-              if (showData.length > 0) {
+              if (showData && showData.length > 0) {
                 setShowData([]);
               } else if (
                 data &&
+                showData &&
                 data.Players &&
                 data.Players.length > 0 &&
                 showData.length === 0
@@ -92,17 +93,15 @@ const PlayerPenaltyStats = () => {
               }
             }}
           >
-            <TableHeader colSpan={8}>Jäähypörssi</TableHeader>
+            <TableHeader colSpan={6}>Maalipörssi</TableHeader>
           </TableHeaderRow>
           <TableTitleRow>
             <HiddableHeaderCell> </HiddableHeaderCell>
             <HiddableHeaderCell> </HiddableHeaderCell>
             <Cell>Pelaaja</Cell>
             <Cell>Joukkue</Cell>
-            <Cell>O</Cell>
-            <HiddableHeaderCell>PR</HiddableHeaderCell>
-            <Cell>2min</Cell>
-            <Cell>Yht</Cell>
+            <Cell>Ottelut</Cell>
+            <Cell>Maalit</Cell>
           </TableTitleRow>
         </thead>
         <tbody>{items}</tbody>
@@ -111,4 +110,4 @@ const PlayerPenaltyStats = () => {
   );
 };
 
-export default PlayerPenaltyStats;
+export default GoalScorers;

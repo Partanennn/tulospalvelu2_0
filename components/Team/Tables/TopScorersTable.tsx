@@ -1,8 +1,8 @@
 "use client";
 
-import { PLAYER_EXTERNAL_URL } from "@/app/api/_lib/urls";
 import { HandleTempClick } from "@/utils/helpers";
 import { TeamInfoTopScorer } from "@/utils/types";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Cell from "../../Table/Cell";
 import TableHeader from "../../Table/TableHeader";
@@ -17,6 +17,8 @@ type TopScorersProps = {
 const TopScorersTable = ({ data }: TopScorersProps) => {
   const [topScorers, setTopScorers] = useState<TeamInfoTopScorer[]>([]);
 
+  const router = useRouter();
+
   const sortTopScorers = (a: TeamInfoTopScorer, b: TeamInfoTopScorer) => {
     if (a.Points > b.Points) {
       return -1;
@@ -28,14 +30,14 @@ const TopScorersTable = ({ data }: TopScorersProps) => {
 
   const topScorerItems = topScorers.sort(sortTopScorers).map((player) => (
     <TableRow key={player.PlayerID ?? player.PersonID}>
-      <Cell noTextCenter>
-        <a
-          className="hover:cursor-pointer"
-          target="_blank"
-          href={`${PLAYER_EXTERNAL_URL}${player.PersonID}`}
-        >
-          {player.LastName} {player.FirstName}
-        </a>
+      <Cell
+        noTextCenter
+        className="hover:cursor-pointer"
+        onClick={() => {
+          router.push(`/player?playerid=${player.PersonID}`);
+        }}
+      >
+        {player.LastName} {player.FirstName}
       </Cell>
       <Cell>{player.Goals}</Cell>
       <Cell>{player.Assists}</Cell>

@@ -5,7 +5,7 @@ import {
   gamesPerDayAction,
   GamesPerDayGameDays,
 } from "@/app/_actions/gamesPerDayAction";
-import { IMAGE_URL } from "@/app/api/_lib/urls";
+import { IMAGE_URL } from "@/app/_lib/urls";
 import { useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
@@ -67,7 +67,7 @@ const GamesTable = ({ header, gameDays = "all" }: GamesTableProps) => {
             Lähetys
           </LinkCell>
           <Cell>
-            <div className="flex justify-center">
+            <div className="flex justify-start">
               <div className="mx-2 hidden sm:table-cell">
                 <MyImage
                   src={`${IMAGE_URL}/${game.HomeImg}`}

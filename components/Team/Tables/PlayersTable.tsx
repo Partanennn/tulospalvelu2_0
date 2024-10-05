@@ -1,8 +1,8 @@
 "use client";
 
-import { PLAYER_EXTERNAL_URL } from "@/app/api/_lib/urls";
 import { HandleTempClick } from "@/utils/helpers";
 import { TeamInfoPlayer } from "@/utils/types";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Cell from "../../Table/Cell";
 import TableHeader from "../../Table/TableHeader";
@@ -17,6 +17,8 @@ type PlayersProps = {
 const PlayersTable = ({ data }: PlayersProps) => {
   const [players, setPlayers] = useState<TeamInfoPlayer[]>([]);
 
+  const router = useRouter();
+
   const sortPlayers = (a: TeamInfoPlayer, b: TeamInfoPlayer) => {
     if (parseInt(a.JerseyNr) < parseInt(b.JerseyNr)) {
       return -1;
@@ -30,14 +32,14 @@ const PlayersTable = ({ data }: PlayersProps) => {
   const playerItems = players.sort(sortPlayers).map((player) => (
     <TableRow key={player.PersonID}>
       <Cell>{player.JerseyNr}</Cell>
-      <Cell noTextCenter>
-        <a
-          className="hover:cursor-pointer"
-          target="_blank"
-          href={`${PLAYER_EXTERNAL_URL}${player.PersonID}`}
-        >
-          {player.LastName} {player.FirstName}
-        </a>
+      <Cell
+        noTextCenter
+        className="hover:cursor-pointer"
+        onClick={() => {
+          router.push(`/player?playerid=${player.PersonID}`);
+        }}
+      >
+        {player.LastName} {player.FirstName}
       </Cell>
       <Cell>{player.PlayerAge}</Cell>
       <Cell>{player.RoleName}</Cell>

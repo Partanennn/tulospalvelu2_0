@@ -1,9 +1,12 @@
 import PlayerInfo from "@/components/Player/PlayerInfo";
+import { Suspense } from "react";
 
 const PlayerPage = () => {
   return (
     <div className="flex justify-center">
-      <PlayerInfo />
+      <Suspense>
+        <PlayerInfo />
+      </Suspense>
     </div>
   );
 };

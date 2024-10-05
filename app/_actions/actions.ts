@@ -7,7 +7,7 @@ import {
   GET_LEVELS_URL,
   GET_SEASONS_URL,
   GET_STAT_GROUP_URL,
-} from "../api/_lib/urls";
+} from "../_lib/urls";
 
 export const getSeasonsAction = async (): Promise<Season[] | null> => {
   const url = GET_SEASONS_URL;

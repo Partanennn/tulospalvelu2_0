@@ -3,7 +3,7 @@
 import { Group } from "@/stores/group-store";
 import { Level } from "@/stores/level-store";
 import { Season } from "@/stores/season-store";
-import { GET_SERIE_INFO_URL } from "../api/_lib/urls";
+import { GET_SERIE_INFO_URL } from "../_lib/urls";
 
 export type SerieInfo = {
   BeginDate: string;

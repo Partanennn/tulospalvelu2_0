@@ -1,7 +1,7 @@
 "use server";
 
 import { TeamStats } from "@/stores/team-stats-store";
-import { GET_TEAM_STATS_URL } from "../api/_lib/urls";
+import { GET_TEAM_STATS_URL } from "../_lib/urls";
 
 type TeamStatsSortedBy = "TeamPoints" | "TeamPenaltyMin" | "";
 type TeamStatsTotal = "avg" | "";

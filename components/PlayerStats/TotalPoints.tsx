@@ -5,9 +5,10 @@ import {
   playerStatsAction,
   PlayerStatsBase,
 } from "@/app/_actions/playerStatsAction";
-import { PLAYER_IMAGE_URL } from "@/app/api/_lib/urls";
+import { PLAYER_IMAGE_URL } from "@/app/_lib/urls";
 import { useGroupStore } from "@/stores/group-store";
 import { useSeasonStore } from "@/stores/season-store";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import MyImage from "../MyImage";
 import Cell from "../Table/Cell";
@@ -16,9 +17,11 @@ import TableHeader from "../Table/TableHeader";
 import TableHeaderRow from "../Table/TableHeaderRow";
 import TableTitleRow from "../Table/TableTitleRow";
 
-const PlayerTotalPoints = () => {
+const TotalPoints = () => {
   const [showData, setShowData] = useState<PlayerStats[] | null>([]);
   const [data, setData] = useState<PlayerStatsBase | null>(null);
+
+  const router = useRouter();
 
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
@@ -56,8 +59,13 @@ const PlayerTotalPoints = () => {
         />
       </HiddableCell>
       <HiddableCell>#{player.JerseyNr}</HiddableCell>
-      <Cell noTextCenter>
-        <div className="flex gap-0 sm:gap-2 px-0">
+      <Cell
+        noTextCenter
+        onClick={() => {
+          router.push(`/player?playerid=${player.LinkID}`);
+        }}
+      >
+        <div className="flex gap-0 px-0 hover:cursor-pointer sm:gap-2">
           <div className="hidden sm:block">{player.FirstName}</div>
           <div>{player.LastName}</div>
         </div>
@@ -107,4 +115,4 @@ const PlayerTotalPoints = () => {
   );
 };
 
-export default PlayerTotalPoints;
+export default TotalPoints;

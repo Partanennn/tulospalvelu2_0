@@ -45,7 +45,7 @@ const ContactPersonTable = ({ data }: ContactPersonProps) => {
             <TableHeader colSpan={2}>Henkilöstö</TableHeader>
           </TableHeaderRow>
           <TableTitleRow>
-            <Cell className="text-center">Pelaaja</Cell>
+            <Cell className="text-center">Henkilö</Cell>
             <Cell>Rooli</Cell>
           </TableTitleRow>
         </thead>

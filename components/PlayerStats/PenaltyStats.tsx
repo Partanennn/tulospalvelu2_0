@@ -63,7 +63,7 @@ const PenaltyStats = () => {
         noTextCenter
         className="hover:cursor-pointer"
         onClick={() => {
-          router.push(`/player?playerid=${player.LinkID}`);
+          router.push(`/player/${player.LinkID}`);
         }}
       >
         {player.FirstName} {player.LastName}

@@ -64,7 +64,7 @@ const LogoSlider = () => {
         className="hover:cursor-pointer"
         onClick={() => {
           router.push(
-            `/team?teamid=${team.TeamID}&associationid=${team.AssociationID}`
+            `/team/${team.TeamID}?associationid=${team.AssociationID}`
           );
         }}
       />

@@ -36,7 +36,7 @@ const PlayersTable = ({ data }: PlayersProps) => {
         noTextCenter
         className="hover:cursor-pointer"
         onClick={() => {
-          router.push(`/player?playerid=${player.PersonID}`);
+          router.push(`/player/${player.PersonID}`);
         }}
       >
         {player.LastName} {player.FirstName}

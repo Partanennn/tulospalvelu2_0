@@ -32,3 +32,5 @@ export const PLAYER_ALL_STATS_URL =
   "https://www.leijonat.fi/modules/mod_playercardallstats/helper/getplayerallstats5.php";
 export const PLAYER_SEASON_STATS_URL =
   "https://www.leijonat.fi/modules/mod_playercardseriestats/helper/getplayerseriestats5.php?lkq=";
+export const GAME_DETAILS_URL =
+  "https://tulospalvelu.leijonat.fi/unsync/front1/statsapi/gamereports/getgamereportdata.php";

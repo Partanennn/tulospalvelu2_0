@@ -8,20 +8,12 @@ import EventContainer from "./EventContainer";
 import EventTimer from "./EventTimer";
 
 type EventsPenaltyProps = {
-  awayTeam: GameReportGamesUpdateTeam;
   event: GameReportGameLogsUpdatePenalty;
-  homeTeam: GameReportGamesUpdateTeam;
   periodLength: number;
+  team: GameReportGamesUpdateTeam;
 };
 
-const EventsPenalty = ({
-  event,
-  periodLength,
-  awayTeam,
-  homeTeam,
-}: EventsPenaltyProps) => {
-  const isHomeTeam = event.TeamId === homeTeam.Id;
-
+const EventsPenalty = ({ event, periodLength, team }: EventsPenaltyProps) => {
   return (
     <EventContainer
       className={`${
@@ -34,10 +26,7 @@ const EventsPenalty = ({
         periodLength={periodLength}
       />
       <div className="flex flex-row items-center gap-10">
-        <MyImage
-          src={`${IMAGE_URL}/${isHomeTeam ? homeTeam.Image : awayTeam.Image}`}
-          alt={""}
-        />
+        <MyImage src={`${IMAGE_URL}/${team.Image}`} alt={""} />
         <div>
           <div className="font-semibold">{event.PenaltyMinutes}</div>
           <div className="text-neutral-900">

@@ -48,13 +48,18 @@ const GameEvents = ({
         return (
           <EventsPenalty
             event={event}
-            awayTeam={awayTeam}
-            homeTeam={homeTeam}
+            team={event.TeamId === homeTeam.Id ? homeTeam : awayTeam}
             periodLength={periodLength}
           />
         );
       case "Timeout":
-        return <EventsTimeout event={event} />;
+        return (
+          <EventsTimeout
+            event={event}
+            periodLength={periodLength}
+            team={event.TeamId === homeTeam.Id ? homeTeam : awayTeam}
+          />
+        );
       default:
         <></>;
         break;

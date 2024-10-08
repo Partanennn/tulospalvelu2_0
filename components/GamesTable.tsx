@@ -13,6 +13,7 @@ import {
 import { useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import MyImage from "./MyImage";
 import Cell from "./Table/Cell";
@@ -31,6 +32,8 @@ type GamesTableProps = {
 const GamesTable = ({ header, gameDays = "all" }: GamesTableProps) => {
   const [showData, setShowData] = useState<GameDay[]>([]);
   const [data, setData] = useState<GameDay[] | null>([]);
+
+  const router = useRouter();
 
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
@@ -61,7 +64,8 @@ const GamesTable = ({ header, gameDays = "all" }: GamesTableProps) => {
       return (
         <tr
           key={game.GameID}
-          className="odd:bg-neutral-500 even: bg-neutral-300"
+          className="odd:bg-neutral-500 even: bg-neutral-300 hover:cursor-pointer"
+          onClick={() => router.push(`/games/${game.GameID}`)}
         >
           <Cell>{game.GameTime}</Cell>
           <LinkCell

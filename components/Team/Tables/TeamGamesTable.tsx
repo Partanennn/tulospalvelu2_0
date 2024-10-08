@@ -2,6 +2,7 @@
 
 import { HandleTempClick } from "@/utils/helpers";
 import { TeamInfoGame } from "@/utils/types";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Cell from "../../Table/Cell";
 import TableHeader from "../../Table/TableHeader";
@@ -15,8 +16,14 @@ type GamesTableProps = {
 const TeamGamesTable = ({ data }: GamesTableProps) => {
   const [games, setGames] = useState<TeamInfoGame[]>([]);
 
+  const router = useRouter();
+
   const gameItems = data.sort().map((game) => (
-    <TableRow key={game.GameID}>
+    <TableRow
+      key={game.GameID}
+      className="hover:cursor-pointer"
+      onClick={() => router.push(`/games/${game.GameID}`)}
+    >
       <Cell>{game.GameDate}</Cell>
       <Cell>{game.HomeTeamAbbreviation}</Cell>
       <Cell>{game.AwayTeamAbbreviation}</Cell>

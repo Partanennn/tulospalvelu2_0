@@ -14,7 +14,7 @@ const TableHeaderRow = ({
   return (
     <tr
       onClick={onClick}
-      className={`hover:cursor-pointer text-xl bg-primary-600 text-white ${className}`}
+      className={`hover:cursor-pointer text-heading6 bg-primary-600 text-white ${className}`}
     >
       {children}
     </tr>

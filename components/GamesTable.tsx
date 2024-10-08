@@ -17,7 +17,7 @@ import LinkCell from "./Table/LinkCell";
 import TableHeader from "./Table/TableHeader";
 import TableHeaderRow from "./Table/TableHeaderRow";
 
-const COL_COUNT = 7;
+const COL_COUNT = 9;
 
 type GamesTableProps = {
   header: string;
@@ -81,7 +81,9 @@ const GamesTable = ({ header, gameDays = "all" }: GamesTableProps) => {
               </div>
             </div>
           </Cell>
+          <Cell>{game.HomeGoals}</Cell>
           <Cell>-</Cell>
+          <Cell>{game.AwayGoals}</Cell>
           <Cell>
             <div className="flex justify-start">
               <div className="mx-2 hidden sm:table-cell">

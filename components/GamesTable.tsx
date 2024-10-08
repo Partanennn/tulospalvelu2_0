@@ -5,7 +5,11 @@ import {
   gamesPerDayAction,
   GamesPerDayGameDays,
 } from "@/app/_actions/gamesPerDayAction";
-import { IMAGE_URL } from "@/app/_lib/urls";
+import {
+  EXTERNAL_BROADCAST_URL,
+  GAME_SHEET_URL,
+  IMAGE_URL,
+} from "@/app/_lib/urls";
 import { useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
@@ -62,7 +66,7 @@ const GamesTable = ({ header, gameDays = "all" }: GamesTableProps) => {
           <Cell>{game.GameTime}</Cell>
           <LinkCell
             className="hidden sm:table-cell"
-            url={`https://www.leijonat.tv/fi/game?ext-id=${game.GameID}&season-id=${selectedSeason?.SeasonNumber}`}
+            url={`${EXTERNAL_BROADCAST_URL}?ext-id=${game.GameID}&season-id=${selectedSeason?.SeasonNumber}`}
           >
             Lähetys
           </LinkCell>
@@ -101,7 +105,7 @@ const GamesTable = ({ header, gameDays = "all" }: GamesTableProps) => {
           </Cell>
           <HiddableCell>{game.RinkName}</HiddableCell>
           <LinkCell
-            url={`https://tulospalvelu.leijonat.fi/gamesheet/?gid=${game.GameID}&lang=fi&season=${selectedSeason?.SeasonNumber}`}
+            url={`${GAME_SHEET_URL}/?gid=${game.GameID}&lang=fi&season=${selectedSeason?.SeasonNumber}`}
           >
             OPK
           </LinkCell>

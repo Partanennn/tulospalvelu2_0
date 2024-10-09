@@ -57,12 +57,14 @@ const BasicInfo = ({ basicInfo }: PlayerBasicInfoProps) => {
           <TableRow>
             <Cell>Varaus</Cell>
             <Cell>
-              {basicInfo !== null && basicInfo?.NHLDraft !== null ? (
+              {basicInfo !== null &&
+              basicInfo?.NHLDraft &&
+              basicInfo?.NHLDraft !== null ? (
                 <div>
-                  {basicInfo?.NHLDraft.DraftYear},{" "}
-                  {basicInfo?.NHLDraft.DraftedTeam},{" "}
-                  {basicInfo?.NHLDraft.DraftRound}. kierros #
-                  {basicInfo?.NHLDraft.DraftNumber}
+                  {basicInfo?.NHLDraft?.DraftYear},{" "}
+                  {basicInfo?.NHLDraft?.DraftedTeam},{" "}
+                  {basicInfo?.NHLDraft?.DraftRound}. kierros #
+                  {basicInfo?.NHLDraft?.DraftNumber}
                 </div>
               ) : (
                 "Ei varattu"

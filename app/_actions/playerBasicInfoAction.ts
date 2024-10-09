@@ -13,7 +13,7 @@ export type PlayerBasicInfo = {
   Height: string;
   JerseyNr: string;
   LastName: string;
-  NHLDraft: PlayerNHLDraft | null;
+  NHLDraft?: PlayerNHLDraft | null;
   Nationality: string;
   PlayerIMG: string;
   Pob: string;

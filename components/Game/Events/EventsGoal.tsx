@@ -4,6 +4,7 @@ import {
 } from "@/app/_actions/gameDataAction";
 import { IMAGE_URL } from "@/app/_lib/urls";
 import MyImage from "@/components/MyImage";
+import { useRouter } from "next/navigation";
 import { Spacer } from "../GameEvents";
 import EventContainer from "./EventContainer";
 import EventTimer from "./EventTimer";
@@ -22,6 +23,8 @@ const EventsGoal = ({
   periodLength,
 }: EventsGoalProps) => {
   const isHomeScorer = event.TeamId === homeTeam.Id;
+
+  const router = useRouter();
 
   const header = (
     <EventContainer
@@ -65,7 +68,10 @@ const EventsGoal = ({
           alt={event.ScorerName}
         />
         <div>
-          <div className="font-semibold">
+          <div
+            className="font-semibold hover:cursor-pointer"
+            onClick={() => router.push(`/player/${event.ScorerLinkID}`)}
+          >
             {event.ScorerName} #{event.ScorerJersey}
           </div>
           <div className="text-neutral-900">

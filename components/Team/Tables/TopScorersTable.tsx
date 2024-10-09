@@ -34,7 +34,7 @@ const TopScorersTable = ({ data }: TopScorersProps) => {
         noTextCenter
         className="hover:cursor-pointer"
         onClick={() => {
-          router.push(`/player/${player.PersonID}`);
+          router.push(`/player/${player.PersonID.split("&")[0]}}`);
         }}
       >
         {player.LastName} {player.FirstName}

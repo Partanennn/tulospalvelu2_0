@@ -7,11 +7,11 @@ import { GET_TEAM_INFO_URL } from "../_lib/urls";
 type TeamInfoProps = {
   teamId: string;
   season: Season;
-  associationId: string;
+  associationId?: string;
 };
 
 export const teamInfoAction = async ({
-  associationId,
+  associationId = "",
   season,
   teamId,
 }: TeamInfoProps): Promise<TeamInfo | null> => {

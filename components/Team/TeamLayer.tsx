@@ -30,10 +30,9 @@ const TeamLayer = ({ teamId }: TeamLayerProps) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (selectedSeason && params.get("associationid")) {
+    if (selectedSeason) {
       const getData = async () => {
         const data = await teamInfoAction({
-          associationId: params.get("associationid") ?? "",
           season: selectedSeason,
           teamId: teamId,
         });

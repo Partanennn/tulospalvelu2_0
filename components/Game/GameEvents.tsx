@@ -33,8 +33,14 @@ const GameEvents = ({
   const items = gameEvents.map((event) => {
     switch (event.Type) {
       case "GK_change":
-      case "GK_start":
-        return <EventsGoalie event={event} />;
+        return (
+          <EventsGoalie
+            awayTeam={awayTeam}
+            homeTeam={homeTeam}
+            event={event}
+            periodLength={periodLength}
+          />
+        );
       case "Goal":
         return (
           <EventsGoal

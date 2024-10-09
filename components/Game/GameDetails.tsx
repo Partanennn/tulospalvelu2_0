@@ -31,12 +31,8 @@ const GameDetails = ({ gameId }: GameDetailsProps) => {
         <div>
           <GameHeader
             gameInfo={game.GamesUpdate[0]}
-            awayName={game.GamesUpdate[0].AwayTeam.Name}
-            awayLogoUrl={game.GamesUpdate[0].AwayTeam.Image}
-            awayScore={game.GamesUpdate[0].AwayTeam.Goals}
-            homeLogoUrl={game.GamesUpdate[0].HomeTeam.Image}
-            homeName={game.GamesUpdate[0].HomeTeam.Name}
-            homeScore={game.GamesUpdate[0].HomeTeam.Goals}
+            awayTeam={game.GamesUpdate[0].AwayTeam}
+            homeTeam={game.GamesUpdate[0].HomeTeam}
           />
           <div className="flex flex-row">
             <GameEvents

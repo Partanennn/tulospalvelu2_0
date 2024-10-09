@@ -1,4 +1,3 @@
-import { useCookiesStore } from "@/stores/cookies-store";
 import Cookies from "js-cookie";
 
 export const getCookie = <T>(name: string): T | null => {
@@ -14,5 +13,7 @@ export const getCookie = <T>(name: string): T | null => {
 };
 
 export const setCookie = <T>(name: string, value: T) => {
-  Cookies.set(name, JSON.stringify(value));
+  Cookies.set(name, JSON.stringify(value), {
+    expires: 30,
+  });
 };

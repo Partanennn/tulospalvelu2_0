@@ -30,7 +30,7 @@ type GameLogsUpdateBase = {
 export type GameReportGamesUpdate = {
   Arena: string;
   AwayTeam: GameReportGamesUpdateTeam;
-  FinishedType: number;
+  FinishedType: 0 | 1; // 0: Not finished, 1: Finished
   GameRules: string;
   GameStatus: number;
   GameTime: number;

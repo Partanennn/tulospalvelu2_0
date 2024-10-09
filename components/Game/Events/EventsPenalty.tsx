@@ -28,9 +28,12 @@ const EventsPenalty = ({ event, periodLength, team }: EventsPenaltyProps) => {
       <div className="flex flex-row items-center gap-10">
         <MyImage src={`${IMAGE_URL}/${team.Image}`} alt={""} />
         <div>
-          <div className="font-semibold">{event.PenaltyMinutes}</div>
+          <div className="font-semibold">
+            {event.PenaltyMinutes}, {event.PenaltyReasonsFI}
+          </div>
           <div className="text-neutral-900">
-            {event.Name} #{event.Jersey}, {event.PenaltyReasonsFI}
+            {event.Jersey === 0 ? event.SuffererNames : event.Name} #
+            {event.Jersey === 0 ? event.SuffererJersey : event.Jersey}
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { HandleTempClick } from "@/utils/helpers";
+import { handleTempClick } from "@/utils/helpers";
 import { TeamInfoContactPerson } from "@/utils/types";
 import { useEffect, useState } from "react";
 import Cell from "../../Table/Cell";
@@ -39,7 +39,7 @@ const ContactPersonTable = ({ data }: ContactPersonProps) => {
         <thead>
           <TableHeaderRow
             onClick={() =>
-              HandleTempClick(data ?? [], contactPersons, setContactPersons)
+              handleTempClick(data ?? [], contactPersons, setContactPersons)
             }
           >
             <TableHeader colSpan={2}>Henkilöstö</TableHeader>

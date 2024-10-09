@@ -1,4 +1,4 @@
-export const HandleTempClick = <T, Y>(
+export const handleTempClick = <T, Y>(
   data: T[],
   tempData: Y[],
   setTempData: (data: T[]) => void
@@ -9,3 +9,25 @@ export const HandleTempClick = <T, Y>(
     setTempData(data);
   }
 };
+
+export const calculatePeriodMinutesAndSeconds = (
+  gameTime: number,
+  periodLength: number,
+  period: number
+) => {
+  const minutes = String(
+    Math.floor((gameTime % (periodLength * 60)) / 60)
+  ).padStart(2, "0");
+  const seconds = String((gameTime % (periodLength * 60)) % 60).padStart(
+    2,
+    "0"
+  );
+
+  return {
+    minutes,
+    seconds,
+  };
+};
+
+export const getPeriodLengthFromRuleString = (ruleString: string): number =>
+  parseInt(ruleString.split(";")[3]);

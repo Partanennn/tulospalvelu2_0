@@ -1,6 +1,6 @@
 "use client";
 
-import { HandleTempClick } from "@/utils/helpers";
+import { handleTempClick } from "@/utils/helpers";
 import { TeamInfoTopScorer } from "@/utils/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -57,7 +57,7 @@ const TopScorersTable = ({ data }: TopScorersProps) => {
         <thead>
           <TableHeaderRow
             onClick={() =>
-              HandleTempClick(data ?? [], topScorers, setTopScorers)
+              handleTempClick(data ?? [], topScorers, setTopScorers)
             }
           >
             <TableHeader colSpan={5}>Pistepörssi</TableHeader>

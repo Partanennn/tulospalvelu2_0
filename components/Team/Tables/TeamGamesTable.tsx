@@ -1,6 +1,6 @@
 "use client";
 
-import { HandleTempClick } from "@/utils/helpers";
+import { handleTempClick } from "@/utils/helpers";
 import { TeamInfoGame } from "@/utils/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -44,7 +44,7 @@ const TeamGamesTable = ({ data }: GamesTableProps) => {
       <table>
         <thead>
           <TableHeaderRow
-            onClick={() => HandleTempClick(data, games, setGames)}
+            onClick={() => handleTempClick(data, games, setGames)}
           >
             <TableHeader colSpan={6}>Ottelut</TableHeader>
           </TableHeaderRow>

@@ -1,6 +1,7 @@
 "use client";
 
 import { GameReport, getGameDataAction } from "@/app/_actions/gameDataAction";
+import { getPeriodLengthFromRuleString } from "@/utils/helpers";
 import { useEffect, useState } from "react";
 import GameBoxScore from "./GameBoxScore";
 import GameEvents from "./GameEvents";
@@ -29,6 +30,7 @@ const GameDetails = ({ gameId }: GameDetailsProps) => {
       {game && (
         <div>
           <GameHeader
+            gameInfo={game.GamesUpdate[0]}
             awayName={game.GamesUpdate[0].AwayTeam.Name}
             awayLogoUrl={game.GamesUpdate[0].AwayTeam.Image}
             awayScore={game.GamesUpdate[0].AwayTeam.Goals}
@@ -41,8 +43,8 @@ const GameDetails = ({ gameId }: GameDetailsProps) => {
               gameEvents={game.GameLogsUpdate}
               homeTeam={game.GamesUpdate[0].HomeTeam}
               awayTeam={game.GamesUpdate[0].AwayTeam}
-              periodLength={parseInt(
-                game.GamesUpdate[0].GameRules.split(";")[3]
+              periodLength={getPeriodLengthFromRuleString(
+                game.GamesUpdate[0].GameRules
               )}
             />
             <GameBoxScore />

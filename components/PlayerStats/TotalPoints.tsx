@@ -62,7 +62,7 @@ const TotalPoints = () => {
       <Cell
         noTextCenter
         onClick={() => {
-          router.push(`/player?playerid=${player.LinkID}`);
+          router.push(`/player/${player.LinkID}`);
         }}
       >
         <div className="flex gap-0 px-0 hover:cursor-pointer sm:gap-2">

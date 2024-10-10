@@ -10,7 +10,9 @@ type LinkCell = {
 const LinkCell = ({ children, className = "", url = "" }: LinkCell) => {
   return (
     <Cell className={`text-accent-500 ${className}`}>
-      <a href={url}>{children}</a>
+      <a href={url} target="_blank">
+        {children}
+      </a>
     </Cell>
   );
 };

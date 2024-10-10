@@ -63,9 +63,7 @@ const LogoSlider = () => {
         height={50}
         className="hover:cursor-pointer"
         onClick={() => {
-          router.push(
-            `/team?teamid=${team.TeamID}&associationid=${team.AssociationID}`
-          );
+          router.push(`/team/${team.TeamID}`);
         }}
       />
     );

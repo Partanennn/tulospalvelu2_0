@@ -13,7 +13,11 @@ import PlayersTable from "./Tables/PlayersTable";
 import TeamGamesTable from "./Tables/TeamGamesTable";
 import TopScorersTable from "./Tables/TopScorersTable";
 
-const TeamLayer = () => {
+type TeamLayerProps = {
+  teamId: string;
+};
+
+const TeamLayer = ({ teamId }: TeamLayerProps) => {
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
   const [data, setData] = useState<TeamInfo | null>(null);
 
@@ -26,12 +30,11 @@ const TeamLayer = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (selectedSeason && params.get("teamid") && params.get("associationid")) {
+    if (selectedSeason) {
       const getData = async () => {
         const data = await teamInfoAction({
-          associationId: params.get("associationid") ?? "",
           season: selectedSeason,
-          teamId: params.get("teamid") ?? "",
+          teamId: teamId,
         });
         setData(data);
       };
@@ -40,15 +43,14 @@ const TeamLayer = () => {
   }, [selectedSeason, params]);
 
   useEffect(() => {
-    if (params.get("teamid")) {
-      const team = teamStats?.Teams.find(
-        (team) => team.TeamID === params.get("teamid")
-      );
+    if (teamId && teamStats) {
+      const team = teamStats?.Teams.find((team) => team.TeamID === teamId);
+
       if (team) {
         setSelectedTeam(team);
       }
     }
-  }, [params]);
+  }, [params, teamStats]);
 
   useEffect(() => {
     if (data) {
@@ -58,7 +60,7 @@ const TeamLayer = () => {
 
   return (
     <div>
-      <div className="text-2xl flex justify-center items-center pb-[5rem] pt-[5rem] font-semibold">
+      <div className="text-heading5 flex justify-center items-center pb-[5rem] pt-[5rem] font-semibold">
         {selectedTeam?.TeamAbbrv}
       </div>
       <div className="flex flex-col items-center flex-wrap justify-evenly md:items-start gap-5 md:flex-row">

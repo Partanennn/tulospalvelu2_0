@@ -1,6 +1,6 @@
 "use client";
 
-import { HandleTempClick } from "@/utils/helpers";
+import { handleTempClick } from "@/utils/helpers";
 import { TeamInfoTopScorer } from "@/utils/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -34,7 +34,7 @@ const TopScorersTable = ({ data }: TopScorersProps) => {
         noTextCenter
         className="hover:cursor-pointer"
         onClick={() => {
-          router.push(`/player?playerid=${player.PersonID}`);
+          router.push(`/player/${player.PersonID.split("&")[0]}}`);
         }}
       >
         {player.LastName} {player.FirstName}
@@ -57,7 +57,7 @@ const TopScorersTable = ({ data }: TopScorersProps) => {
         <thead>
           <TableHeaderRow
             onClick={() =>
-              HandleTempClick(data ?? [], topScorers, setTopScorers)
+              handleTempClick(data ?? [], topScorers, setTopScorers)
             }
           >
             <TableHeader colSpan={5}>Pistepörssi</TableHeader>

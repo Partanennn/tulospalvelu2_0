@@ -5,10 +5,15 @@ import {
   gamesPerDayAction,
   GamesPerDayGameDays,
 } from "@/app/_actions/gamesPerDayAction";
-import { IMAGE_URL } from "@/app/_lib/urls";
+import {
+  EXTERNAL_BROADCAST_URL,
+  GAME_SHEET_URL,
+  IMAGE_URL,
+} from "@/app/_lib/urls";
 import { useGroupStore } from "@/stores/group-store";
 import { useLevelStore } from "@/stores/level-store";
 import { useSeasonStore } from "@/stores/season-store";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import MyImage from "./MyImage";
 import Cell from "./Table/Cell";
@@ -17,7 +22,7 @@ import LinkCell from "./Table/LinkCell";
 import TableHeader from "./Table/TableHeader";
 import TableHeaderRow from "./Table/TableHeaderRow";
 
-const COL_COUNT = 7;
+const COL_COUNT = 9;
 
 type GamesTableProps = {
   header: string;
@@ -27,6 +32,8 @@ type GamesTableProps = {
 const GamesTable = ({ header, gameDays = "all" }: GamesTableProps) => {
   const [showData, setShowData] = useState<GameDay[]>([]);
   const [data, setData] = useState<GameDay[] | null>([]);
+
+  const router = useRouter();
 
   const { selectedSeason } = useSeasonStore();
   const { selectedGroup } = useGroupStore();
@@ -57,12 +64,13 @@ const GamesTable = ({ header, gameDays = "all" }: GamesTableProps) => {
       return (
         <tr
           key={game.GameID}
-          className="odd:bg-neutral-500 even: bg-neutral-300"
+          className="odd:bg-neutral-500 even: bg-neutral-300 hover:cursor-pointer"
+          onClick={() => router.push(`/games/${game.GameID}`)}
         >
           <Cell>{game.GameTime}</Cell>
           <LinkCell
             className="hidden sm:table-cell"
-            url={`https://www.leijonat.tv/fi/game?ext-id=${game.GameID}&season-id=${selectedSeason?.SeasonNumber}`}
+            url={`${EXTERNAL_BROADCAST_URL}?ext-id=${game.GameID}&season-id=${selectedSeason?.SeasonNumber}`}
           >
             Lähetys
           </LinkCell>
@@ -81,7 +89,9 @@ const GamesTable = ({ header, gameDays = "all" }: GamesTableProps) => {
               </div>
             </div>
           </Cell>
+          <Cell>{game.HomeGoals}</Cell>
           <Cell>-</Cell>
+          <Cell>{game.AwayGoals}</Cell>
           <Cell>
             <div className="flex justify-start">
               <div className="mx-2 hidden sm:table-cell">
@@ -99,7 +109,7 @@ const GamesTable = ({ header, gameDays = "all" }: GamesTableProps) => {
           </Cell>
           <HiddableCell>{game.RinkName}</HiddableCell>
           <LinkCell
-            url={`https://tulospalvelu.leijonat.fi/gamesheet/?gid=${game.GameID}&lang=fi&season=${selectedSeason?.SeasonNumber}`}
+            url={`${GAME_SHEET_URL}/?gid=${game.GameID}&lang=fi&season=${selectedSeason?.SeasonNumber}`}
           >
             OPK
           </LinkCell>

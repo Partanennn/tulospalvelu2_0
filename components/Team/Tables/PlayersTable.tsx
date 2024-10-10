@@ -1,6 +1,6 @@
 "use client";
 
-import { HandleTempClick } from "@/utils/helpers";
+import { handleTempClick } from "@/utils/helpers";
 import { TeamInfoPlayer } from "@/utils/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -36,7 +36,7 @@ const PlayersTable = ({ data }: PlayersProps) => {
         noTextCenter
         className="hover:cursor-pointer"
         onClick={() => {
-          router.push(`/player?playerid=${player.PersonID}`);
+          router.push(`/player/${player.PersonID.split("&")[0]}`);
         }}
       >
         {player.LastName} {player.FirstName}
@@ -57,7 +57,7 @@ const PlayersTable = ({ data }: PlayersProps) => {
       <table>
         <thead>
           <TableHeaderRow
-            onClick={() => HandleTempClick(data, players, setPlayers)}
+            onClick={() => handleTempClick(data, players, setPlayers)}
           >
             <TableHeader colSpan={5}>Pelaajat</TableHeader>
           </TableHeaderRow>

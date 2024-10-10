@@ -1,10 +1,8 @@
 "use client";
 
-import {
-  getGroupsAction,
-  getLevelsAction,
-  getSeasonsAction,
-} from "@/app/_actions/actions";
+import { getGroupsAction } from "@/app/_actions/groupsAction";
+import { getLevelsAction } from "@/app/_actions/levelsAction";
+import { getSeasonsAction } from "@/app/_actions/seasonsAction";
 import { Group, useGroupStore } from "@/stores/group-store";
 import { Level, useLevelStore } from "@/stores/level-store";
 import { Season, useSeasonStore } from "@/stores/season-store";

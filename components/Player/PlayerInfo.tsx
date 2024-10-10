@@ -5,21 +5,21 @@ import {
   playerBasicInfoAction,
 } from "@/app/_actions/playerBasicInfoAction";
 import { PLAYER_EXTERNAL_URL } from "@/app/_lib/urls";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import MyImage from "../MyImage";
 import PlayerAllSeasonsStats from "./PlayerAllSeasonsStats";
 import BasicInfo from "./PlayerBasicInfo";
 
-const PlayerInfo = () => {
+type PlayerInfoProps = {
+  playerId: string;
+};
+
+const PlayerInfo = ({ playerId }: PlayerInfoProps) => {
   const [basicInfo, setBasicInfo] = useState<PlayerBasicInfo | null>(null);
-  const params = useSearchParams();
 
   useEffect(() => {
-    if (params.get("playerid")) {
+    if (playerId) {
       const fetchData = async () => {
-        const playerId = params.get("playerid");
-
         const data = await playerBasicInfoAction({
           playerId: playerId ?? "",
         });
@@ -30,7 +30,7 @@ const PlayerInfo = () => {
       };
       fetchData();
     }
-  }, [params]);
+  }, [playerId]);
 
   return (
     <div className="flex flex-col gap-5 items-center">
@@ -43,7 +43,7 @@ const PlayerInfo = () => {
       )}
 
       <div>
-        <a href={`${PLAYER_EXTERNAL_URL}${params.get("playerid")}`}>
+        <a href={`${PLAYER_EXTERNAL_URL}${playerId}`}>
           <p className="font-semibold">
             {basicInfo?.FirstName} {basicInfo?.LastName}
           </p>
@@ -53,7 +53,7 @@ const PlayerInfo = () => {
         <BasicInfo basicInfo={basicInfo} />
         <PlayerAllSeasonsStats
           basicInfo={basicInfo}
-          playerId={params.get("playerid") ?? ""}
+          playerId={playerId ?? ""}
         />
       </div>
     </div>

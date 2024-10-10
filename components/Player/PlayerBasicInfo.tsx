@@ -19,16 +19,12 @@ const BasicInfo = ({ basicInfo }: PlayerBasicInfoProps) => {
         </thead>
         <tbody>
           <TableRow>
-            <Cell>Syntymäaika</Cell>
-            <Cell>{basicInfo?.Dob}</Cell>
+            <Cell>Joukkue</Cell>
+            <Cell>{basicInfo?.AssociationName}</Cell>
           </TableRow>
           <TableRow>
             <Cell>Syntymäpaikka</Cell>
             <Cell>{basicInfo?.Pob}</Cell>
-          </TableRow>
-          <TableRow>
-            <Cell>Joukkue</Cell>
-            <Cell>{basicInfo?.AssociationName}</Cell>
           </TableRow>
           <TableRow>
             <Cell>Kansallisuus</Cell>
@@ -51,18 +47,24 @@ const BasicInfo = ({ basicInfo }: PlayerBasicInfoProps) => {
             <Cell>{basicInfo?.Hand ?? "Ei määritelty"}</Cell>
           </TableRow>
           <TableRow>
+            <Cell>Syntymäaika</Cell>
+            <Cell>{basicInfo?.Dob}</Cell>
+          </TableRow>
+          <TableRow>
             <Cell>Ikä</Cell>
             <Cell>{basicInfo?.Age ?? 0} vuotta</Cell>
           </TableRow>
           <TableRow>
             <Cell>Varaus</Cell>
             <Cell>
-              {basicInfo !== null && basicInfo?.NHLDraft !== null ? (
+              {basicInfo !== null &&
+              basicInfo?.NHLDraft &&
+              basicInfo?.NHLDraft !== null ? (
                 <div>
-                  {basicInfo?.NHLDraft.DraftYear},{" "}
-                  {basicInfo?.NHLDraft.DraftedTeam},{" "}
-                  {basicInfo?.NHLDraft.DraftRound}. kierros #
-                  {basicInfo?.NHLDraft.DraftNumber}
+                  {basicInfo?.NHLDraft?.DraftYear},{" "}
+                  {basicInfo?.NHLDraft?.DraftedTeam},{" "}
+                  {basicInfo?.NHLDraft?.DraftRound}. kierros #
+                  {basicInfo?.NHLDraft?.DraftNumber}
                 </div>
               ) : (
                 "Ei varattu"

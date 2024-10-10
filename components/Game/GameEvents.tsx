@@ -35,6 +35,7 @@ const GameEvents = ({
       case "GK_change":
         return (
           <EventsGoalie
+            key={`goalie-${event.Key}`}
             awayTeam={awayTeam}
             homeTeam={homeTeam}
             event={event}
@@ -44,6 +45,7 @@ const GameEvents = ({
       case "Goal":
         return (
           <EventsGoal
+            key={`goal-${event.Key}`}
             event={event}
             awayTeam={awayTeam}
             homeTeam={homeTeam}
@@ -53,6 +55,7 @@ const GameEvents = ({
       case "Penalty":
         return (
           <EventsPenalty
+            key={`penalty-${event.Key}`}
             event={event}
             team={event.TeamId === homeTeam.Id ? homeTeam : awayTeam}
             periodLength={periodLength}
@@ -61,6 +64,7 @@ const GameEvents = ({
       case "Timeout":
         return (
           <EventsTimeout
+            key={`timeout-${event.TeamId}`}
             event={event}
             periodLength={periodLength}
             team={event.TeamId === homeTeam.Id ? homeTeam : awayTeam}

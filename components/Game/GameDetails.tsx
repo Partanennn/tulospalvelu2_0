@@ -24,7 +24,7 @@ const GameDetails = ({ gameId }: GameDetailsProps) => {
 
       const intervalId = setInterval(() => {
         getData();
-      }, 20 * 1000);
+      }, 25 * 1000);
 
       getData();
 

@@ -30,10 +30,9 @@ const TeamLayer = ({ teamId }: TeamLayerProps) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (selectedSeason && params.get("associationid")) {
+    if (selectedSeason) {
       const getData = async () => {
         const data = await teamInfoAction({
-          associationId: params.get("associationid") ?? "",
           season: selectedSeason,
           teamId: teamId,
         });
@@ -61,7 +60,7 @@ const TeamLayer = ({ teamId }: TeamLayerProps) => {
 
   return (
     <div>
-      <div className="text-2xl flex justify-center items-center pb-[5rem] pt-[5rem] font-semibold">
+      <div className="text-heading5 flex justify-center items-center pb-[5rem] pt-[5rem] font-semibold">
         {selectedTeam?.TeamAbbrv}
       </div>
       <div className="flex flex-col items-center flex-wrap justify-evenly md:items-start gap-5 md:flex-row">

@@ -1,25 +1,24 @@
 import { ReactNode } from "react";
 
-type TableRowProps = {
+type EventContainerProps = {
   children: ReactNode;
   className?: string;
-  keyValue?: string;
   onClick?: () => void;
 };
 
-const TableRow = ({
+const EventContainer = ({
   children,
   className = "",
   onClick = () => null,
-}: TableRowProps) => {
+}: EventContainerProps) => {
   return (
-    <tr
-      className={`odd:bg-neutral-500 even: bg-neutral-300 ${className}`}
+    <div
+      className={`flex flex-row gap-10 items-center p-2 py-4 ${className}`}
       onClick={onClick}
     >
       {children}
-    </tr>
+    </div>
   );
 };
 
-export default TableRow;
+export default EventContainer;

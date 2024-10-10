@@ -1,5 +1,4 @@
 import TeamLayer from "@/components/Team/TeamLayer";
-import { Suspense } from "react";
 
 type TeamSlugPageProps = {
   params: {
@@ -8,11 +7,7 @@ type TeamSlugPageProps = {
 };
 
 const TeamSlugPage = ({ params: { slug } }: TeamSlugPageProps) => {
-  return (
-    <Suspense>
-      <TeamLayer teamId={slug} />
-    </Suspense>
-  );
+  return <TeamLayer teamId={slug} />;
 };
 
 export default TeamSlugPage;

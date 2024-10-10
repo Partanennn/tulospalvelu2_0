@@ -40,7 +40,7 @@ const GameDetails = ({ gameId }: GameDetailsProps) => {
             awayTeam={game.GamesUpdate[0].AwayTeam}
             homeTeam={game.GamesUpdate[0].HomeTeam}
           />
-          <div className="flex flex-row">
+          <div className="flex flex-row gap-10">
             <GameEvents
               gameEvents={game.GameLogsUpdate}
               homeTeam={game.GamesUpdate[0].HomeTeam}
@@ -49,7 +49,11 @@ const GameDetails = ({ gameId }: GameDetailsProps) => {
                 game.GamesUpdate[0].GameRules
               )}
             />
-            <GameBoxScore />
+            <GameBoxScore
+              homeTeam={game.GamesUpdate[0].HomeTeam}
+              awayTeam={game.GamesUpdate[0].AwayTeam}
+              events={game.PeriodSummary}
+            />
           </div>
         </div>
       )}

@@ -19,16 +19,12 @@ const BasicInfo = ({ basicInfo }: PlayerBasicInfoProps) => {
         </thead>
         <tbody>
           <TableRow>
-            <Cell>Syntymäaika</Cell>
-            <Cell>{basicInfo?.Dob}</Cell>
+            <Cell>Joukkue</Cell>
+            <Cell>{basicInfo?.AssociationName}</Cell>
           </TableRow>
           <TableRow>
             <Cell>Syntymäpaikka</Cell>
             <Cell>{basicInfo?.Pob}</Cell>
-          </TableRow>
-          <TableRow>
-            <Cell>Joukkue</Cell>
-            <Cell>{basicInfo?.AssociationName}</Cell>
           </TableRow>
           <TableRow>
             <Cell>Kansallisuus</Cell>
@@ -49,6 +45,10 @@ const BasicInfo = ({ basicInfo }: PlayerBasicInfoProps) => {
           <TableRow>
             <Cell>Kätisyys</Cell>
             <Cell>{basicInfo?.Hand ?? "Ei määritelty"}</Cell>
+          </TableRow>
+          <TableRow>
+            <Cell>Syntymäaika</Cell>
+            <Cell>{basicInfo?.Dob}</Cell>
           </TableRow>
           <TableRow>
             <Cell>Ikä</Cell>

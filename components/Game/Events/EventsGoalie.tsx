@@ -22,7 +22,7 @@ const EventsGoalie = ({
   periodLength,
 }: EventsGoalieProps) => {
   const team = event.TeamId === awayTeam.Id ? awayTeam : homeTeam;
-  console.log(team);
+
   return (
     <EventContainer>
       <EventTimer

@@ -24,6 +24,8 @@ const EventsGoal = ({
 }: EventsGoalProps) => {
   const isHomeScorer = event.TeamId === homeTeam.Id;
 
+  const scorerTeam = isHomeScorer ? homeTeam : awayTeam;
+
   const router = useRouter();
 
   const header = (
@@ -56,25 +58,30 @@ const EventsGoal = ({
     </EventContainer>
   );
   const body = (
-    <EventContainer>
+    <EventContainer
+      className={`${
+        isHomeScorer ? "bg-detroit-red-500" : "bg-toronto-blue-500"
+      }`}
+    >
       <EventTimer
         gameTime={event.GameTime}
         period={event.Period}
         periodLength={periodLength}
+        periodColor="white"
       />
       <div className="flex flex-row items-center gap-10">
         <MyImage
-          src={`${IMAGE_URL}/${homeTeam.Image}`}
+          src={`${IMAGE_URL}/${scorerTeam.Image}`}
           alt={event.ScorerName}
         />
         <div>
           <div
-            className="font-semibold hover:cursor-pointer"
+            className="font-semibold text-white hover:cursor-pointer"
             onClick={() => router.push(`/player/${event.ScorerLinkID}`)}
           >
             {event.ScorerName} #{event.ScorerJersey}
           </div>
-          <div className="text-neutral-900">
+          <div className="text-neutral-600">
             Syöttäjät:{" "}
             {event.FirstAssistJersey !== 0
               ? `${event.FirstAssistName} #${event.FirstAssistJersey}`

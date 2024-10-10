@@ -113,42 +113,42 @@ export type GameReportGameLogsUpdateGK = GameLogsUpdateBase & {
   Type: "GK_start" | "GK_change";
 };
 
-type GameReportReferees = {
+export type GameReportReferees = {
   RefereeRole: string;
   RefereeName: string;
 };
 
-type GameReportPeriodSummary = {
+export type GameReportPeriodSummary = {
   PeriodGoals: PeriodGoals[];
   PeriodPPGoals: PeriodPPGoals[];
   PeriodPPMins: PeriodPPMins[];
   PeriodPenMins: PeriodPenMins[];
   PeriodSHGoals: PeriodSHGoals[];
   PeriodSaves: PeriodSaves[];
-  PlayerPeriods: string;
+  PlayedPeriods: string;
 };
 
-type PeriodGoals = {
+export type PeriodGoals = {
   Goals: string;
 };
 
-type PeriodPPGoals = {
+export type PeriodPPGoals = {
   PPGoals: string;
 };
 
-type PeriodPPMins = {
+export type PeriodPPMins = {
   PPMins: string;
 };
 
-type PeriodPenMins = {
+export type PeriodPenMins = {
   PenMins: string;
 };
 
-type PeriodSHGoals = {
+export type PeriodSHGoals = {
   SHGoals: string;
 };
 
-type PeriodSaves = {
+export type PeriodSaves = {
   Saves: string;
 };
 

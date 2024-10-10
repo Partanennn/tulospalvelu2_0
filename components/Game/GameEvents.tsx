@@ -72,7 +72,7 @@ const GameEvents = ({
     }
   });
 
-  return <div>{items}</div>;
+  return <div className="flex flex-col gap-3">{items}</div>;
 };
 
 export default GameEvents;

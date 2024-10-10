@@ -65,7 +65,7 @@ const NavBar = () => {
           onClick={() => setIsMenuOpen((oldValue) => !oldValue)}
         />
         {isMenuOpen && (
-          <div className="flex flex-col bg-primary-600 gap-3 p-4 mt-10 rounded-md absolute shadow-md 2xl:hidden">
+          <div className="flex flex-col z-50 bg-primary-600 gap-3 p-4 mt-10 rounded-md absolute shadow-md 2xl:hidden">
             {navItems}
           </div>
         )}

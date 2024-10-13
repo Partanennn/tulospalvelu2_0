@@ -65,7 +65,6 @@ const GameHeader = ({ awayTeam, gameInfo, homeTeam }: GameHeaderProps) => {
           </div>
         </div>
       )}
-
       <div className="flex flex-row-reverse justify-center items-center gap-5">
         <div
           className={`font-semibold text-heading4 hover:cursor-pointer xl:text-heading1 ${awayScoreColor} `}

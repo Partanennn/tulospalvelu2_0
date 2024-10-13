@@ -40,7 +40,7 @@ const GameDetails = ({ gameId }: GameDetailsProps) => {
             awayTeam={game.GamesUpdate[0].AwayTeam}
             homeTeam={game.GamesUpdate[0].HomeTeam}
           />
-          <div className="flex flex-col-reverse items-center gap-10 xl:flex-row xl:items-start">
+          <div className="flex flex-col-reverse items-center justify-center gap-10 xl:flex-row xl:items-start">
             <GameEvents
               gameEvents={game.GameLogsUpdate}
               homeTeam={game.GamesUpdate[0].HomeTeam}

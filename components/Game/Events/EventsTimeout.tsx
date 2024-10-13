@@ -15,7 +15,7 @@ type EventsTimeoutProps = {
 
 const EventsTimeout = ({ event, periodLength, team }: EventsTimeoutProps) => {
   return (
-    <EventContainer className="justify-between">
+    <EventContainer className="justify-between" gap="gap-0">
       <EventTimer
         gameTime={event.GameTime}
         period={event.Period}

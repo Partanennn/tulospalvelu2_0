@@ -19,8 +19,4 @@ export const navbarItems: NavbarItem[] = [
     text: "Säännöt",
     url: "/rules",
   },
-  {
-    text: "Tilastot",
-    url: "/",
-  },
 ];

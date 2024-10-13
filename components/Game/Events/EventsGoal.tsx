@@ -5,7 +5,6 @@ import {
 import { IMAGE_URL } from "@/app/_lib/urls";
 import MyImage from "@/components/MyImage";
 import { useRouter } from "next/navigation";
-import { Spacer } from "../GameEvents";
 import EventContainer from "./EventContainer";
 import EventTimer from "./EventTimer";
 
@@ -30,11 +29,10 @@ const EventsGoal = ({
 
   const header = (
     <EventContainer
-      className={`flex flex-row gap-1 items-center xl:gap-5 ${
+      className={`flex flex-row gap-1 items-center xl:gap-5 justify-center ${
         isHomeScorer ? "bg-detroit-red-600" : "bg-toronto-blue-600"
-      }  text-white px-10`}
+      }  text-white`}
     >
-      <Spacer />
       <MyImage
         width={60}
         alt={homeTeam.Name}
@@ -54,7 +52,6 @@ const EventsGoal = ({
         className={`${isHomeScorer ? "opacity-50" : ""}`}
         src={`${IMAGE_URL}/${awayTeam.Image}`}
       />
-      <Spacer />
     </EventContainer>
   );
   const body = (

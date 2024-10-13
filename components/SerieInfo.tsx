@@ -46,6 +46,9 @@ const SerieInfo = () => {
     }
   }, [selectedSeason, selectedLevel, selectedGroup]);
 
+  const getValue = (value?: string | number) =>
+    value && (value === "0" || value === 0) ? "-" : value;
+
   return (
     <div>
       <table>
@@ -80,48 +83,50 @@ const SerieInfo = () => {
           <Row>
             <CellLeft>Erän pituus</CellLeft>
             <CellRight>
-              {data?.GameRules?.PeriodLengthMinutes ?? 0} min
+              {getValue(data?.GameRules?.PeriodLengthMinutes)} min
             </CellRight>
           </Row>
           <Row>
             <CellLeft>Erien määrä</CellLeft>
-            <CellRight>{data?.GameRules?.NumberOfPeriods} kpl</CellRight>
+            <CellRight>
+              {getValue(data?.GameRules?.NumberOfPeriods)} kpl
+            </CellRight>
           </Row>
           <Row>
             <CellLeft>Pieni jäähy</CellLeft>
             <CellRight>
-              {data?.GameRules?.MinorPenaltyLengthMinutes} min
+              {getValue(data?.GameRules?.MinorPenaltyLengthMinutes)} min
             </CellRight>
           </Row>
           <Row>
             <CellLeft>Iso jäähy</CellLeft>
             <CellRight>
-              {data?.GameRules?.MajorPenaltyLengthMinutes} min
+              {getValue(data?.GameRules?.MajorPenaltyLengthMinutes)} min
             </CellRight>
           </Row>
           <Row>
             <CellLeft>Erätauko</CellLeft>
             <CellRight>
-              {data?.IntermissionTimeBetweenPeriods ?? 0} min
+              {getValue(data?.IntermissionTimeBetweenPeriods)} min
             </CellRight>
           </Row>
           <Row>
             <CellLeft>Erätauko (Jatkoaika)</CellLeft>
             <CellRight>
-              {data?.IntermissionTimeBetweenPeriods ?? 0} min
+              {getValue(data?.IntermissionTimeBetweenPeriods)} min
             </CellRight>
           </Row>
           <Row>
             <CellLeft>Lämmittely</CellLeft>
-            <CellRight>{data?.WarmUpTime ?? 0} min</CellRight>
+            <CellRight>{getValue(data?.WarmUpTime)} min</CellRight>
           </Row>
           <Row>
             <CellLeft>Erotuomarimäärä</CellLeft>
-            <CellRight>{data?.NumberOfReferees ?? 0}</CellRight>
+            <CellRight>{getValue(data?.NumberOfReferees)}</CellRight>
           </Row>
           <Row>
             <CellLeft>Erotuomaritaso</CellLeft>
-            <CellRight>Taso {data?.LevelOfReferees ?? 0}</CellRight>
+            <CellRight>Taso {getValue(data?.LevelOfReferees)}</CellRight>
           </Row>
         </tbody>
       </table>

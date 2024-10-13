@@ -32,7 +32,7 @@ const GameDetails = ({ gameId }: GameDetailsProps) => {
     }
   }, [gameId]);
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex justify-center items-center">
       {game && (
         <div>
           <GameHeader
@@ -40,7 +40,7 @@ const GameDetails = ({ gameId }: GameDetailsProps) => {
             awayTeam={game.GamesUpdate[0].AwayTeam}
             homeTeam={game.GamesUpdate[0].HomeTeam}
           />
-          <div className="flex flex-row gap-10">
+          <div className="flex flex-col-reverse items-center gap-10 xl:flex-row xl:items-start">
             <GameEvents
               gameEvents={game.GameLogsUpdate}
               homeTeam={game.GamesUpdate[0].HomeTeam}

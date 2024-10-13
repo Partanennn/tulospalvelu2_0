@@ -34,7 +34,7 @@ const GameHeader = ({ awayTeam, gameInfo, homeTeam }: GameHeaderProps) => {
   );
 
   return (
-    <div className="flex flex-row gap-10 items-center p-4">
+    <div className="flex flex-row gap-2 items-center justify-center p-4 xl:gap-10">
       <MyImage
         src={`${IMAGE_URL}/${homeTeam.Image}`}
         alt={homeTeam.Name}
@@ -42,13 +42,13 @@ const GameHeader = ({ awayTeam, gameInfo, homeTeam }: GameHeaderProps) => {
         className="hover:cursor-pointer"
       />
       <div
-        className="font-semibold text-heading2 hover:cursor-pointer"
+        className="font-semibold text-heading6 hover:cursor-pointer xl:text-heading2"
         onClick={() => router.push(`/team/${homeTeam.Id}`)}
       >
         {homeTeam.Name}
       </div>
       <div
-        className={`font-semibold text-heading1 hover:cursor-pointer ${homeScoreColor}`}
+        className={`font-semibold text-heading4 hover:cursor-pointer xl:text-heading1 ${homeScoreColor}`}
         onClick={() => router.push(`/team/${homeTeam.Id}`)}
       >
         {homeTeam.Goals}
@@ -65,13 +65,13 @@ const GameHeader = ({ awayTeam, gameInfo, homeTeam }: GameHeaderProps) => {
       )}
 
       <div
-        className={`font-semibold text-heading1 hover:cursor-pointer ${awayScoreColor}`}
+        className={`font-semibold text-heading4 hover:cursor-pointer xl:text-heading1 ${awayScoreColor} `}
         onClick={() => router.push(`/team/${awayTeam.Id}`)}
       >
         {awayTeam.Goals}
       </div>
       <div
-        className="font-semibold text-heading2 hover:cursor-pointer"
+        className="font-semibold text-heading6 hover:cursor-pointer xl:text-heading2"
         onClick={() => router.push(`/team/${awayTeam.Id}`)}
       >
         {awayTeam.Name}

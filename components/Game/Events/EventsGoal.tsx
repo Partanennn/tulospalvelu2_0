@@ -30,7 +30,7 @@ const EventsGoal = ({
 
   const header = (
     <EventContainer
-      className={`flex flex-row gap-5 items-center ${
+      className={`flex flex-row gap-1 items-center xl:gap-5 ${
         isHomeScorer ? "bg-detroit-red-600" : "bg-toronto-blue-600"
       }  text-white px-10`}
     >
@@ -44,7 +44,7 @@ const EventsGoal = ({
       <div className={`${isHomeScorer ? "" : "opacity-30"} text-heading4 px-3`}>
         {event.HomeTeamGoals}
       </div>
-      <div className="text-heading6 px-10">Maali</div>
+      <div className="text-heading6 px-3 xl:px-10">Maali</div>
       <div className={`${isHomeScorer ? "opacity-30" : ""} text-heading4 px-3`}>
         {event.AwayTeamGoals}
       </div>
@@ -69,7 +69,7 @@ const EventsGoal = ({
         periodLength={periodLength}
         periodColor="white"
       />
-      <div className="flex flex-row items-center gap-10">
+      <div className="flex flex-row items-center gap-5 xl:gap-10">
         <MyImage
           src={`${IMAGE_URL}/${scorerTeam.Image}`}
           alt={event.ScorerName}

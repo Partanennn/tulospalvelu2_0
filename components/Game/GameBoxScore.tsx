@@ -96,7 +96,9 @@ const GameBoxScore = ({ awayTeam, events, homeTeam }: GameBoxScoreProps) => {
             <Cell>{getGoals(events?.PeriodGoals, 1).home}</Cell>
             <Cell>{getGoals(events?.PeriodGoals, 2).home}</Cell>
             <Cell>{getGoals(events?.PeriodGoals, 3).home}</Cell>
-            <Cell>{getTotalGoals(events?.PeriodGoals).home}</Cell>
+            <Cell className="font-semibold">
+              {getTotalGoals(events?.PeriodGoals).home}
+            </Cell>
           </TableRow>
           <TableRow>
             <Cell>
@@ -111,7 +113,9 @@ const GameBoxScore = ({ awayTeam, events, homeTeam }: GameBoxScoreProps) => {
             <Cell>{getGoals(events?.PeriodGoals, 1).away}</Cell>
             <Cell>{getGoals(events?.PeriodGoals, 2).away}</Cell>
             <Cell>{getGoals(events?.PeriodGoals, 3).away}</Cell>
-            <Cell>{getTotalGoals(events?.PeriodGoals).away}</Cell>
+            <Cell className="font-semibold">
+              {getTotalGoals(events?.PeriodGoals).away}
+            </Cell>
           </TableRow>
         </tbody>
       </table>
@@ -143,7 +147,9 @@ const GameBoxScore = ({ awayTeam, events, homeTeam }: GameBoxScoreProps) => {
             <Cell>{getSaves(events?.PeriodSaves, 1).home}</Cell>
             <Cell>{getSaves(events?.PeriodSaves, 2).home}</Cell>
             <Cell>{getSaves(events?.PeriodSaves, 3).home}</Cell>
-            <Cell>{getTotalSaves(events?.PeriodSaves).home}</Cell>
+            <Cell className="font-semibold">
+              {getTotalSaves(events?.PeriodSaves).home}
+            </Cell>
           </TableRow>
           <TableRow>
             <Cell>
@@ -158,7 +164,9 @@ const GameBoxScore = ({ awayTeam, events, homeTeam }: GameBoxScoreProps) => {
             <Cell>{getSaves(events?.PeriodSaves, 1).away}</Cell>
             <Cell>{getSaves(events?.PeriodSaves, 2).away}</Cell>
             <Cell>{getSaves(events?.PeriodSaves, 3).away}</Cell>
-            <Cell>{getTotalSaves(events?.PeriodSaves).away}</Cell>
+            <Cell className="font-semibold">
+              {getTotalSaves(events?.PeriodSaves).away}
+            </Cell>
           </TableRow>
         </tbody>
       </table>
@@ -190,7 +198,9 @@ const GameBoxScore = ({ awayTeam, events, homeTeam }: GameBoxScoreProps) => {
             <Cell>{getPenalties(events?.PeriodPenMins, 1).home}</Cell>
             <Cell>{getPenalties(events?.PeriodPenMins, 2).home}</Cell>
             <Cell>{getPenalties(events?.PeriodPenMins, 3).home}</Cell>
-            <Cell>{getTotalPenalties(events?.PeriodPenMins).home}</Cell>
+            <Cell className="font-semibold">
+              {getTotalPenalties(events?.PeriodPenMins).home}
+            </Cell>
           </TableRow>
           <TableRow>
             <Cell>
@@ -205,7 +215,9 @@ const GameBoxScore = ({ awayTeam, events, homeTeam }: GameBoxScoreProps) => {
             <Cell>{getPenalties(events?.PeriodPenMins, 1).away}</Cell>
             <Cell>{getPenalties(events?.PeriodPenMins, 2).away}</Cell>
             <Cell>{getPenalties(events?.PeriodPenMins, 3).away}</Cell>
-            <Cell>{getTotalPenalties(events?.PeriodPenMins).away}</Cell>
+            <Cell className="font-semibold">
+              {getTotalPenalties(events?.PeriodPenMins).away}
+            </Cell>
           </TableRow>
         </tbody>
       </table>

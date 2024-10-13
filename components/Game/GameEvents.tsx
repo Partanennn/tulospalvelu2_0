@@ -5,9 +5,11 @@ import {
   GameReportGameLogsUpdateTimeout,
   GameReportGamesUpdateTeam,
 } from "@/app/_actions/gameDataAction";
+import { ReactNode } from "react";
 import EventsGoal from "./Events/EventsGoal";
 import EventsGoalie from "./Events/EventsGoalie";
 import EventsPenalty from "./Events/EventsPenalty";
+import EventsPeriod from "./Events/EventsPeriod";
 import EventsTimeout from "./Events/EventsTimeout";
 
 type GameEventsProps = {
@@ -22,7 +24,7 @@ type GameEventsProps = {
   periodLength: number;
 };
 
-export const Spacer = () => <div className="px-10"></div>;
+export const Spacer = () => <div className="px-5 xl:px-10"></div>;
 
 const GameEvents = ({
   gameEvents,
@@ -30,10 +32,19 @@ const GameEvents = ({
   homeTeam,
   periodLength,
 }: GameEventsProps) => {
+  let period = 0;
+
   const items = gameEvents.map((event) => {
+    const itemsToReturn: ReactNode[] = [];
+
+    if (event.Period !== period) {
+      period = event.Period;
+      itemsToReturn.push(<EventsPeriod period={event.Period} />);
+    }
+
     switch (event.Type) {
       case "GK_change":
-        return (
+        itemsToReturn.push(
           <EventsGoalie
             key={`goalie-${event.Key}`}
             awayTeam={awayTeam}
@@ -42,8 +53,9 @@ const GameEvents = ({
             periodLength={periodLength}
           />
         );
+        break;
       case "Goal":
-        return (
+        itemsToReturn.push(
           <EventsGoal
             key={`goal-${event.Key}`}
             event={event}
@@ -52,8 +64,9 @@ const GameEvents = ({
             periodLength={periodLength}
           />
         );
+        break;
       case "Penalty":
-        return (
+        itemsToReturn.push(
           <EventsPenalty
             key={`penalty-${event.Key}`}
             event={event}
@@ -61,8 +74,9 @@ const GameEvents = ({
             periodLength={periodLength}
           />
         );
+        break;
       case "Timeout":
-        return (
+        itemsToReturn.push(
           <EventsTimeout
             key={`timeout-${event.TeamId}`}
             event={event}
@@ -70,10 +84,13 @@ const GameEvents = ({
             team={event.TeamId === homeTeam.Id ? homeTeam : awayTeam}
           />
         );
+        break;
       default:
         <></>;
         break;
     }
+
+    return itemsToReturn;
   });
 
   return <div className="flex flex-col gap-3">{items}</div>;
